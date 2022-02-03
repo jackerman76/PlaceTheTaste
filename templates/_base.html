@@ -1,0 +1,92 @@
+<html>
+
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=yes">
+      <link rel="icon" type="image/x-icon" href="../static-files-folder/Iconicon-Veggies-Bananas.ico" />
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+      <link rel="stylesheet" type="text/css" href="/static-files-folder/style.css">
+      <title>{% block title %}{% endblock %}</title>
+
+    </head>
+    <body>
+        {#
+
+            Only show the error message area if we've specified one when rendering.
+
+        #}
+        {% if error_message %}<div><strong>{{error_message}}</strong></div>{% endif %}
+        <nav class="navbar navbar-expand-lg navbar-light bg-primary">
+          <a class="navbar-brand" style="color: #ffffff;" href="{{ url_for('home') }}">Bananaman</a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <div class="collapse navbar-collapse color-nav" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+
+              <li class="nav-item active">
+              <a class="nav-link" style="color: #ffffff;" href="{{ url_for('login') }}">Login<span class="sr-only">(current)</span></a>
+              </li>
+
+              <li class="nav-item active">
+                <a class="nav-link" style="color: #ffffff;" href="{{ url_for('create_account') }}">Create Account<span class="sr-only">(current)</span></a>
+              </li>
+
+              <li class="nav-item active">
+                <a class="nav-link" style="color: #ffffff;" href="{{ url_for('got_bananas') }}">Got Bananas<span class="sr-only">(current)</span></a>
+              </li>
+
+              <li class="nav-item active">
+                <a class="nav-link" style="color: #ffffff;" href="{{ url_for('need_bananas') }}">Need Bananas<span class="sr-only">(current)</span></a>
+              </li>
+
+              <li class="nav-item active">
+                <a class="nav-link" style="color: #ffffff;" href="{{ url_for('view_map') }}">View Map<span class="sr-only">(current)</span></a>
+              </li>
+
+              <li class="nav-item active">
+                <a class="nav-link" style="color: #ffffff;" onclick="return confirmLogout()" href="{{ url_for('logout') }}">Logout<span class="sr-only">(current)</span></a>
+              </li>
+           </ul>
+           <!--
+           <form class="d-flex">
+            <button class="btn btn-outline-light" type="submit">
+                <i class="bi-cart-fill me-1" style="color: #ffffff;"></i>
+                Saved
+                <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
+            </button>
+        </form>
+        -->
+         </div>
+
+        </nav>
+
+
+        <header>
+            {#
+
+                The header and content areas will be replaced in templates that extend
+                this one.
+
+            #}
+            {% block header %}{% endblock %}
+        </header>
+        <section>
+            {% block content %}{% endblock %}
+        </section>
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+    <script>
+      function confirmLogout(){
+          if(!confirm("Are you sure you want to log out?")){
+            return false;
+          };
+      }
+    </script>
+
+
+    </body>
+</html>
