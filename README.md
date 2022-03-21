@@ -2,7 +2,7 @@
 
 # Place The Taste
 
-![license](https://img.shields.io/github/license/jackerman76/PlaceTheTaste?style=flat-square) ![last_commit](https://img.shields.io/github/last-commit/jackerman76/PlaceTheTaste?style=flat-square) ![top_lang](https://img.shields.io/github/languages/top/jackerman76/PlaceTheTaste?style=flat-square)
+![license](https://img.shields.io/github/license/jackerman76/PlaceTheTaste?style=flat-square) ![last_commit](https://img.shields.io/github/last-commit/jackerman76/PlaceTheTaste?style=flat-square) ![top_lang](https://img.shields.io/github/languages/top/jackerman76/PlaceTheTaste?style=flat-square) ![code_size](https://img.shields.io/github/languages/code-size/jackerman76/PlaceTheTaste?style=flat-square)
 
 ## Team
 
