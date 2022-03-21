@@ -2,7 +2,7 @@
 
 # Place The Taste
 
-![license](https://img.shields.io/github/license/jackerman76/PlaceTheTaste?style=flat-square)
+![license](https://img.shields.io/github/license/jackerman76/PlaceTheTaste?style=flat-square) ![last_commit](https://img.shields.io/github/last-commit/jackerman76/PlaceTheTaste?style=flat-square)
 
 ## Team
 
