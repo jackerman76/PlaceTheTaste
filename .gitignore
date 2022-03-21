@@ -6,3 +6,5 @@
 config.yml
 # Prevent accidental pushing of keys
 *.json
+# Don't push __pycache__
+__pycache__
