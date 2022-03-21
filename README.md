@@ -22,4 +22,4 @@
 
 * Install python / tooling
 * ```pip install -r requirements.txt```
-* ```gunicorn --bind 0.0.0.0:8000 wsgi:app```
+* ```gunicorn --bind 0.0.0.0:8000 wsgi:app``` or ```./start.sh``` or ```./start_dev.sh```
