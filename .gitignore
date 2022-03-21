@@ -4,3 +4,5 @@
 .vscode
 # Live configs with data
 config.yml
+# Prevent accidental pushing of keys
+*.json
