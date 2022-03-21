@@ -2,4 +2,5 @@
 .DS_Store
 # VSCode stuff
 .vscode
-
+# Live configs with data
+config.yml

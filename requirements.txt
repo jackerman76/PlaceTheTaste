@@ -1,0 +1,7 @@
+flask
+flask-classful
+firebase_admin
+twilio
+gunicorn
+requests>=2.25.0
+PyYAML
