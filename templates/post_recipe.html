@@ -1,0 +1,43 @@
+{% extends '_base.html' %}
+{% block header %}
+{% endblock %}
+{% block content %}
+  <div class="container">
+    <form>
+          <div class="form-group">
+                <label for="recipe_name"><b>Recipe Name</b></label><br>
+                <input type="text" class="form-control" placeholder="Enter Recipe Name" name="recipe_name" required>
+                <br>
+          </div>
+
+          <div class="form-group">
+              <label for="ingredients"><b>Ingredients</b></label><br>
+              <textarea class="form-control" placeholder="Please list your ingredients (one per line)" name="ingredients" rows="7" id="ingredients" required></textarea>
+              <br>
+          </div>
+
+          <div class="form-group">
+            <label for="directions"><b>Directions</b></label><br>
+            <textarea class="form-control" placeholder="Please list the directions" name="ingredients" rows="7" id="ingredients" required></textarea>
+            <br>
+          </div>
+
+          <div class="form-group">
+            <label for="file"><b>Picture</b></label><br>
+            <input type="file" class="form-control" placeholder="Upload an image" name="file" accept="image/png, image/jpeg" required>
+            <br>
+          </div>
+
+         
+          <div class="form-group">
+              <button type="submit" name="submit_recipe" value="True" formmethod="post"  class="btn btn-primary">Submit Recipe!</button>
+          </div>
+
+
+    </form>
+       
+
+      <br>
+</div>
+
+{% endblock %}
