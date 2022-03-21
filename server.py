@@ -6,6 +6,7 @@ from utils import *
 HOST = "0.0.0.0"
 PORT = 8000
 
+AuthHolder() # Invoke this early just to avoid any possible race conditions
 app = Flask(__name__)
 ran_startup = False
 
