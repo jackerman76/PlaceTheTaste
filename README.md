@@ -2,6 +2,8 @@
 
 # Place The Taste
 
+![license](https://img.shields.io/github/license/jackerman76/PlaceTheTaste?style=flat-square)
+
 ## Team
 
 * Noah Martino
