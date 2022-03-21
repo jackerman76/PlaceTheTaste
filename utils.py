@@ -196,5 +196,6 @@ class InfoProvider(metaclass=Singleton):
             self.version = self.__info_dict["version"]
             self.license = self.__info_dict["license"]
             self.pretty_name = self.__info_dict["pretty_name"]
+            self.authors = self.__info_dict["authors"]
         except Exception as e:
             print("ERROR: Some or all of the keys are missing from info.yml or info.yml has not been created. Please correct this or the server will not start.\n", e)

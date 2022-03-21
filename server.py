@@ -25,6 +25,7 @@ class PTTRequests(FlaskView):
         info = InfoProvider()
         print("+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+")
         print(f"Starting {info.pretty_name} Server v{info.version}")
+        print(f"Team Members: {info.authors}")
         print(f"License: {info.license}")
         print("+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+")
         global ran_startup
