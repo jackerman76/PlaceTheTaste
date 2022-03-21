@@ -1,4 +1,4 @@
-<p align="center"><img width=60% src="https://raw.githubusercontent.com/jackerman76/PlaceTheTaste/master/branding/ptt_logo_color.jpeg"></p>
+<p align="left"><img width=50% src="https://raw.githubusercontent.com/jackerman76/PlaceTheTaste/master/branding/ptt_logo_color.jpeg"></p>
 
 # Place The Taste
 
