@@ -183,3 +183,18 @@ class ConfigProvider(metaclass=Singleton):
             self.twilio_from_phone = self.__config_dict["twilio_from_phone"]
         except Exception as e:
             print("ERROR: Some or all of the keys are missing from config.yml or config.yml has not been created from config.yml.TEMPLATE. Please correct this or the server will not start.\n", e)
+
+class InfoProvider(metaclass=Singleton):
+
+    def __init__(self):
+        """
+        Holds immutable data from info.yml
+        """
+        try:
+            self.__info_file = FileManager("info.yml")
+            self.__info_dict = self.__info_file.read_file()
+            self.version = self.__info_dict["version"]
+            self.license = self.__info_dict["license"]
+            self.pretty_name = self.__info_dict["pretty_name"]
+        except Exception as e:
+            print("ERROR: Some or all of the keys are missing from info.yml or info.yml has not been created. Please correct this or the server will not start.\n", e)
