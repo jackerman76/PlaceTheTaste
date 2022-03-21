@@ -1,4 +1,4 @@
-![ptt_logo](https://raw.githubusercontent.com/jackerman76/PlaceTheTaste/master/branding/ptt_logo_color.jpeg)
+<p align="center"><img width=60% src="https://raw.githubusercontent.com/jackerman76/PlaceTheTaste/master/branding/ptt_logo_color.jpeg"></p>
 
 # Place The Taste
 
