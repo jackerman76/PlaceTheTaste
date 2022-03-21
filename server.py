@@ -10,24 +10,25 @@ AuthHolder() # Invoke this early just to avoid any possible race conditions
 app = Flask(__name__)
 ran_startup = False
 
-def print_startup():
-    """
-    Print server startup
-    """
-    info = InfoProvider()
-    print("+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+")
-    print(f"Starting {info.pretty_name} Server v{info.version}")
-    print(f"License: {info.license}")
-    print("+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+")
-    ran_startup = True
-
 class PTTRequests(FlaskView):
     route_base = "/"
     
     def __init__(self):
         self.__fsio = FirestoreIO()
         if ran_startup == False:
-            print_startup() # Multiple instances of PTTRequests are started by Flask/Gunicorn, so this prevents spam.
+            self.print_startup() # Multiple instances of PTTRequests are started by Flask/Gunicorn, so this prevents spam.
+
+    def print_startup(self):
+        """
+        Print server startup
+        """
+        info = InfoProvider()
+        print("+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+")
+        print(f"Starting {info.pretty_name} Server v{info.version}")
+        print(f"License: {info.license}")
+        print("+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+")
+        global ran_startup
+        ran_startup = True
 
     @route('/ptt/api/login/check_username_exists', methods=['POST'])
     def check_username_exists(self):
@@ -38,3 +39,5 @@ class PTTRequests(FlaskView):
         if request_data["Username"] != None:
             pass
             # Implement this functionality
+
+PTTRequests.register(app)
