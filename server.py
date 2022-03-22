@@ -46,12 +46,12 @@ class PTTRequests(FlaskView):
     def post_recipe(self):
         return (render_template("post_recipe.html"))
 
-    @app.route('/', methods=["GET", "POST"])
-    @app.route('/home', methods=["GET", "POST"])
+    @route('/', methods=["GET", "POST"])
+    @route('/home', methods=["GET", "POST"])
     def home(self):
         return render_template("home.html")
 
-    @app.route('/create_account', methods=["GET", "POST"])
+    @route('/create_account', methods=["GET", "POST"])
     def create_account(self):
         if request.method == "POST":
             username = request.values.get("username")
