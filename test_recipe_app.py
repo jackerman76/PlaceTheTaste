@@ -11,6 +11,22 @@ app = Flask(__name__)
 
 @app.route('/post_recipe', methods=["GET", "POST"])
 def post_recipe():
+    if request.method == 'POST':
+        if request.form.get("submit_recipe") == "True":
+            recipe_name = request.values.get('recipe_name')
+            ingredients = request.values.get('ingredients')
+            directions = request.values.get('directions')
+            picture = request.values.get('file')
+
+        recipe = Recipe(
+            picture="https://www.abakingjourney.com/wp-content/uploads/2020/04/French-Crepes-feature.jpg",
+            recipe_name=recipe_name,
+            ingredients=ingredients,
+            directions=directions
+        )
+
+        return (render_template("view_recipe.html", recipe=recipe))
+
     return (render_template("post_recipe.html"))
 
 
@@ -20,7 +36,7 @@ def view_recipe():
     recipe = Recipe(
         picture="https://www.abakingjourney.com/wp-content/uploads/2020/04/French-Crepes-feature.jpg",
         recipe_name="Basic crepes",
-        ingredients="1 cup flour\n1 cup milk\n1 egg\n".replace("\n", "<br>"),
+        ingredients="1 cup flour 1 cup milk 1 egg",
         directions="add all the stuff together and then cook em up"
     )
     return (render_template("view_recipe.html", recipe=recipe))
