@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, render_template
 from flask_classful import FlaskView, route
 from firestoreio import FirestoreIO
 from utils import *
@@ -40,5 +40,9 @@ class PTTRequests(FlaskView):
         if request_data["Username"] != None:
             pass
             # Implement this functionality
+
+    @app.route('/post_recipe', methods=["GET", "POST"])
+    def post_recipe():
+        return (render_template("post_recipe.html"))
 
 PTTRequests.register(app)
