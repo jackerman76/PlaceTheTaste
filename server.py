@@ -1,6 +1,7 @@
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, flash
 from flask_classful import FlaskView, route
 from firestoreio import FirestoreIO
+from user import User
 from utils import *
 
 HOST = "0.0.0.0"
@@ -42,7 +43,29 @@ class PTTRequests(FlaskView):
             # Implement this functionality
 
     @route('/post_recipe', methods=["GET", "POST"])
-    def post_recipe():
+    def post_recipe(self):
         return (render_template("post_recipe.html"))
+
+    @app.route('/', methods=["GET", "POST"])
+    @app.route('/home', methods=["GET", "POST"])
+    def home(self):
+        return render_template("home.html")
+
+    @app.route('/create_account', methods=["GET", "POST"])
+    def create_account(self):
+        if request.method == "POST":
+            username = request.values.get("username")
+            password = request.values.get("password")
+            password2 = request.values.get("password2")
+            phone_number = request.values.get("phone")
+            if (password == password2):
+                user = User(username, password, phone_number)
+                flash("Account Created!")  # temporary notification to let user know info was taken
+
+            # Note this is a naive implementation, password stuff needs overhaul still
+
+            # print(email + " " + password + " " + phone_number)
+
+        return render_template("create_account.html")
 
 PTTRequests.register(app)

@@ -9,7 +9,10 @@ class User():
         self.timestamp = time.time()
 
     # def generate_random2fa_code(self)
+        # implement
 
-    # def send_log_2fa_sms(self, cde, to_phone
+    # def send_log_2fa_sms(self, cde, to_phone)
+        # implement
 
     #def validate_passwords(self):
+        # implement

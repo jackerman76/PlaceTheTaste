@@ -12,11 +12,6 @@
       <form>
         <section>
           <div class="form-group">
-                <label for="email"><b>Enter Email</b></label><br>
-                <input type="text" class="form-control" placeholder="Enter Email" name="email" required>
-                <br>
-          </div>
-          <div class="form-group">
               <label for="username"><b>Create Username</b></label><br>
               <input type="text" class="form-control" placeholder="Enter Username" name="username" required>
               <br>
@@ -31,9 +26,25 @@
               <input type="password" class="form-control" placeholder="Enter Password" name="password2" id="password2" required>
               <br>
           </div>
+           <div class="form-group">
+               <label for="phone">Enter your phone number:</label>
+               <input type="tel" id="phone" name="phone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required>
+               <small>Format: 123-456-7890</small>
+               <br>
+          </div>
           <div class="form-group">
               <button type="submit" name="create_account" onclick="isValidPassword()" value="True" formmethod="post"  class="btn btn-secondary">Create Account</button>
           </div>
+
+            {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <ul>
+            {% for message in messages %}
+            <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
 
           <script>
               // checks that password inputs match and password is long enough
