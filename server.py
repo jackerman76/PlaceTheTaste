@@ -2,6 +2,7 @@ from flask import Flask, request, render_template, flash
 from flask_classful import FlaskView, route
 from firestoreio import FirestoreIO
 from user import User
+from comment import Comment
 from utils import *
 
 HOST = "0.0.0.0"
@@ -67,5 +68,14 @@ class PTTRequests(FlaskView):
             # print(email + " " + password + " " + phone_number)
 
         return render_template("create_account.html")
+
+    @route('/post_comment', methods=["GET", "POST"])
+    def post_comment(self):
+        if request.method == "POST":
+            message = request.values.get("message")
+            # Need to connect to firestore to get actual username
+            comment = Comment(username="Anon_for_now", message=message)
+
+        return render_template("post_comment.html")
 
 PTTRequests.register(app)

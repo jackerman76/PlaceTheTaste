@@ -1,0 +1,21 @@
+{% extends '_base.html' %}
+{% block header %}
+{% endblock %}
+{% block content %}
+  <div class="container">
+    <form>
+          <div class="form-group">
+              <label for="message"><b>Comment</b></label><br>
+              <textarea class="form-control" placeholder="Please write your comment" name="message" rows="7" id="message" required></textarea>
+              <br>
+          </div>
+
+          <div class="form-group">
+              <button type="submit" name="submit_comment" value="True" formmethod="post"  class="btn btn-secondary">Submit Comment!</button>
+          </div>
+
+    </form>
+      <br>
+</div>
+
+{% endblock %}
