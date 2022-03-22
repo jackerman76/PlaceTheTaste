@@ -41,7 +41,7 @@ class PTTRequests(FlaskView):
             pass
             # Implement this functionality
 
-    @app.route('/post_recipe', methods=["GET", "POST"])
+    @route('/post_recipe', methods=["GET", "POST"])
     def post_recipe():
         return (render_template("post_recipe.html"))
 
