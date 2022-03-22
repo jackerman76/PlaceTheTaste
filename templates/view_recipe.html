@@ -4,18 +4,17 @@
 {% endblock %}
 {% block content %}
 <div class="container">
-    <div class="card">
-        <img class="card-img-top cover" style="object-fit: scale-down;" src="{{ recipe.picture }}">
+    <img style="width:250px;height:300px;" src="{{ recipe.picture }}">
 
-        <div class="card-body">
-            <h1 class="card-text cardtext">{{ recipe.recipe_name }}</h1>
-            <hr/>
-            <p class="card-text cardtext">{{ recipe.ingredients }}</p>
-            <hr/>
-            <p class="card-text cardtext">{{ recipe.directions }}</p>   
-        </div>
+        
+    <h1>{{ recipe.recipe_name }}</h1>
+    <hr/>
+    <p>{{ recipe.ingredients }}</p>
+    <hr/>
+    <p>{{ recipe.directions }}</p>   
+       
 
-    </div>
+   
 
 </div>
     
