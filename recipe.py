@@ -3,11 +3,11 @@ from time import gmtime, strftime
 from datetime import datetime
 from geopy import distance
 import json
-from utils import *
+#from utils import *
 
 class Recipe():
-    def __init__(self, username, recipe_name, picture, ingredients, 
-    geolocation, tags, directions, ratings, recipe_id, timestamp):
+    def __init__(self, username=None, recipe_name=None, picture=None, ingredients=None, 
+    geolocation=None, tags=None, directions=None, ratings=None, recipe_id=None, timestamp=None):
         self.username = username
         self.recipe_name = recipe_name
         self.picture = picture
