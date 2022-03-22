@@ -4,6 +4,7 @@ from firestoreio import FirestoreIO
 from user import User
 from comment import Comment
 from utils import *
+from recipe import Recipe
 
 HOST = "0.0.0.0"
 PORT = 8000
@@ -45,6 +46,26 @@ class PTTRequests(FlaskView):
 
     @route('/post_recipe', methods=["GET", "POST"])
     def post_recipe(self):
+        if request.method == 'POST':
+            if request.form.get("submit_recipe") == "True":
+                # get form fields
+                recipe_name = request.values.get('recipe_name')
+                ingredients = request.values.get('ingredients')
+                directions = request.values.get('directions')
+                picture = request.values.get('file')
+
+                # create recipe object and load data from fields in
+                recipe = Recipe()
+                recipe.recipe_name=recipe_name
+                recipe.ingredients=ingredients
+                recipe.directions=directions
+
+                # add recipe to database
+                # varify validity of recipe
+
+                # return view of published recipe
+                return (render_template("view_recipe.html", recipe=recipe))
+
         return (render_template("post_recipe.html"))
 
     @route('/', methods=["GET", "POST"])
