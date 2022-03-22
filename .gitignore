@@ -8,3 +8,5 @@ config.yml
 *.json
 # Don't push __pycache__
 __pycache__
+
+test_recipe_app.py 

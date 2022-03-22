@@ -1,10 +1,39 @@
 {% extends '_base.html' %}
 {% block header %}
+<style>
+    /* Default height for small devices */
+    #recipe-image {
+      height: 400px;
+      width: 100%;
+    }
 
+    /* Height for devices larger than 992px */
+    @media (min-width: 992px) {
+      #recipe-image {
+        height: 600px;
+      }
+    }
+</style>
+  <!-- Background image -->
+  <div class="container">
+    <div
+        id="recipe-image"
+        class="p-5 text-center bg-image"
+        style="background-image: url({{ recipe.picture }});"
+    >
+  </div>
 {% endblock %}
 {% block content %}
 <div class="container">
-  
+
+    <h1>{{ recipe.recipe_name }}</h1>
+    <hr/>
+    <p>{{ recipe.ingredients }}</p>
+    <hr/>
+    <p>{{ recipe.directions }}</p>   
+       
+
+   
 
 </div>
     
