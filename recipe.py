@@ -17,7 +17,10 @@ class Recipe():
         self.directions = directions
         self.ratings = ratings
         self.recipe_id = recipe_id
-        self.timestamp = timestamp
+        if timestamp:
+            self.timestamp = timestamp
+        else:
+            self.timestamp = time.time()
 
     def as_json(self):
         return json.dumps(self.__dict__)
