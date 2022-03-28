@@ -48,20 +48,18 @@ class PTTRequests(FlaskView):
     def post_recipe(self):
         if request.method == 'POST':
             if request.form.get("submit_recipe") == "True":
-                # get form fields
-                recipe_name = request.values.get('recipe_name')
-                ingredients = request.values.get('ingredients')
-                directions = request.values.get('directions')
-                picture = request.values.get('file')
-
-                # create recipe object and load data from fields in
+                # create recipe object
                 recipe = Recipe()
-                recipe.recipe_name=recipe_name
-                recipe.ingredients=ingredients
-                recipe.directions=directions
+                # get form fields
+                recipe.recipe_name = request.values.get('recipe_name')
+                recipe.ingredients = request.values.get('ingredients')
+                recipe.directions = request.values.get('directions')
+                recipe.picture = request.values.get('file')
 
                 # add recipe to database
+
                 # varify validity of recipe
+                
 
                 # return view of published recipe
                 return (render_template("view_recipe.html", recipe=recipe))
