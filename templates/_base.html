@@ -9,7 +9,7 @@
 
 <body>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark" >
-    <div class="container"> <a class="navbar-brand" href="{{ url_for('view_map') }}">
+    <div class="container"> <a class="navbar-brand" href="{{ url_for('PTTRequests:view_map_0') }}">
         <i class="fa d-inline fa-lg fa-circle-o"></i>
         <b> Place The Taste</b>
       </a> <button class="navbar-toggler navbar-toggler-right border-0" type="button" data-toggle="collapse" data-target="#navbar11">
@@ -17,9 +17,9 @@
       </button>
       <div class="collapse navbar-collapse" id="navbar11">
         <ul class="navbar-nav mr-auto">
-          <li class="nav-item"> <a class="nav-link" href="{{ url_for('login') }}">Login</a> </li>
-          <li class="nav-item"> <a class="nav-link" href="{{ url_for('create_account') }}">Create Account</a> </li>
-          <li class="nav-item"> <a class="nav-link" href="{{ url_for('post_recipe') }}">Post Recipe</a> </li>
+          <li class="nav-item"> <a class="nav-link" href="{{ url_for('PTTRequests:login') }}">Login</a> </li>
+          <li class="nav-item"> <a class="nav-link" href="{{ url_for('PTTRequests:create_account') }}">Create Account</a> </li>
+          <li class="nav-item"> <a class="nav-link" href="{{ url_for('PTTRequests:post_recipe') }}">Post Recipe</a> </li>
           <li class="nav-item"> <a class="nav-link" href="#">Logout</a> </li>
         </ul>
       </div>

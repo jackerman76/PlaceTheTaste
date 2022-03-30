@@ -11,6 +11,7 @@ PORT = 8000
 
 AuthHolder() # Invoke this early just to avoid any possible race conditions
 app = Flask(__name__, static_folder='static')
+# add secret key here using app.secret_key = INSERT_KEY_HERE for now until more permanent solution (if that is a thing)
 ran_startup = False
 
 class PTTRequests(FlaskView):
@@ -59,7 +60,6 @@ class PTTRequests(FlaskView):
                 # add recipe to database
 
                 # varify validity of recipe
-                
 
                 # return view of published recipe
                 return (render_template("view_recipe.html", recipe=recipe))
