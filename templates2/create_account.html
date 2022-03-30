@@ -2,22 +2,70 @@
 {% block header %}
 {% endblock %}
 {% block content %}
-  <div class="py-5">
-    <div class="container">
-      <div class="row">
-        <div class="mx-auto col-lg-6 col-10">
+  <div class="container center">
+      <header>
           <h1>Create Account</h1>
-          <form class="text-left">
-            <div class="form-group"> <label for="form16">Username</label> <input type="text" class="form-control" id="form16" placeholder="MyUsername" required="required"> </div>
-            <div class="form-group"> <label for="form18">Phone Number</label> <input type="text" class="form-control" id="form18" placeholder="123-456-7890" required="required"> </div>
-            <div class="form-row">
-              <div class="form-group col-md-6"> <label for="form19">Password</label> <input type="password" class="form-control" id="form19" placeholder="••••" required="required"> </div>
-              <div class="form-group col-md-6"> <label for="form20">Confirm Password</label> <input type="password" class="form-control" id="form20" placeholder="••••" required="required"> </div>
-            </div>
-            <button type="submit" class="btn btn-primary">Create Account</button>
-          </form>
-        </div>
-      </div>
-    </div>
+          <br>
+      </header>
   </div>
+  <div class="container">
+      <form>
+        <section>
+          <div class="form-group">
+              <label for="username"><b>Create Username</b></label><br>
+              <input type="text" class="form-control" placeholder="Enter Username" name="username" required>
+              <br>
+          </div>
+          <div class="form-group">
+              <label for="password"><b>Create Password</b></label><br>
+              <input type="password" class="form-control" placeholder="Enter Password" name="password" id="password" required>
+              <br>
+          </div>
+          <div class="form-group">
+              <label for="password2"><b>Retype Password</b></label><br>
+              <input type="password" class="form-control" placeholder="Enter Password" name="password2" id="password2" required>
+              <br>
+          </div>
+           <div class="form-group">
+               <label for="phone">Enter your phone number:</label>
+               <input type="tel" id="phone" name="phone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required>
+               <small>Format: 123-456-7890</small>
+               <br>
+          </div>
+          <div class="form-group">
+              <button type="submit" name="create_account" onclick="isValidPassword()" value="True" formmethod="post"  class="btn btn-secondary">Create Account</button>
+          </div>
+
+            {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <ul>
+            {% for message in messages %}
+            <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
+
+          <script>
+              // checks that password inputs match and password is long enough
+              function isValidPassword(){
+                if(document.getElementById("password").value != document.getElementById("password2").value){
+                    alert("Passwords must match! Please try again.");
+                    return false;
+                };
+                var string = document.getElementById("password").value;
+                if(string.length < 8){
+                    alert("Password is not long enough. It must be at least 8 characters.");
+                    return false;
+                };
+                return true;
+            }
+          </script>
+
+        </form>
+        </section>
+
+      <br>
+</div>
+
 {% endblock %}

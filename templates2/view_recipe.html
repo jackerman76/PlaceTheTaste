@@ -1,80 +1,41 @@
 {% extends '_base.html' %}
 {% block header %}
+<style>
+    /* Default height for small devices */
+    #recipe-image {
+      height: 400px;
+      width: 100%;
+    }
+
+    /* Height for devices larger than 992px */
+    @media (min-width: 992px) {
+      #recipe-image {
+        height: 600px;
+      }
+    }
+</style>
+  <!-- Background image -->
+  <div class="container">
+    <div
+        id="recipe-image"
+        class="p-5 text-center bg-image"
+        style="background-image: url({{ recipe.picture }});"
+    >
+  </div>
 {% endblock %}
 {% block content %}
-  <div class="py-5">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12">
-          <div class="card"> <img class="card-img mx-auto" src="https://media.istockphoto.com/photos/crepes-with-chocolate-cream-picture-id482305605?k=20&amp;m=482305605&amp;s=612x612&amp;w=0&amp;h=JDcM8RY77qh76MZOxVbpA1UvlEfPVJigIYwO2_fwtGA=" alt="Card image" id="picture
-picture">
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="py-5">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12">
-          <div class="card">
-            <div class="card-body">
-              <h1 class="display-4">My Favorite Crepes</h1>
-              <h6 class="card-subtitle my-2 text-muted">Location: Paris, France by Josh Ackerman</h6>
-              <h3 class="">Ingredients</h3>
-              <p class="card-text">- 1 cup flour<br>- 1 cup milk<br>- 1 tsp salt<br>- 1 tsp sugar<br>- 1 lemon<br>- 1 tbsp butter<br>- 1 tbsp honey</p>
-              <h3 class="">Directions</h3>
-              <p class="card-text">1. Mix all of the ingredients together except for the butter<br>2. Heat up a nonstick pan<br>3. Add a little bit of the butter and spread around<br>4. Make crepes like normal</p>
-              <a href="#" class="card-link">Leave a Comment</a>
-              <a href="#" class="card-link">Rate this Recipe</a><a href="#" class="card-link">Back to Map</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="py-3 text-center">
-    <div class="container">
-      <div class="row">
-        <div class="mx-auto p-4 col-lg-7">
-          <h1 class="mb-4">Leave a Comment</h1>
-          <form>
-            <div class="form-row">
-              <div class="form-group col-md-6"> <input type="text" class="form-control" id="comment_name" placeholder="Name" name="commenter_name
-commenter_name" required="required"> </div>
-              <div class="form-group col-md-6"> <input type="email" class="form-control" id="comment_email" placeholder="Email" name="commenter_email"> </div>
-            </div>
-            <div class="form-group"> <textarea class="form-control" id="comment" rows="3" placeholder="Your message" name="comment"></textarea> </div>
-          </form>
-          <div class="form-group"><input type="number" class="form-control" id="stars" placeholder="# of Stars (1-5)" name="Stars" required="required"></div><button type="submit" class="btn btn-primary" style="" id="submit_comment
-submit_comment">Send</button>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="py-5" id="comment">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12">
-          <div class="card text-center">
-            <div class="card-header"> Josh Ackerman</div>
-            <div class="card-body">
-              <p class="card-text">This recipe was garbage I will never make it again</p>
-            </div>
-            <p class="card-text">2 Stars</p>
-            <div class="card-footer text-muted" style=""> 2 days ago </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="py-5" style="">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12" style="">
-          <div class="btn-group" style=""> </div>
-        </div>
-      </div>
-    </div>
-  </div>
+<div class="container">
+
+    <h1>{{ recipe.recipe_name }}</h1>
+    <hr/>
+    <p>{{ recipe.ingredients }}</p>
+    <hr/>
+    <p>{{ recipe.directions }}</p>   
+       
+
+   
+
+</div>
+    
+
 {% endblock %}

@@ -10,7 +10,7 @@ HOST = "0.0.0.0"
 PORT = 8000
 
 AuthHolder() # Invoke this early just to avoid any possible race conditions
-app = Flask(__name__)
+app = Flask(__name__, static_folder='static')
 ran_startup = False
 
 class PTTRequests(FlaskView):
@@ -67,34 +67,29 @@ class PTTRequests(FlaskView):
         return (render_template("post_recipe.html"))
 
     @route('/', methods=["GET", "POST"])
-    @route('/home', methods=["GET", "POST"])
-    def home(self):
-        return render_template("home.html")
+    @route('/view_map', methods=["GET", "POST"])
+    def view_map(self):
+        return render_template("view_map.html")
 
     @route('/create_account', methods=["GET", "POST"])
     def create_account(self):
         if request.method == "POST":
             username = request.values.get("username")
+            phone_number = request.values.get("phone")
             password = request.values.get("password")
             password2 = request.values.get("password2")
-            phone_number = request.values.get("phone")
             if (password == password2):
                 user = User(username, password, phone_number)
                 flash("Account Created!")  # temporary notification to let user know info was taken
 
             # Note this is a naive implementation, password stuff needs overhaul still
 
-            # print(email + " " + password + " " + phone_number)
+            # print(username + " " + password + " " + phone_number)
 
         return render_template("create_account.html")
 
-    @route('/post_comment', methods=["GET", "POST"])
-    def post_comment(self):
-        if request.method == "POST":
-            message = request.values.get("message")
-            # Need to connect to firestore to get actual username
-            comment = Comment(username="Anon_for_now", message=message)
-
-        return render_template("post_comment.html")
+    @route('/login', methods=["GET", "POST"])
+    def login(self):
+        return render_template("login.html")
 
 PTTRequests.register(app)
