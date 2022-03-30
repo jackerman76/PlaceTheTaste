@@ -4,12 +4,12 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css">
-  <link rel="stylesheet" href="theme.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='theme.css') }}">
 </head>
 
 <body>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark" >
-    <div class="container"> <a class="navbar-brand" href="#">
+    <div class="container"> <a class="navbar-brand" href="{{ url_for('view_map') }}">
         <i class="fa d-inline fa-lg fa-circle-o"></i>
         <b> Place The Taste</b>
       </a> <button class="navbar-toggler navbar-toggler-right border-0" type="button" data-toggle="collapse" data-target="#navbar11">
@@ -25,7 +25,7 @@
       </div>
     </div>
   </nav>
-
+<!--  <input type="button" value="btn1" class="btn btn-primary"/>-->
   <header>
     <!-- Google Maps API Scripts - INSERT API KEY HERE-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -53,7 +53,6 @@
   async
   ></script>
 
-  <pingendo onclick="window.open('https://pingendo.com/', '_blank')" style="cursor:pointer;position: fixed;bottom: 20px;right:20px;padding:4px;background-color: #00b0eb;border-radius: 8px; width:220px;display:flex;flex-direction:row;align-items:center;justify-content:center;font-size:14px;color:white">Made with Pingendo Free&nbsp;&nbsp;<img src="https://pingendo.com/site-assets/Pingendo_logo_big.png" class="d-block" alt="Pingendo logo" height="16"></pingendo>
 </body>
 
 </html>
