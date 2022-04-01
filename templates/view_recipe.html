@@ -1,5 +1,6 @@
 {% extends '_base.html' %}
 {% block header %}
+
 {% endblock %}
 {% block content %}
   <div class="py-5">
@@ -37,13 +38,28 @@ picture">
     <div class="container">
       <div class="row">
         <div class="mx-auto p-4 col-lg-7">
-          <h1 class="mb-4">Leave a Comment</h1>
+          <h1 class="mb-4" id="leave-comment-msg">Leave a Comment</h1>
           <form>
-            <div class="form-row">
-              <div class="form-group col-md-6"> <input type="text" class="form-control" id="comment_name" placeholder="Name" name="commenter_name
-commenter_name" required="required"> </div>
-              <div class="form-group col-md-6"> <input type="email" class="form-control" id="comment_email" placeholder="Email" name="commenter_email"> </div>
+              <div class="rating-css">
+              <div class="star-icon">
+                <div id="star-rating-prompt">Rate the Recipe </div>
+                <input type="radio" name="rating1" id="rating1">
+                <label for="rating1" class="fa fa-star"></label>
+                <input type="radio" name="rating1" id="rating2">
+                <label for="rating2" class="fa fa-star"></label>
+                <input type="radio" name="rating1" id="rating3">
+                <label for="rating3" class="fa fa-star"></label>
+                <input type="radio" name="rating1" id="rating4">
+                <label for="rating4" class="fa fa-star"></label>
+                <input type="radio" name="rating1" id="rating5">
+                <label for="rating5" class="fa fa-star"></label>
+              </div>
             </div>
+
+              <div class="form-group"> <input type="text" class="form-control" id="comment_name" placeholder="Name" name="commenter_name
+commenter_name" required="required"> </div>
+
+
             <div class="form-group"> <textarea class="form-control" id="comment" rows="3" placeholder="Your message" name="comment"></textarea> </div>
           </form>
           <div class="form-group"><input type="number" class="form-control" id="stars" placeholder="# of Stars (1-5)" name="Stars" required="required"></div><button type="submit" class="btn btn-primary" style="" id="submit_comment
