@@ -6,7 +6,6 @@ class Comment():
         self.username = username
         self.message = message
         self.recipe_id = recipe_id;
-
         self.timestamp = time.time()
 
 
@@ -15,3 +14,4 @@ class Comment():
 
     def write_comment(self, message):
         self.message = message
+

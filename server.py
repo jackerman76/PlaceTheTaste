@@ -101,13 +101,24 @@ class PTTRequests(FlaskView):
     @route('/view_recipe', methods=["GET", "POST"])
     def view_recipe(self):
         if request.method == "POST":
-            commenter_name = request.values.get("commenter_name") # isn't this just the username?
+            commenter_name = request.values.get("commenter_name") # TODO: Replace with Session username
 
             commenter_ratings = request.values.get("rating1")
             comment_text = request.values.get("comment")
-            # if (commenter_ratings):
-            #     comment = Comment(commenter_name, comment_text, commenter_ratings)
-            #     print(commenter_ratings)
+
+            #  for testing purposes
+            recipe = Recipe()
+            # TEMPORARY RECIPE ID  (change later to be id from database)
+            recipe.recipe_name = "crepe";
+            recipe.ingredients = "1 cup flour 1 cup milk"
+            recipe.directions = "mix then cook"
+            recipe.recipe_id = 99
+            
+
+            if(commenter_ratings):
+                recipe.ratings = commenter_ratings #  TODO: incorrect impl for now
+                
+            comment = Comment(commenter_name, comment_text, recipe.recipe_id)
 
         return render_template("view_recipe.html")
 
