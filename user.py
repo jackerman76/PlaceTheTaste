@@ -16,3 +16,7 @@ class User():
 
     #def validate_passwords(self):
         # implement
+
+    def get_formatted_time(self):
+        return datetime.fromtimestamp(self.timestamp).strftime("%m-%d-%Y %I:%M:%S %p")
+

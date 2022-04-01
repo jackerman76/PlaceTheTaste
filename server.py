@@ -1,5 +1,5 @@
 import bcrypt
-from flask import Flask, request, render_template, flash
+from flask import Flask, request, render_template, flash, session
 from flask_classful import FlaskView, route
 from firestoreio import FirestoreIO
 from user import User
@@ -14,7 +14,7 @@ PORT = 8000
 AuthHolder() # Invoke this early just to avoid any possible race conditions
 app = Flask(__name__, static_folder='static')
 # add secret key here using app.secret_key = INSERT_KEY_HERE for now until more permanent solution (if that is a thing)
-
+app.secret_key = 'THIS_IS_SUPER_SECRET_GUYS_REALLY_HUSH_STUFF'
 bcrypt = Bcrypt(app)
 ran_startup = False
 
@@ -85,6 +85,8 @@ class PTTRequests(FlaskView):
             if password == password2:
                 hashed_password = bcrypt.generate_password_hash(password).decode('utf_8')  # hashed pw converted to str
                 user = User(username, hashed_password, phone_number)
+                session['username'] = username;
+
                 flash("Account Created!")  # temporary notification to let user know info was taken
 
             # Note this is a naive implementation, password stuff needs overhaul still
