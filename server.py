@@ -89,8 +89,6 @@ class PTTRequests(FlaskView):
 
                 flash("Account Created!")  # temporary notification to let user know info was taken
 
-            # Note this is a naive implementation, password stuff needs overhaul still
-
            # print(username + " " + hashed_password + " " + phone_number)
 
         return render_template("create_account.html")
@@ -98,5 +96,9 @@ class PTTRequests(FlaskView):
     @route('/login', methods=["GET", "POST"])
     def login(self):
         return render_template("login.html")
+
+    @route('/view_recipe', methods=["GET", "POST"])
+    def view_recipe(self):
+        return render_template("view_recipe.html")
 
 PTTRequests.register(app)
