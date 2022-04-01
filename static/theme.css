@@ -7585,7 +7585,7 @@ a.text-dark:hover, a.text-dark:focus {
   font-weight: 600;
   text-align: left;
   /* text-transform: uppercase; */
-  padding: 10px 0;
+  padding: 10px 0 5px 0;
 }
 .rating-css input {
   display: none;

@@ -40,30 +40,33 @@ picture">
         <div class="mx-auto p-4 col-lg-7">
           <h1 class="mb-4" id="leave-comment-msg">Leave a Comment</h1>
           <form>
+
+            <div class="form-group">
               <div class="rating-css">
-              <div class="star-icon">
-                <div id="star-rating-prompt">Rate the Recipe </div>
-                <input type="radio" name="rating1" id="rating1">
-                <label for="rating1" class="fa fa-star"></label>
-                <input type="radio" name="rating1" id="rating2">
-                <label for="rating2" class="fa fa-star"></label>
-                <input type="radio" name="rating1" id="rating3">
-                <label for="rating3" class="fa fa-star"></label>
-                <input type="radio" name="rating1" id="rating4">
-                <label for="rating4" class="fa fa-star"></label>
-                <input type="radio" name="rating1" id="rating5">
-                <label for="rating5" class="fa fa-star"></label>
+                <div class="star-icon">
+                  <div id="star-rating-prompt">Rate the Recipe </div>
+                  <input type="radio" class="form-control" name="rating1" id="rating1" value="1">
+                  <label for="rating1" class="fa fa-star"></label>
+                  <input type="radio" class="form-control" name="rating1" id="rating2" value="2">
+                  <label for="rating2" class="fa fa-star"></label>
+                  <input type="radio" class="form-control" name="rating1" id="rating3" value="3">
+                  <label for="rating3" class="fa fa-star"></label>
+                  <input type="radio" class="form-control" name="rating1" id="rating4" value="4">
+                  <label for="rating4" class="fa fa-star"></label>
+                  <input type="radio" class="form-control" name="rating1" id="rating5" value="5">
+                  <label for="rating5" class="fa fa-star"></label>
+                </div>
               </div>
             </div>
 
-              <div class="form-group"> <input type="text" class="form-control" id="comment_name" placeholder="Name" name="commenter_name
-commenter_name" required="required"> </div>
+              <div class="form-group"> <input type="text" class="form-control" id="commenter_name" placeholder="Name" name="commenter_name" required="required"> </div>
+            <div class="form-group"> <textarea class="form-control" id="comment" rows="3" placeholder="Your message" name="comment"  required="required"></textarea> </div>
 
-
-            <div class="form-group"> <textarea class="form-control" id="comment" rows="3" placeholder="Your message" name="comment"></textarea> </div>
+<!--          <div class="form-group"><input type="number" class="form-control" id="stars" placeholder="# of Stars (1-5)" name="Stars" required="required"></div>-->
+          <div class="form-group">
+            <button type="submit" name="submit_comment" value="True" formmethod="post"  class="btn btn-primary">Send</button>
+          </div>
           </form>
-          <div class="form-group"><input type="number" class="form-control" id="stars" placeholder="# of Stars (1-5)" name="Stars" required="required"></div><button type="submit" class="btn btn-primary" style="" id="submit_comment
-submit_comment">Send</button>
         </div>
       </div>
     </div>

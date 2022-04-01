@@ -11,20 +11,21 @@ from flask_bcrypt import Bcrypt
 HOST = "0.0.0.0"
 PORT = 8000
 
-AuthHolder() # Invoke this early just to avoid any possible race conditions
+AuthHolder()  # Invoke this early just to avoid any possible race conditions
 app = Flask(__name__, static_folder='static')
 # add secret key here using app.secret_key = INSERT_KEY_HERE for now until more permanent solution (if that is a thing)
 app.secret_key = 'THIS_IS_SUPER_SECRET_GUYS_REALLY_HUSH_STUFF'
 bcrypt = Bcrypt(app)
 ran_startup = False
 
+
 class PTTRequests(FlaskView):
     route_base = "/"
-    
+
     def __init__(self):
         self.__fsio = FirestoreIO()
         if ran_startup == False:
-            self.print_startup() # Multiple instances of PTTRequests are started by Flask/Gunicorn, so this prevents spam.
+            self.print_startup()  # Multiple instances of PTTRequests are started by Flask/Gunicorn, so this prevents spam.
 
     def print_startup(self):
         """
@@ -85,11 +86,11 @@ class PTTRequests(FlaskView):
             if password == password2:
                 hashed_password = bcrypt.generate_password_hash(password).decode('utf_8')  # hashed pw converted to str
                 user = User(username, hashed_password, phone_number)
-                session['username'] = username;
+                session['username'] = username
 
                 flash("Account Created!")  # temporary notification to let user know info was taken
 
-           # print(username + " " + hashed_password + " " + phone_number)
+        # print(username + " " + hashed_password + " " + phone_number)
 
         return render_template("create_account.html")
 
@@ -99,6 +100,16 @@ class PTTRequests(FlaskView):
 
     @route('/view_recipe', methods=["GET", "POST"])
     def view_recipe(self):
+        if request.method == "POST":
+            commenter_name = request.values.get("commenter_name") # isn't this just the username?
+
+            commenter_ratings = request.values.get("rating1")
+            comment_text = request.values.get("comment")
+            # if (commenter_ratings):
+            #     comment = Comment(commenter_name, comment_text, commenter_ratings)
+            #     print(commenter_ratings)
+
         return render_template("view_recipe.html")
+
 
 PTTRequests.register(app)
