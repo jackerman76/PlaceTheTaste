@@ -119,7 +119,7 @@ class PTTRequests(FlaskView):
             if(commenter_ratings):
                 recipe.add_rating(commenter_ratings)
 
-                
+
             comment = Comment(commenter_name, comment_text, recipe.recipe_id)
 
         return render_template("view_recipe.html", recipe=recipe)
