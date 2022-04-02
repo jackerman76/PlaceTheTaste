@@ -19,6 +19,7 @@ bcrypt = Bcrypt(app)
 ran_startup = False
 
 
+
 class PTTRequests(FlaskView):
     route_base = "/"
 
@@ -87,8 +88,13 @@ class PTTRequests(FlaskView):
                 hashed_password = bcrypt.generate_password_hash(password).decode('utf_8')  # hashed pw converted to str
                 user = User(username, hashed_password, phone_number)
                 session['username'] = username
-
-                flash("Account Created!")  # temporary notification to let user know info was taken
+                if self.__fsio.read_docs_by_query("/Users/", ["username", "==", username]):
+                    flash("An account with that username already exists.")  # temporary behavior
+                else:
+                    ret = self.__fsio.write_doc("/Users/" + username, user.__dict__)
+                    flash("Account Created!")  # Notification to let user know info was taken
+                    return render_template("login.html")
+                # print(ret)
 
         # print(username + " " + hashed_password + " " + phone_number)
 
@@ -102,7 +108,7 @@ class PTTRequests(FlaskView):
     def view_recipe(self):
         recipe = Recipe()
         if request.method == "POST":
-            commenter_name = request.values.get("commenter_name") # TODO: Replace with Session username
+            commenter_name = request.values.get("commenter_name")  # TODO: Replace with Session username
 
             commenter_ratings = request.values.get("rating1")
             comment_text = request.values.get("comment")
@@ -110,17 +116,17 @@ class PTTRequests(FlaskView):
             #  for testing purposes
 
             # TEMPORARY RECIPE ID  (change later to be id from database)
-            recipe.recipe_name = "crepe";
+            recipe.recipe_name = "crepe"
             recipe.ingredients = "1 cup flour 1 cup milk"
             recipe.directions = "mix then cook"
             recipe.recipe_id = 99
-            
 
-            if(commenter_ratings):
+            if commenter_ratings:
                 recipe.add_rating(commenter_ratings)
 
-
             comment = Comment(commenter_name, comment_text, recipe.recipe_id)
+
+
 
         return render_template("view_recipe.html", recipe=recipe)
 
