@@ -1,5 +1,14 @@
 {% extends '_base.html' %}
 {% block header %}
+  <style>
+  /* Set the size of the div element that contains the map */
+  #map {
+    height: 400px;
+    /* The height is 400 pixels */
+    width: 100%;
+    /* The width is the width of the web page */
+  }
+  </style>
   <script>
 
     // Initialize and add the map
@@ -78,4 +87,11 @@
       </div>
     </div>
   </div>
+
+  <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
+  <!-- Google Maps API Scripts - INSERT API KEY HERE  -->
+  <script
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBgtepAwTWCNH-3_Wkmz6NkXobt7JqZPRM&callback=initMap&libraries=&v=weekly=geometry"
+  async
+  ></script>
 {% endblock %}
