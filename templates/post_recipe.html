@@ -1,5 +1,28 @@
 {% extends '_base.html' %}
 {% block header %}
+  <script>
+    var searchInput = 'search_input';
+
+    $(document).ready(function () {
+        var autocomplete;
+        autocomplete = new google.maps.places.Autocomplete((document.getElementById(searchInput)), {
+            types: ['geocode'],
+        });
+
+        google.maps.event.addListener(autocomplete, 'place_changed', function () {
+            var near_place = autocomplete.getPlace();
+            document.getElementById('loc_lat').value = near_place.geometry.location.lat();
+            document.getElementById('loc_long').value = near_place.geometry.location.lng();
+
+        });
+    });
+
+    $(document).on('change', '#'+searchInput, function () {
+      document.getElementById('latitude_input').value = '';
+      document.getElementById('longitude_input').value = '';
+
+    });
+  </script>
 {% endblock %}
 {% block content %}
   <div class="py-5" >
@@ -8,11 +31,20 @@
         <div class="mx-auto col-lg-6 col-10">
           <h1>Post a Recipe</h1>
           <form class="text-left">
+           
+            <input type="hidden" id="loc_lat" name="loc_lat">
+            <input type="hidden" id="loc_long" name="loc_long">
+
             <div class="form-group"> <label for="recipe_name">Recipe Name</label> <input type="text" class="form-control" id="recipe_name" placeholder="My Great Recipe" name="recipe_name" required="required"> </div>
             <div class="form-group"><label>Ingredients</label><textarea class="form-control" id="ingredients" rows="3" placeholder="Please list ingredients (one per line)" name="ingredients"></textarea>
               <div class="form-group"><label>Directions</label><textarea class="form-control" id="directions" rows="3" placeholder="Please List the Directions" name="directions"></textarea></div>
             </div>
             <div class="form-group"><label>Picture</label><input type="file" class="form-control-file" id="recipe_image" placeholder="My Great Recipe" required="required" name="recipe_image"></div>
+            <div class="form-group">
+              <label for="recipe_location"><b>Location</b></label><br>
+              <input type="text" class="form-control" id="search_input" placeholder="Input a location for this recipe to be tied to..." name="recipe_location" required>
+              <br>
+            </div>
             <button type="submit" class="btn btn-primary">Submit!</button>
           </form>
         </div>
