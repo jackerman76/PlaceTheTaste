@@ -14,7 +14,7 @@ PORT = 8000
 AuthHolder()  # Invoke this early just to avoid any possible race conditions
 app = Flask(__name__, static_folder='static')
 # add secret key here using app.secret_key = INSERT_KEY_HERE for now until more permanent solution (if that is a thing)
-app.secret_key = 'THIS_IS_SUPER_SECRET_GUYS_REALLY_HUSH_STUFF'
+
 bcrypt = Bcrypt(app)
 ran_startup = False
 
@@ -100,6 +100,7 @@ class PTTRequests(FlaskView):
 
     @route('/view_recipe', methods=["GET", "POST"])
     def view_recipe(self):
+        recipe = Recipe()
         if request.method == "POST":
             commenter_name = request.values.get("commenter_name") # TODO: Replace with Session username
 
@@ -107,7 +108,7 @@ class PTTRequests(FlaskView):
             comment_text = request.values.get("comment")
 
             #  for testing purposes
-            recipe = Recipe()
+
             # TEMPORARY RECIPE ID  (change later to be id from database)
             recipe.recipe_name = "crepe";
             recipe.ingredients = "1 cup flour 1 cup milk"
@@ -116,11 +117,12 @@ class PTTRequests(FlaskView):
             
 
             if(commenter_ratings):
-                recipe.ratings = commenter_ratings #  TODO: incorrect impl for now
+                recipe.add_rating(commenter_ratings)
+
                 
             comment = Comment(commenter_name, comment_text, recipe.recipe_id)
 
-        return render_template("view_recipe.html")
+        return render_template("view_recipe.html", recipe=recipe)
 
 
 PTTRequests.register(app)
