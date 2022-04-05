@@ -7,6 +7,7 @@ from comment import Comment
 from utils import *
 from recipe import Recipe
 from flask_bcrypt import Bcrypt
+import time
 
 HOST = "0.0.0.0"
 PORT = 8000
@@ -63,17 +64,26 @@ class PTTRequests(FlaskView):
                 recipe.directions = request.values.get('directions')
 
                 # file handling
-                uploaded_file = request.files['file']
-                file_name = uploaded_file.filename or "image_upload"
-                file_name += session["username"] + "-" + str(time.time())
+                #uploaded_file = request.files['recipe_image']
+                #file_name = uploaded_file.filename or "image_upload"
+                # file_name += session["username"] + "-" + str(time.time())
 
                 # TODO UPload file to filestore
-                recipe.picture = file_name
+                #recipe.picture = file_name
 
                 # location input using google maps api
                 latitude = float(request.values.get("loc_lat"))
                 longitude = float(request.values.get("loc_long"))
                 recipe.geolocation = str([latitude,longitude])
+
+                # for test purposes
+                recipe.username = "JoshAckerman"
+                recipe.picture = "https://hips.hearstapps.com/hmg-prod/images/delish-basic-crepes-horizontal-1545245797.jpg"
+                # print out recipe
+                print(recipe.as_json())
+                recipes = [recipe]
+                
+                return (render_template("view_map.html", recipes=recipes))
 
                 # add recipe to database
 
@@ -87,7 +97,9 @@ class PTTRequests(FlaskView):
     @route('/', methods=["GET", "POST"])
     @route('/view_map', methods=["GET", "POST"])
     def view_map(self):
-        return render_template("view_map.html")
+        # list of recipes to be returned for map
+        recipes = []
+        return (render_template("view_map.html", recipes=recipes))
 
     @route('/create_account', methods=["GET", "POST"])
     def create_account(self):
