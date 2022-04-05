@@ -42,3 +42,14 @@ class Recipe:
 
     def get_formatted_time(self):
         return datetime.fromtimestamp(self.timestamp).strftime("%m-%d-%Y %I:%M:%S %p")
+
+    def has_geolocation(self):
+        return self.geolocation != None
+
+    def get_latitude(self):
+        self.latitude = float(json.loads(self.geolocation)[0]) or None
+        return self.latitude
+
+    def get_longitude(self):
+        self.longitude = float(json.loads(self.geolocation)[1]) or None
+        return self.longitude

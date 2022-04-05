@@ -1,14 +1,16 @@
 {% extends '_base.html' %}
 {% block header %}
+<div class="container center">
   <style>
-  /* Set the size of the div element that contains the map */
-  #map {
-    height: 400px;
-    /* The height is 400 pixels */
-    width: 100%;
-    /* The width is the width of the web page */
-  }
+    /* Set the size of the div element that contains the map */
+    #map {
+      height: 400px;
+      /* The height is 400 pixels */
+      width: 100%;
+      /* The width is the width of the web page */
+    }
   </style>
+
   <script>
 
     // Initialize and add the map
@@ -21,26 +23,30 @@
         center: pittsburgh,
       });
 
-  /* list of recipes passed to frontend
-  {% for i in list %}
+
+  {% for recipe in recipes %}
 
 
       // add marker - this part works
       var marker = new google.maps.Marker({
-        position: { lat: {{ i.get_latitude() }}, lng: {{ i.get_longitude() }} }, //{ lat: -25.344, lng: 131.036 }
+        position: { lat: {{ recipe.get_latitude() }}, lng: {{ recipe.get_longitude() }} }, //{ lat: -25.344, lng: 131.036 }
         map: map,
-        data: {{ i.as_json() | safe }}
+        data: {{ recipe.as_json() | safe }}
       });
 
       marker.addListener("click", () => {
-        document.getElementById("description").innerText = {{ "`"  + i.description + "`" }};
-        document.getElementById("quantity").innerText =  {{ "`" + i.quantity + " bananas " + i.get_formatted_availability() + "`" }};
-        document.getElementById("username").innerText = {{ "`" + i.username + "`" }};
-        document.getElementById("time").innerText = {{ "`" + i.get_formatted_time() + "`" }};
-        document.getElementById("picture").src = {{ "`" + i.picture + "`" }};
-        
+        document.getElementById("recipe_name").innerText = {{ "`"  + recipe.recipe_name + "`" }};
+        document.getElementById("ingredients").innerText = {{ "`"  + recipe.ingredients + "`" }};
+        document.getElementById("directions").innerText = {{ "`"  + recipe.directions + "`" }};
+        //document.getElementById("username").innerText = {{ "`" + recipe.username + "`" }};
+        //document.getElementById("time").innerText = {{ "`" + recipe.get_formatted_time() + "`" }};
+        document.getElementById("picture").src = {{ "`" + recipe.picture + "`" }};
+
+        // make recipe not hidden
+        document.getElementById("recipe_container").style.visibility= "visible" ;    
+        /* dont't need this
         var click = document.getElementById("collapseButton");
-        click.click();
+        click.click();*/
         
         
 
@@ -48,37 +54,45 @@
 
 
   {% endfor %}
-  */
+
     }
 
-
   </script>
+</div>
+
 {% endblock %}
 {% block content %}
   <div class="py-5">
     <div class="container">
       <div class="row">
         <div class="col-md-12">
+          
           <div class="card"> 
             <!-- Interactive Map -->
             <div id="map"></div>
           </div>
+         
         </div>
       </div>
     </div>
   </div>
   <div class="py-5">
-    <div class="container">
+    <div class="container" id="recipe_container" style="visibility: hidden;">
       <div class="row">
         <div class="col-md-12">
+
+          <div class="card"> 
+            <img class="card-img mx-auto" src="https://media.istockphoto.com/photos/crepes-with-chocolate-cream-picture-id482305605?k=20&amp;m=482305605&amp;s=612x612&amp;w=0&amp;h=JDcM8RY77qh76MZOxVbpA1UvlEfPVJigIYwO2_fwtGA=" alt="Card image" id="picture">
+          </div>
+
           <div class="card">
             <div class="card-body">
               <h1 class="display-4" id="recipe_name">My Favorite Crepes</h1>
               <h6 class="card-subtitle my-2 text-muted" id="location_formatted">Location: Paris, France by Josh Ackerman</h6>
-              <h3 class="" id="ingredients">Ingredients</h3>
-              <p class="card-text">- 1 cup flour<br>- 1 cup milk<br>- 1 tsp salt<br>- 1 tsp sugar<br>- 1 lemon<br>- 1 tbsp butter<br>- 1 tbsp honey</p>
-              <h3 class="" id="directions">Directions</h3>
-              <p class="card-text">1. Mix all of the ingredients together except for the butter<br>2. Heat up a nonstick pan<br>3. Add a little bit of the butter and spread around<br>4. Make crepes like normal</p>
+              <h3 class="" >Ingredients</h3>
+              <p class="card-text" id="ingredients">- 1 cup flour<br>- 1 cup milk<br>- 1 tsp salt<br>- 1 tsp sugar<br>- 1 lemon<br>- 1 tbsp butter<br>- 1 tbsp honey</p>
+              <h3 class="">Directions</h3>
+              <p class="card-text" id="directions">1. Mix all of the ingredients together except for the butter<br>2. Heat up a nonstick pan<br>3. Add a little bit of the butter and spread around<br>4. Make crepes like normal</p>
               <a href="#" class="card-link">Leave a Comment</a>
               <a href="#" class="card-link">Rate this Recipe</a><a href="#" class="card-link">Back to Map</a>
             </div>
@@ -93,5 +107,5 @@
   <script
   src="https://maps.googleapis.com/maps/api/js?key=API_KEY&callback=initMap&libraries=&v=weekly=geometry"
   async
-  ></script>
+  ></script>  
 {% endblock %}
