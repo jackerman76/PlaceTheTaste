@@ -89,6 +89,7 @@ class PTTRequests(FlaskView):
                 recipe.recipe_name = request.values.get('recipe_name')
                 recipe.ingredients = request.values.get('ingredients')
                 recipe.directions = request.values.get('directions')
+                
 
                 # file handling
                 #uploaded_file = request.files['recipe_image']
@@ -102,6 +103,7 @@ class PTTRequests(FlaskView):
                 latitude = float(request.values.get("loc_lat"))
                 longitude = float(request.values.get("loc_long"))
                 recipe.geolocation = str([latitude,longitude])
+                recipe.location_description = request.values.get("recipe_location")
 
                 # for test purposes
                 recipe.username = "JoshAckerman"

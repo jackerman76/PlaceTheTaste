@@ -10,12 +10,14 @@ import json
 class Recipe:
 
     def __init__(self, username=None, recipe_name=None, picture=None, ingredients=None,
-                 geolocation=None, tags=None, directions=None, ratings=None, recipe_id=None, timestamp=None):
+                 geolocation=None, tags=None, directions=None, ratings=None, recipe_id=None, timestamp=None,
+                 location_description=None):
         self.username = username
         self.recipe_name = recipe_name
         self.picture = picture
         self.ingredients = ingredients
         self.geolocation = geolocation
+        self.location_description = location_description
         self.tags = tags
         self.directions = directions
         self.__ratings = ratings
