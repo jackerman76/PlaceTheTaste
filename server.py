@@ -61,7 +61,19 @@ class PTTRequests(FlaskView):
                 recipe.recipe_name = request.values.get('recipe_name')
                 recipe.ingredients = request.values.get('ingredients')
                 recipe.directions = request.values.get('directions')
-                recipe.picture = request.values.get('file')
+
+                # file handling
+                uploaded_file = request.files['file']
+                file_name = uploaded_file.filename or "image_upload"
+                file_name += session["username"] + "-" + str(time.time())
+
+                # TODO UPload file to filestore
+                recipe.picture = file_name
+
+                # location input using google maps api
+                latitude = float(request.values.get("loc_lat"))
+                longitude = float(request.values.get("loc_long"))
+                recipe.geolocation = str([latitude,longitude])
 
                 # add recipe to database
 
