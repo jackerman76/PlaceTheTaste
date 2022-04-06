@@ -42,7 +42,7 @@
         //document.getElementById("username").innerText = {{ "`" + recipe.username + "`" }};
         //document.getElementById("time").innerText = {{ "`" + recipe.get_formatted_time() + "`" }};
         document.getElementById("picture").src = {{ "`" + recipe.picture + "`" }};
-        document.getElementById("leave-a-comment").innerText = {{ "`/view_recipe/" + recipe.recipe_id + "`" }}
+        document.getElementById("leave-a-comment").href = {{ "`/view_recipe/" + recipe.recipe_id + "`" }}
 
         // make recipe not hidden
         document.getElementById("recipe_container").style.visibility= "visible" ;    
