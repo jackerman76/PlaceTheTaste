@@ -20,12 +20,14 @@ app = Flask(__name__, static_folder='static')
 bcrypt = Bcrypt(app)
 ran_startup = False
 
+
 def get_test_recipes():
     """Returns a list of test recipes for testing purposes"""
     recipes = []
 
     recipe1 = Recipe()
     recipe1.recipe_name = "Roasted Chicken"
+    recipe1.recipe_id = str(uuid.uuid4())
     recipe1.ingredients = "1. 1 whole chicken\r\n2. 2 t poultry seasoning\r\n3. 1 T butter (melted)\r\n4. 1 t salt"
     recipe1.directions = "1. Mix ingredients 2-4\r\n2. Rub ingredients on chicken\r\n3. Bake at 280 F for 2.5-3 hours"
     recipe1.geolocation = "[40.44062479999999, -79.9958864]"
@@ -33,9 +35,10 @@ def get_test_recipes():
     recipe1.username = "joshackerman"
     recipe1.timestamp = 1649165332.34273
     recipe1.picture = "https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fstatic.onecms.io%2Fwp-content%2Fuploads%2Fsites%2F43%2F2022%2F01%2F19%2F83557-juicy-roast-chicken-mfs495-1.jpg"
-   
+
     recipe2 = Recipe()
     recipe2.recipe_name = "Slow Roasted Carrots"
+    recipe2.recipe_id = str(uuid.uuid4())
     recipe2.ingredients = "1. 1 lb carrots\r\n2. 2 t garlic\r\n3. 1 T butter (melted)\r\n4. 1 t salt"
     recipe2.directions = "1. Mix ingredients 2-4\r\n2. Bake at 300 F for 60 - 90 minutes"
     recipe2.geolocation = "[40.3765791,-80.0858934]"
@@ -48,7 +51,6 @@ def get_test_recipes():
     recipes.append(recipe2)
 
     return recipes
-
 
 
 class PTTRequests(FlaskView):
@@ -96,19 +98,18 @@ class PTTRequests(FlaskView):
                 # Assign a unique recipe id to this recipe
                 recipe.recipe_id = str(uuid.uuid4());
 
-
                 # file handling
-                #uploaded_file = request.files['recipe_image']
-                #file_name = uploaded_file.filename or "image_upload"
+                # uploaded_file = request.files['recipe_image']
+                # file_name = uploaded_file.filename or "image_upload"
                 # file_name += session["username"] + "-" + str(time.time())
 
                 # TODO UPload file to filestore
-                #recipe.picture = file_name
+                # recipe.picture = file_name
 
                 # location input using google maps api
                 latitude = float(request.values.get("loc_lat"))
                 longitude = float(request.values.get("loc_long"))
-                recipe.geolocation = str([latitude,longitude])
+                recipe.geolocation = str([latitude, longitude])
                 recipe.location_description = request.values.get("recipe_location")
 
                 # for test purposes
@@ -122,7 +123,6 @@ class PTTRequests(FlaskView):
                 if not (self.__fsio.write_doc("/Recipe/" + recipe.recipe_id, recipe.__dict__)):
                     flash("Sorry, there was an error with posting your recipe to our server. Please try again.")
                     return render_template("post_recipe.html")
-
 
                 return (render_template("view_map.html", recipes=recipes))
 
@@ -168,9 +168,17 @@ class PTTRequests(FlaskView):
         return render_template("login.html")
 
     @route('/view_recipe', methods=["GET", "POST"])
-    def view_recipe(self):
+    @route('/view_map/<string:requested_recipe_id>', methods=['GET', 'POST'])
+    def view_recipe(self, requested_recipe_id):
         recipe = Recipe()
+        print(requested_recipe_id)
+        if requested_recipe_id:
+            found_recipe = self.__fsio.read_docs_by_query("/Recipe/" + requested_recipe_id, ["recipe_id", "==",
+                                                                                            requested_recipe_id])
+            if found_recipe:
+                return render_template("view_map.html", recipes=found_recipe)
         if request.method == "POST":
+
             commenter_name = request.values.get("commenter_name")  # TODO: Replace with Session username
 
             commenter_ratings = request.values.get("rating1")
@@ -188,8 +196,6 @@ class PTTRequests(FlaskView):
                 recipe.add_rating(commenter_ratings)
 
             comment = Comment(commenter_name, comment_text, recipe.recipe_id)
-
-
 
         return render_template("view_recipe.html", recipe=recipe)
 
