@@ -7,6 +7,7 @@ from comment import Comment
 from utils import *
 from recipe import Recipe
 from flask_bcrypt import Bcrypt
+import uuid
 import time
 
 HOST = "0.0.0.0"
@@ -89,7 +90,10 @@ class PTTRequests(FlaskView):
                 recipe.recipe_name = request.values.get('recipe_name')
                 recipe.ingredients = request.values.get('ingredients')
                 recipe.directions = request.values.get('directions')
-                
+
+                # Assign a unique recipe id to this recipe
+                recipe.recipe_id = str(uuid.uuid4());
+
 
                 # file handling
                 #uploaded_file = request.files['recipe_image']
@@ -115,6 +119,7 @@ class PTTRequests(FlaskView):
                 return (render_template("view_map.html", recipes=recipes))
 
                 # add recipe to database
+                # ret = self.__fsio.write_doc("/Recipe/" + , user.__dict__)
 
                 # varify validity of recipe
 
