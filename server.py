@@ -149,17 +149,15 @@ class PTTRequests(FlaskView):
             password2 = request.values.get("password2")
             if password == password2:
                 hashed_password = bcrypt.generate_password_hash(password).decode('utf_8')  # hashed pw converted to str
-                user = User(username, hashed_password, phone_number)
-                session['username'] = username
                 if self.__fsio.read_docs_by_query("/Users/", ["username", "==", username]):
                     flash("An account with that username already exists.")  # temporary behavior
                 else:
+                    user = User(username, hashed_password, phone_number)
+                    session['username'] = username
                     ret = self.__fsio.write_doc("/Users/" + username, user.__dict__)
                     flash("Account Created!")  # Notification to let user know info was taken
                     return render_template("login.html")
                 # print(ret)
-
-        # print(username + " " + hashed_password + " " + phone_number)
 
         return render_template("create_account.html")
 
@@ -193,9 +191,10 @@ class PTTRequests(FlaskView):
 
             if commenter_ratings:
                 recipe.add_rating(commenter_ratings)
-
-            comment = Comment(commenter_name, comment_text, recipe.recipe_id)
-
+            comment_id = str(uuid.uuid4())
+            comment = Comment(commenter_name, comment_text, comment_id, recipe.recipe_id)
+            if not self.__fsio.write_doc("/Comment/" + comment_id, comment.__dict__):
+                flash("Comment could not be added. Please try again.")
 
         return render_template("view_recipe.html", recipe=recipe)
 
