@@ -8,11 +8,23 @@
         <div class="mx-auto col-lg-6 col-10">
           <h1>Login</h1>
           <form class="text-left">
-            <div class="form-group"> <label for="form16">Username</label> <input type="text" class="form-control" id="form16" placeholder="MyUsername" required="required"> </div>
+            <div class="form-group"> <label for="form16">Username</label> <input type="text" class="form-control" name="username" id="form16" placeholder="MyUsername" required="required"> </div>
             <div class="form-row">
-              <div class="form-group col-md-12"> <label for="form19">Password</label> <input type="password" class="form-control" id="form19" placeholder="••••" required="required"> </div>
+              <div class="form-group col-md-12"> <label for="form19">Password</label> <input type="password" class="form-control" name="password" id="form19" placeholder="••••" required="required"> </div>
             </div>
-            <button type="submit" class="btn btn-primary">Login</button>
+            <button type="submit" class="btn btn-primary" formmethod="post">Login</button>
+
+
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            <ul>
+                {% for message in messages %}
+                <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+            {% endwith %}
+
           </form>
         </div>
       </div>
