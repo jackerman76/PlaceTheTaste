@@ -16,7 +16,6 @@ PORT = 8000
 AuthHolder()  # Invoke this early just to avoid any possible race conditions
 app = Flask(__name__, static_folder='static')
 # add secret key here using app.secret_key = INSERT_KEY_HERE for now until more permanent solution (if that is a thing)
-
 bcrypt = Bcrypt(app)
 ran_startup = False
 
@@ -115,11 +114,14 @@ class PTTRequests(FlaskView):
                 # print out recipe
                 print(recipe.as_json())
                 recipes = [recipe]
-                
-                return (render_template("view_map.html", recipes=recipes))
 
-                # add recipe to database
-                # ret = self.__fsio.write_doc("/Recipe/" + , user.__dict__)
+                # add recipe to database and let user know if it failed
+                if not (self.__fsio.write_doc("/Recipe/" + recipe.recipe_id, recipe.__dict__)):
+                    flash("Sorry, there was an error with posting your recipe to our server. Please try again.")
+                    return render_template("post_recipe.html")
+
+
+                return (render_template("view_map.html", recipes=recipes))
 
                 # varify validity of recipe
 
