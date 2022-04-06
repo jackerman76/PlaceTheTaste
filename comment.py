@@ -4,10 +4,11 @@ from datetime import datetime
 
 class Comment:
 
-    def __init__(self, username, message, recipe_id):
+    def __init__(self, username, message, comment_id, recipe_id):
         self.username = username
         self.message = message
-        self.recipe_id = recipe_id;
+        self.comment_id = comment_id
+        self.recipe_id = recipe_id
         self.timestamp = time.time()
 
     def get_formatted_time(self):
