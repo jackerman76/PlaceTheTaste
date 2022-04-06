@@ -168,15 +168,14 @@ class PTTRequests(FlaskView):
         return render_template("login.html")
 
     @route('/view_recipe', methods=["GET", "POST"])
-    @route('/view_map/<string:requested_recipe_id>', methods=['GET', 'POST'])
-    def view_recipe(self, requested_recipe_id):
+    # @route('/view_map/<string:requested_recipe_id>', methods=['GET', 'POST'])
+    def view_recipe(self):
         recipe = Recipe()
-        print(requested_recipe_id)
-        if requested_recipe_id:
-            found_recipe = self.__fsio.read_docs_by_query("/Recipe/" + requested_recipe_id, ["recipe_id", "==",
-                                                                                            requested_recipe_id])
-            if found_recipe:
-                return render_template("view_map.html", recipes=found_recipe)
+        # if requested_recipe_id:
+        #     found_recipe = self.__fsio.read_docs_by_query("/Recipe/" + requested_recipe_id, ["recipe_id", "==",
+        #                                                                                     requested_recipe_id])
+        #     if found_recipe:
+        #         return render_template("view_map.html", recipes=found_recipe)
         if request.method == "POST":
 
             commenter_name = request.values.get("commenter_name")  # TODO: Replace with Session username
