@@ -16,6 +16,7 @@ PORT = 8000
 AuthHolder()  # Invoke this early just to avoid any possible race conditions
 app = Flask(__name__, static_folder='static')
 # add secret key here using app.secret_key = INSERT_KEY_HERE for now until more permanent solution (if that is a thing)
+
 bcrypt = Bcrypt(app)
 ran_startup = False
 
@@ -28,6 +29,7 @@ def get_test_recipes():
     recipe1.ingredients = "1. 1 whole chicken\r\n2. 2 t poultry seasoning\r\n3. 1 T butter (melted)\r\n4. 1 t salt"
     recipe1.directions = "1. Mix ingredients 2-4\r\n2. Rub ingredients on chicken\r\n3. Bake at 280 F for 2.5-3 hours"
     recipe1.geolocation = "[40.44062479999999, -79.9958864]"
+    recipe1.location_description = "5165 Grant St, Pittsburgh, PA 15129, US"
     recipe1.username = "joshackerman"
     recipe1.timestamp = 1649165332.34273
     recipe1.picture = "https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fstatic.onecms.io%2Fwp-content%2Fuploads%2Fsites%2F43%2F2022%2F01%2F19%2F83557-juicy-roast-chicken-mfs495-1.jpg"
@@ -37,6 +39,7 @@ def get_test_recipes():
     recipe2.ingredients = "1. 1 lb carrots\r\n2. 2 t garlic\r\n3. 1 T butter (melted)\r\n4. 1 t salt"
     recipe2.directions = "1. Mix ingredients 2-4\r\n2. Bake at 300 F for 60 - 90 minutes"
     recipe2.geolocation = "[40.3765791,-80.0858934]"
+    recipe2.location_description = "200 Adams Ave, Pittsburgh, PA, 15243, US"
     recipe2.username = "johndoe"
     recipe2.timestamp = 1649165300.34273
     recipe2.picture = "https://www.spendwithpennies.com/wp-content/uploads/2018/10/Spend-With-Pennies-Roasted-Carrots-25.jpg"
@@ -134,7 +137,7 @@ class PTTRequests(FlaskView):
     @route('/view_map', methods=["GET", "POST"])
     def view_map(self):
         # list of recipes to be returned for map
-        recipes = []
+        recipes = get_test_recipes()
         return (render_template("view_map.html", recipes=get_test_recipes()))
 
     @route('/create_account', methods=["GET", "POST"])
