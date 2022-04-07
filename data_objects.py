@@ -45,10 +45,10 @@ class Recipe:
         if self.__is_instantiated == False and self.recipe_id != None:
             i = self.init_recipe_by_id(self.recipe_id)
         self.__fsio = FirestoreIO()
-        self.__fsio.write_doc
         self.__COLLECTION_BASE = "/Recipe/"
 
     def __check_minimum_data_populated(self):
+        self.get_dict_from_obj()
         for key in self.__r_dict:
             if key != "comment_ids" and key != "rating_num" and key != "ratings": #These are not required to set up a recipe for the first time so can afford to be blank
                 if self.__r_dict[key] == None:
