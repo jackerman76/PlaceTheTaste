@@ -10,7 +10,6 @@ from flask_bcrypt import Bcrypt
 import uuid
 import time
 from google.cloud import storage
-from uploadedFile import UploadedFile
 
 HOST = "0.0.0.0"
 PORT = 8000
