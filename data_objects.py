@@ -111,7 +111,7 @@ class Recipe:
         """
         if self.__is_instantiated == True:
             if self.comment_ids == None:
-                self.comment_ids == []
+                self.comment_ids = []
             self.comment_ids.append(comment_id)
         else:
             if recipe_id != None:
