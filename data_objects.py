@@ -57,6 +57,13 @@ class Recipe:
         self.__is_instantiated = True
         return
 
+    def diag_print_fields(self):
+        """
+        Diagnostic function to print the data in the object's dictionary
+        """
+        self.get_dict_from_obj()
+        print(self.__r_dict)
+
     def add_rating(self, rating_int, recipe_id=None):
         """
         If the object has all of the necessary data instantiated, will add a rating
@@ -216,15 +223,8 @@ class Recipe:
         else:
             self.get_dict_from_obj() # Make absolutely 100% sure that the dictionary is up to date with any actions performed on class variables
             w_doc = self.__r_dict
-            for key in w_doc:
-                if w_doc[key] == None:
-                    print(f"Unable to write recipe. Field '{key}' is None")
-                    return False
             if type(w_doc["tags"]) != list:
                 print(f"Unable to write recipe. Field 'tags' is not type 'list', instead type '{type(w_doc['tags'])}'")
-                return False
-            if type(w_doc["ratings"]) != list:
-                print(f"Unable to write recipe. Field 'ratings' is not type 'list', instead type {type(w_doc['ratings'])}")
                 return False
             w_res = self.__fsio.write_doc(f"{self.__COLLECTION_BASE}{self.recipe_id}", w_doc)
             if w_res == False or w_res == None:
