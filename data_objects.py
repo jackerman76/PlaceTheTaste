@@ -97,6 +97,7 @@ class Recipe:
             else:
                 print("No recipe ID found in recipe object or provided when you called this method. Unable to continue.")
                 return False
+        self.rating_num = len(self.ratings)
         w_res = self.write_recipe()
         return w_res
 
@@ -119,7 +120,7 @@ class Recipe:
                 if r ==True:
                     if self.comment_ids == None:
                         self.comment_ids = []
-                    self.commend_ids.append(comment_id)
+                    self.comment_ids.append(comment_id)
                 else:
                     print("Unknown error occured trying to instantiate recipe from recipe_id given for this function")
                     return False
