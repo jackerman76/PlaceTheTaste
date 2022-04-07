@@ -23,8 +23,6 @@ ran_startup = False
 
 _BUCKET_NAME = "recipe-images"
 
-
-
 def get_test_recipes():
     """Returns a list of test recipes for testing purposes"""
     recipes = []
