@@ -9,6 +9,8 @@ from recipe import Recipe
 from flask_bcrypt import Bcrypt
 import uuid
 import time
+from google.cloud import storage
+from uploadedFile import UploadedFile
 
 HOST = "0.0.0.0"
 PORT = 8000
@@ -18,6 +20,9 @@ app = Flask(__name__, static_folder='static')
 # add secret key here using app.secret_key = INSERT_KEY_HERE for now until more permanent solution (if that is a thing)
 bcrypt = Bcrypt(app)
 ran_startup = False
+
+_BUCKET_NAME = "recipe-images"
+
 
 
 def get_test_recipes():
@@ -98,13 +103,20 @@ class PTTRequests(FlaskView):
                 recipe.recipe_id = str(uuid.uuid4());
 
                 # file handling
-                # uploaded_file = request.files['recipe_image']
-                # file_name = uploaded_file.filename or "image_upload"
-                # file_name += session["username"] + "-" + str(time.time())
+                uploaded_file = request.files['recipe_image']
+                file_name = uploaded_file.filename or "image_upload"
+                file_name += session["username"] + "-" + str(time.time())
 
-                # TODO UPload file to filestore
-                # recipe.picture = file_name
+                # UPload file to filestore
+                """
+                gcs_client = storage.Client()
+                storage_bucket = gcs_client.get_bucket(_BUCKET_NAME)
+                blob = storage_bucket.blob(file_name)
+                c_type = uploaded_file.content_type
+                blob.upload_from_string(uploaded_file.read(), content_type=c_type)
 
+                recipe.picture = blob.public_url
+                """
                 # location input using google maps api
                 latitude = float(request.values.get("loc_lat"))
                 longitude = float(request.values.get("loc_long"))
@@ -113,6 +125,7 @@ class PTTRequests(FlaskView):
 
                 # for test purposes
                 recipe.username = "JoshAckerman"
+                # comment this when enabling filestore
                 recipe.picture = "https://hips.hearstapps.com/hmg-prod/images/delish-basic-crepes-horizontal-1545245797.jpg"
                 # print out recipe
                 print(recipe.as_json())
@@ -136,6 +149,7 @@ class PTTRequests(FlaskView):
     @route('/view_map', methods=["GET", "POST"])
     def view_map(self):
         # list of recipes to be returned for map
+        # TODO fetch recipes from database
         recipes = get_test_recipes()
         return (render_template("view_map.html", recipes=get_test_recipes()))
 
