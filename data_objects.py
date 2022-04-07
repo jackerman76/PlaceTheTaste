@@ -198,7 +198,7 @@ class Recipe:
                     self.timestamp = doc["timestamp"]
                     self.location_description = doc["location_description"]
                     self.ratings = doc["ratings"]
-                    self.ratings_num = doc["ratings_num"]
+                    self.rating_num = doc["rating_num"]
                     self.comment_ids = doc["comment_ids"]
                     self.get_dict_from_obj() # Populate self.__r_dict
                     self.__check_minimum_data_populated() # Update self.__is_instantiated
