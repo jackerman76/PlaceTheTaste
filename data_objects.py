@@ -130,6 +130,7 @@ class Recipe:
         """
         rid = str(uuid.uuid4())
         self.recipe_id = rid
+        self.__check_minimum_data_populated()
         return self.recipe_id
 
     def get_dict_from_obj(self):
@@ -150,7 +151,7 @@ class Recipe:
             "location_description": self.location_description,
             "ratings": self.ratings,
             "rating_num": self.rating_num,
-            "comment_ids": self.commend_ids
+            "comment_ids": self.comment_ids
         }
         self.__r_dict = doc
         return doc
