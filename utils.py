@@ -4,11 +4,6 @@ import firebase_admin
 from firebase_admin import firestore, storage, credentials
 from twilio.rest import Client
 
-def get_date_time():
-    """
-    Returns the current formatted date and time (standard across our server)
-    """
-
 class Singleton(type):
     _instances = {}
     
