@@ -10,3 +10,4 @@ config.yml
 __pycache__
 
 test_recipe_app.py 
+test.py
