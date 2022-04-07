@@ -1,0 +1,8 @@
+# Copy this file and rename to config.yml to activate. Make sure to fill in values as appropriate
+# Firestore Stuff
+fs_auth_key_filepath: ""
+fs_project_name: ""
+# Twilio
+twilio_acc_sid: ""
+twilio_auth_token: ""
+twilio_from_phone: ""
