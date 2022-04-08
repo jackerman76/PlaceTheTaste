@@ -4,10 +4,10 @@
 .vscode
 # Live configs with data
 config.yml
-config.yml.TEMPLATE
 # Prevent accidental pushing of keys
 *.json
 # Don't push __pycache__
 __pycache__
 
 test_recipe_app.py 
+test.py

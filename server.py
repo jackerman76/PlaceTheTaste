@@ -10,7 +10,6 @@ from flask_bcrypt import Bcrypt
 import uuid
 import time
 from google.cloud import storage
-from uploadedFile import UploadedFile
 
 HOST = "0.0.0.0"
 PORT = 8000
@@ -22,8 +21,6 @@ bcrypt = Bcrypt(app)
 ran_startup = False
 
 _BUCKET_NAME = "recipe-images"
-
-
 
 def get_test_recipes():
     """Returns a list of test recipes for testing purposes"""

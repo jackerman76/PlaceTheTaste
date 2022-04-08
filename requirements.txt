@@ -5,3 +5,6 @@ twilio
 gunicorn
 requests>=2.25.0
 PyYAML
+geopy
+bcrypt
+flask_bcrypt
