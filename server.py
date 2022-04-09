@@ -1,5 +1,5 @@
 import bcrypt
-from flask import Flask, request, render_template, flash, session
+from flask import Flask, request, render_template, flash, session, redirect, url_for
 from flask_classful import FlaskView, route
 from firestoreio import FirestoreIO
 from user import User
@@ -21,6 +21,8 @@ bcrypt = Bcrypt(app)
 ran_startup = False
 
 _BUCKET_NAME = "recipe-images"
+
+app.secret_key = 'SECRET_KEY'
 
 def get_test_recipes():
     """Returns a list of test recipes for testing purposes"""
@@ -87,6 +89,8 @@ class PTTRequests(FlaskView):
 
     @route('/post_recipe', methods=["GET", "POST"])
     def post_recipe(self):
+        if not session.get('username'):
+            return redirect(url_for('PTTRequests:login'))
         if request.method == 'POST':
             if request.form.get("submit_recipe") == "True":
                 # create recipe object
@@ -96,13 +100,18 @@ class PTTRequests(FlaskView):
                 recipe.ingredients = request.values.get('ingredients')
                 recipe.directions = request.values.get('directions')
 
+                
+
                 # Assign a unique recipe id to this recipe
-                recipe.recipe_id = str(uuid.uuid4());
+                recipe.recipe_id = str(uuid.uuid4())
+
 
                 # file handling
                 uploaded_file = request.files['recipe_image']
                 file_name = uploaded_file.filename or "image_upload"
                 file_name += session["username"] + "-" + str(time.time())
+
+                print(session["username"])
 
                 # UPload file to filestore
                 """
@@ -120,12 +129,14 @@ class PTTRequests(FlaskView):
                 recipe.geolocation = str([latitude, longitude])
                 recipe.location_description = request.values.get("recipe_location")
 
+                print(recipe.__dict__)
+
                 # for test purposes
                 recipe.username = "JoshAckerman"
                 # comment this when enabling filestore
                 recipe.picture = "https://hips.hearstapps.com/hmg-prod/images/delish-basic-crepes-horizontal-1545245797.jpg"
                 # print out recipe
-                print(recipe.as_json())
+                # print(recipe.as_json())
                 recipes = [recipe]
 
                 # add recipe to database and let user know if it failed
@@ -173,6 +184,8 @@ class PTTRequests(FlaskView):
 
     @route('/login', methods=["GET", "POST"])
     def login(self):
+        if session.get('username'):
+            return redirect(url_for('PTTRequests:view_map_0'))
         if request.method == "POST":
             username = request.values.get("username")
             password = request.values.get("password")
@@ -196,12 +209,14 @@ class PTTRequests(FlaskView):
     @route('/view_recipe', methods=["GET", "POST"])
     @route('/view_recipe/<requested_recipe_id>', methods=['GET', 'POST'])
     def view_recipe(self, requested_recipe_id=None):
-        print(requested_recipe_id)
+        # print(requested_recipe_id)
         recipe = Recipe()
         if requested_recipe_id:
-            found_recipe = self.__fsio.read_docs_by_query("/Recipe/", ["recipe_id", "==", requested_recipe_id])
+            # found_recipe = self.__fsio.read_docs_by_query("/Recipe/", ["recipe_id", "==", requested_recipe_id])
+            found_recipe = recipe.init_recipe_by_id(requested_recipe_id)
             if found_recipe:
-                return render_template("view_map.html", recipes=found_recipe)
+                # return render_template("view_map.html", recipes=found_recipe)
+                return render_template("view_recipe.html", recipe=recipe)
         if request.method == "POST":
 
             commenter_name = request.values.get("commenter_name")  # TODO: Replace with Session username
