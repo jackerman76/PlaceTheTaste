@@ -31,7 +31,7 @@
       var marker = new google.maps.Marker({
         position: { lat: {{ recipe.get_latitude() }}, lng: {{ recipe.get_longitude() }} }, //{ lat: -25.344, lng: 131.036 }
         map: map,
-        data: {{ recipe.as_json() | safe }}
+        
       });
 
       marker.addListener("click", () => {
