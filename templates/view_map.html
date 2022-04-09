@@ -42,6 +42,7 @@
         //document.getElementById("username").innerText = {{ "`" + recipe.username + "`" }};
         //document.getElementById("time").innerText = {{ "`" + recipe.get_formatted_time() + "`" }};
         document.getElementById("picture").src = {{ "`" + recipe.picture + "`" }};
+        document.getElementById("leave-a-comment").href = {{  "`" + url_for('PTTRequests:view_recipe_0', requested_recipe_id=recipe.recipe_id) +  "`"}};
 
         // this is for link to comment, not working yet
         // document.getElementById("leave-a-comment").href = {{ "`/view_recipe/" + recipe.recipe_id + "`" }}
@@ -96,7 +97,7 @@
               <p class="card-text" id="ingredients">- 1 cup flour<br>- 1 cup milk<br>- 1 tsp salt<br>- 1 tsp sugar<br>- 1 lemon<br>- 1 tbsp butter<br>- 1 tbsp honey</p>
               <h3 class="">Directions</h3>
               <p class="card-text" id="directions">1. Mix all of the ingredients together except for the butter<br>2. Heat up a nonstick pan<br>3. Add a little bit of the butter and spread around<br>4. Make crepes like normal</p>
-              <a href="#" class="card-link" id="leave-a-comment">Leave a Comment</a>
+              <a href="" class="card-link" id="leave-a-comment">Leave a Comment</a>
               <a href="#" class="card-link">Rate this Recipe</a><a href="#" class="card-link">Back to Map</a>
             </div>
           </div>
