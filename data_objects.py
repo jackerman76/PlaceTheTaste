@@ -254,3 +254,6 @@ class Recipe:
     def get_longitude(self):
         self.longitude = float(json.loads(self.geolocation)[1]) or None
         return self.longitude
+
+    def as_json(self):
+        return json.dumps(self.__dict__)
