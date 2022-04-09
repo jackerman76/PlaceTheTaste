@@ -1,5 +1,11 @@
 import uuid
 from firestoreio import FirestoreIO
+import time
+from time import gmtime, strftime
+from datetime import datetime
+from geopy import distance
+import json
+
 
 class Recipe:
 
@@ -233,3 +239,18 @@ class Recipe:
                 return False
             else:
                 return True
+
+
+    def get_formatted_time(self):
+        return datetime.fromtimestamp(self.timestamp).strftime("%m-%d-%Y %I:%M:%S %p")
+
+    def has_geolocation(self):
+        return self.geolocation != None
+
+    def get_latitude(self):
+        self.latitude = float(json.loads(self.geolocation)[0]) or None
+        return self.latitude
+
+    def get_longitude(self):
+        self.longitude = float(json.loads(self.geolocation)[1]) or None
+        return self.longitude
