@@ -163,8 +163,9 @@ class PTTRequests(FlaskView):
     def view_map(self):
         # list of recipes to be returned for map
         # TODO fetch recipes from database
+
         recipes = get_test_recipes()
-        return (render_template("view_map.html", recipes=get_test_recipes()))
+        return render_template("view_map.html", recipes=get_test_recipes())
 
     @route('/create_account', methods=["GET", "POST"])
     def create_account(self):
@@ -245,6 +246,14 @@ class PTTRequests(FlaskView):
                 flash("Comment could not be added. Please try again.")
 
         return render_template("view_recipe.html", recipe=recipe)
+
+    @route('/logout')
+    def logout(self):
+        if session.get('username'):
+            session.pop('username', default=None)
+        else:
+            flash("You are not logged in")
+        return redirect(url_for('PTTRequests:view_map_0'))
 
 
 PTTRequests.register(app)
