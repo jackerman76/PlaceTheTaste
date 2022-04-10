@@ -223,8 +223,13 @@ class PTTRequests(FlaskView):
                 # return render_template("view_map.html", recipes=found_recipe)
                 return render_template("view_recipe.html", recipe=recipe)
         if request.method == "POST":
-
-            commenter_name = request.values.get("commenter_name")  # TODO: Replace with Session username
+            print('here')
+            if not session.get('username'):
+                print("here")
+                flash("You need to login first")
+                return redirect(url_for('PTTRequests:login'))
+            else:
+                commenter_name = session.get('username') # TODO: Replace with Session username
 
             commenter_ratings = request.values.get("rating1")
             comment_text = request.values.get("comment")
@@ -232,10 +237,10 @@ class PTTRequests(FlaskView):
             #  for testing purposes
 
             # TEMPORARY RECIPE ID  (change later to be id from database)
-            recipe.recipe_name = "crepe"
-            recipe.ingredients = "1 cup flour 1 cup milk"
-            recipe.directions = "mix then cook"
-            recipe.recipe_id = 99
+            # recipe.recipe_name = "crepe"
+            # recipe.ingredients = "1 cup flour 1 cup milk"
+            # recipe.directions = "mix then cook"
+            # recipe.recipe_id = 99
 
             if commenter_ratings:
                 recipe.add_rating(commenter_ratings)
@@ -243,8 +248,8 @@ class PTTRequests(FlaskView):
             comment = Comment(commenter_name, comment_text, comment_id, recipe.recipe_id)
             if not self.__fsio.write_doc("/Comment/" + comment_id, comment.__dict__):
                 flash("Comment could not be added. Please try again.")
-
-        return render_template("view_recipe.html", recipe=recipe)
+        #
+        # return render_template("view_recipe.html", recipe=recipe)
 
     @route('/logout')
     def logout(self):
