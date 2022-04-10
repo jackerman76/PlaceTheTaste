@@ -210,7 +210,7 @@ class PTTRequests(FlaskView):
             if user_dict != None:  # if dict exists
                 if bcrypt.check_password_hash(user_dict[username]['password'], password):
                     session['username'] = username
-                    return render_template("view_map.html")
+                    return redirect(url_for('PTTRequests:view_map_0'))
                 else:
                     flash("wrong password")
                     return render_template("login.html")
