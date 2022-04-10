@@ -17,12 +17,14 @@ PORT = 8000
 AuthHolder()  # Invoke this early just to avoid any possible race conditions
 app = Flask(__name__, static_folder='static')
 # add secret key here using app.secret_key = INSERT_KEY_HERE for now until more permanent solution (if that is a thing)
+
 bcrypt = Bcrypt(app)
 ran_startup = False
 
 _BUCKET_NAME = "recipe-images"
 
 app.secret_key = 'SECRET_KEY'
+
 
 def get_test_recipes():
     """Returns a list of test recipes for testing purposes"""
@@ -94,22 +96,19 @@ class PTTRequests(FlaskView):
         if request.method == 'POST':
             if request.form.get("submit_recipe") == "True":
                 # create recipe object
-                recipe = Recipe()
-                # get form fields
-                recipe.recipe_name = request.values.get('recipe_name')
-                recipe.ingredients = request.values.get('ingredients')
-                recipe.directions = request.values.get('directions')
 
-                
+                # get form fields
+                recipe_name = request.values.get('recipe_name')
+                ingredients = request.values.get('ingredients')
+                directions = request.values.get('directions')
 
                 # Assign a unique recipe id to this recipe
-                recipe.recipe_id = str(uuid.uuid4())
-
+                recipe_id = str(uuid.uuid4())
 
                 # file handling
-                uploaded_file = request.files['recipe_image']
-                file_name = uploaded_file.filename or "image_upload"
-                file_name += session["username"] + "-" + str(time.time())
+                # uploaded_file = request.files['recipe_image']
+                # file_name = uploaded_file.filename or "image_upload"
+                # file_name += session["username"] + "-" + str(time.time())
 
                 print(session["username"])
 
@@ -126,25 +125,31 @@ class PTTRequests(FlaskView):
                 # location input using google maps api
                 latitude = float(request.values.get("loc_lat"))
                 longitude = float(request.values.get("loc_long"))
-                recipe.geolocation = str([latitude, longitude])
-                recipe.location_description = request.values.get("recipe_location")
-
-                print(recipe.__dict__)
+                geolocation = str([latitude, longitude])
+                location_description = request.values.get("recipe_location")
 
                 # for test purposes
-                recipe.username = "JoshAckerman"
+                # recipe.username = "JoshAckerman"
                 # comment this when enabling filestore
-                recipe.picture = "https://hips.hearstapps.com/hmg-prod/images/delish-basic-crepes-horizontal-1545245797.jpg"
+                picture = "https://hips.hearstapps.com/hmg-prod/images/delish-basic-crepes-horizontal-1545245797.jpg"
                 # print out recipe
                 # print(recipe.as_json())
-                recipes = [recipe]
 
+                # no picture yet Add when filestore is setup
+                recipe = Recipe(username=session.get('username'), recipe_name=recipe_name, picture=picture,
+                                ingredients=ingredients, geolocation=geolocation, tags=["tag1", "tag2", "tag3"],
+                                directions=directions, timestamp=str(time.time()),
+                                location_description=location_description)
+                id = recipe.gen_new_recipe_uuid()
+
+                print(recipe.__dict__)
+                recipes = [recipe]
                 # add recipe to database and let user know if it failed
-                if not (self.__fsio.write_doc("/Recipe/" + recipe.recipe_id, recipe.__dict__)):
+                if not recipe.write_recipe():
                     flash("Sorry, there was an error with posting your recipe to our server. Please try again.")
                     return render_template("post_recipe.html")
 
-                return (render_template("view_map.html", recipes=recipes))
+                return render_template("view_map.html", recipes=recipes)
 
                 # varify validity of recipe
 
@@ -193,17 +198,17 @@ class PTTRequests(FlaskView):
             if session.get('username'):
                 flash("already logged in")
                 return render_template("login.html")
-            if user_dict != None: #if dict exists 
+            if user_dict != None:  # if dict exists
                 if bcrypt.check_password_hash(user_dict[username]['password'], password):
                     session['username'] = username
                     return render_template("view_map.html")
                 else:
                     flash("wrong password")
                     return render_template("login.html")
-            else: 
+            else:
                 flash("username does not exist")
-                return render_template("login.html") 
-        
+                return render_template("login.html")
+
         return render_template("login.html")
 
     @route('/view_recipe', methods=["GET", "POST"])

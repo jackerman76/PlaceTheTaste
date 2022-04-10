@@ -11,3 +11,8 @@ __pycache__
 
 test_recipe_app.py 
 test.py
+
+.idea/
+__init__.py
+test_routes.py
+old
