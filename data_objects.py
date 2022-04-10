@@ -58,6 +58,7 @@ class Recipe:
         for key in self.__r_dict:
             if key != "comment_ids" and key != "rating_num" and key != "ratings": #These are not required to set up a recipe for the first time so can afford to be blank
                 if self.__r_dict[key] == None:
+                    print("missing", self.__r_dict[key])
                     self.__is_instantiated = False
                     return
         self.__is_instantiated = True
@@ -242,7 +243,7 @@ class Recipe:
 
 
     def get_formatted_time(self):
-        return datetime.fromtimestamp(self.timestamp).strftime("%m-%d-%Y %I:%M:%S %p")
+        return datetime.fromtimestamp(float(self.timestamp)).strftime("%m-%d-%Y %I:%M:%S %p")
 
     def has_geolocation(self):
         return self.geolocation != None
