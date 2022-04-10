@@ -162,16 +162,8 @@ class PTTRequests(FlaskView):
     @route('/view_map', methods=["GET", "POST"])
     def view_map(self):
         # list of recipes to be returned for map
-        # TODO fetch recipes from database
         r = Recipe()
-        rps = r.get_all_recipes()
-        recipes = []
-        for recipe in rps:
-            r = Recipe()
-            r.init_recipe_by_id(recipe['recipe_id'])
-            recipes.append(r)
-
-
+        recipes = r.get_all_recipes()
         #recipes = get_test_recipes()
         return render_template("view_map.html", recipes=recipes)
 
@@ -226,7 +218,6 @@ class PTTRequests(FlaskView):
         # print(requested_recipe_id)
         recipe = Recipe()
         if requested_recipe_id:
-            # found_recipe = self.__fsio.read_docs_by_query("/Recipe/", ["recipe_id", "==", requested_recipe_id])
             found_recipe = recipe.init_recipe_by_id(requested_recipe_id)
             if found_recipe:
                 # return render_template("view_map.html", recipes=found_recipe)

@@ -240,12 +240,24 @@ class Recipe:
             else:
                 return True
 
-    # TODO: We need a method like this to be able to show all recipes on map, refactor later
     def get_all_recipes(self):
+        """
+        Get all recipes that are currently in firestore
+
+        :returns: on success returns a list of all recipes in firestore as recipe objects
+        :returns: if no recipes found, returns an empty list
+        """
+        # Get all recipes from firestore
         collection = self.__fsio.get_collection('Recipe')
+
+        # Convert all recipe documents found to recipe objects and add them to a list
         recipes = []
         for r in collection:
-            recipes.append(r.to_dict())
+            recipe_dict = r.to_dict()
+            r = Recipe()
+            r.init_recipe_by_id(recipe_dict['recipe_id'])
+            recipes.append(r)
+
         return recipes
 
     def get_formatted_time(self):
