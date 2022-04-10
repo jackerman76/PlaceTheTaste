@@ -23,6 +23,8 @@ ran_startup = False
 
 _BUCKET_NAME = "recipe-images"
 
+app.secret_key = 'SECRET_KEY'
+
 
 
 
