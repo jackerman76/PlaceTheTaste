@@ -57,8 +57,7 @@ class Recipe:
         self.get_dict_from_obj()
         for key in self.__r_dict:
             if key != "comment_ids" and key != "rating_num" and key != "ratings": #These are not required to set up a recipe for the first time so can afford to be blank
-                if self.__r_dict[key] == None:
-                    print("missing", self.__r_dict[key])
+                if self.__r_dict[key] is None:
                     self.__is_instantiated = False
                     return
         self.__is_instantiated = True
@@ -241,6 +240,13 @@ class Recipe:
             else:
                 return True
 
+    # TODO: We need a method like this to be able to show all recipes on map, refactor later
+    def get_all_recipes(self):
+        collection = self.__fsio.get_collection('Recipe')
+        recipes = []
+        for r in collection:
+            recipes.append(r.to_dict())
+        return recipes
 
     def get_formatted_time(self):
         return datetime.fromtimestamp(float(self.timestamp)).strftime("%m-%d-%Y %I:%M:%S %p")

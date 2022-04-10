@@ -23,7 +23,7 @@ ran_startup = False
 
 _BUCKET_NAME = "recipe-images"
 
-app.secret_key = 'SECRET_KEY'
+
 
 
 def get_test_recipes():
@@ -163,8 +163,17 @@ class PTTRequests(FlaskView):
     def view_map(self):
         # list of recipes to be returned for map
         # TODO fetch recipes from database
-        recipes = get_test_recipes()
-        return (render_template("view_map.html", recipes=get_test_recipes()))
+        r = Recipe()
+        rps = r.get_all_recipes()
+        recipes = []
+        for recipe in rps:
+            r = Recipe()
+            r.init_recipe_by_id(recipe['recipe_id'])
+            recipes.append(r)
+
+
+        #recipes = get_test_recipes()
+        return render_template("view_map.html", recipes=recipes)
 
     @route('/create_account', methods=["GET", "POST"])
     def create_account(self):
@@ -201,7 +210,7 @@ class PTTRequests(FlaskView):
             if user_dict != None:  # if dict exists
                 if bcrypt.check_password_hash(user_dict[username]['password'], password):
                     session['username'] = username
-                    return render_template("view_map.html")
+                    return redirect(url_for('PTTRequests:view_map_0'))
                 else:
                     flash("wrong password")
                     return render_template("login.html")
@@ -245,6 +254,14 @@ class PTTRequests(FlaskView):
                 flash("Comment could not be added. Please try again.")
 
         return render_template("view_recipe.html", recipe=recipe)
+
+    @route('/logout')
+    def logout(self):
+        if session.get('username'):
+            session.pop('username', default=None)
+        else:
+            flash("You are not logged in")
+        return redirect(url_for('PTTRequests:view_map_0'))
 
 
 PTTRequests.register(app)

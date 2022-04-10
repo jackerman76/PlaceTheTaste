@@ -385,3 +385,7 @@ class FirestoreIO():
             else:
                 doc_dicts_dict[f'{doc.id}'] = doc.to_dict()
         return doc_dicts_dict
+
+    # For testing purposes TODO: refactor because we need an equivalent to this
+    def get_collection(self, collection_name):
+        return self.__firebase_auth.collection(collection_name).get()
