@@ -7621,4 +7621,19 @@ a.text-dark:hover, a.text-dark:focus {
 
 #view_recipe_card_container {
   padding-top: 0 !important; 
+  padding-bottom: 0 !important;
+}
+
+#recipe_comment {
+  padding-top: 0 !important; 
+  padding-bottom: 0 !important;
+  
+}
+
+#commenter_username {
+  text-align: left !important;
+}
+
+#comment_text {
+  text-align: left !important;
 }
