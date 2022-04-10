@@ -23,7 +23,7 @@ ran_startup = False
 
 _BUCKET_NAME = "recipe-images"
 
-app.secret_key = 'SECRET_KEY'
+
 
 
 def get_test_recipes():
@@ -163,9 +163,17 @@ class PTTRequests(FlaskView):
     def view_map(self):
         # list of recipes to be returned for map
         # TODO fetch recipes from database
+        r = Recipe()
+        rps = r.get_all_recipes()
+        recipes = []
+        for recipe in rps:
+            r = Recipe()
+            r.init_recipe_by_id(recipe['recipe_id'])
+            recipes.append(r)
 
-        recipes = get_test_recipes()
-        return render_template("view_map.html", recipes=get_test_recipes())
+
+        #recipes = get_test_recipes()
+        return render_template("view_map.html", recipes=recipes)
 
     @route('/create_account', methods=["GET", "POST"])
     def create_account(self):
