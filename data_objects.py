@@ -5,6 +5,7 @@ from time import gmtime, strftime
 from datetime import datetime
 from geopy import distance
 import json
+from comment import Comment
 
 
 class Recipe:
@@ -259,6 +260,34 @@ class Recipe:
             recipes.append(r)
 
         return recipes
+
+    def get_all_comments(self):
+        """
+        Get all comments stored in firestore for specific recipe
+
+        :returns: on success returns a list of all comments for recipe as comment objects
+        :returns: if no comments found, returns an empty list
+        """
+        # Get all recipes from firestore
+        # NOTE: This needs to be changes later
+        collection = self.__fsio.get_collection('Comment')
+
+        # Convert all recipe documents found to recipe objects and add them to a list
+        comments = []
+        for c in collection:
+            comment_dict = c.to_dict()
+            
+            if (comment_dict['recipe_id'] == self.recipe_id):
+
+                comment = Comment()
+                comment.username = comment_dict['username']
+                comment.message = comment_dict['message']
+                comment.comment_id = comment_dict['comment_id']
+                comment.recipe_id = comment_dict['recipe_id']
+                comment.timestamp = comment_dict['timestamp']
+                comments.append(comment)
+
+        return comments
 
     def get_formatted_time(self):
         return datetime.fromtimestamp(float(self.timestamp)).strftime("%m-%d-%Y %I:%M:%S %p")

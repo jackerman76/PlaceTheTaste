@@ -87,20 +87,24 @@
       </div>
     </div>
   </div>
+
+
+{% for comment in comments %}
 <div class="container mb-2">
-    <div class="d-flex justify-content-center row">
-        <div class="d-flex flex-column col-md-8">
-            <div class="comment-bottom bg-white px-4">
-                <div class="commented-section mt-2">
-                    <div class="d-flex flex-row align-items-center commented-user">
-                        <h5 class="mr-2" id="recipe_commenter_name">Josh Ackerman</h5><span class="dot mb-1"></span><span class="mb-1 ml-auto pr-2" id="comment_timestamp">4 hours ago</span>
-                    </div>
-                    <div class="comment-text-sm" id="recipe_comment_content"><span>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</span></div>
-                    </div>
-                </div>
+  <div class="d-flex justify-content-center row">
+      <div class="d-flex flex-column col-md-8">
+          <div class="comment-bottom bg-white px-4">
+              <div class="commented-section mt-2">
+                  <div class="d-flex flex-row align-items-center commented-user">
+                      <h5 class="mr-2" id="recipe_commenter_name">{{ comment.username }}</h5><span class="dot mb-1"></span><span class="mb-1 ml-auto pr-2" id="comment_timestamp">{{ comment.get_time_delta() }}</span>
+                  </div>
+                  <div class="comment-text-sm" id="recipe_comment_content"><span>{{ comment.message }}</span></div>
+              </div>
             </div>
         </div>
-    </div>
+  </div>
+</div>
+{% endfor %}
 
 <!--  <div class="py-5" id="recipe_comment">-->
 <!--    <div class="container">-->

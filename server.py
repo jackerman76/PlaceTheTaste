@@ -239,7 +239,10 @@ class PTTRequests(FlaskView):
                         flash("Comment could not be added. Please try again.")
 
                     recipe.add_comment(comment_id)
-                return render_template("view_recipe.html", recipe=recipe)
+
+                # get list of comments from firestore
+                comment_dict = self.__fsio.read_docs_by_query("/Comment/", ["recipe_id", "==", recipe.recipe_id])
+                return render_template("view_recipe.html", recipe=recipe, comments=recipe.get_all_comments())
 
         return render_template("view_recipe.html")
 
