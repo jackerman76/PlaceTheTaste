@@ -57,8 +57,7 @@ class Recipe:
         self.get_dict_from_obj()
         for key in self.__r_dict:
             if key != "comment_ids" and key != "rating_num" and key != "ratings": #These are not required to set up a recipe for the first time so can afford to be blank
-                if self.__r_dict[key] == None:
-                    print("missing", self.__r_dict[key])
+                if self.__r_dict[key] is None:
                     self.__is_instantiated = False
                     return
         self.__is_instantiated = True
