@@ -23,7 +23,7 @@ ran_startup = False
 
 _BUCKET_NAME = "recipe-images"
 
-app.secret_key = 'SECRET_KEY'
+
 
 
 
@@ -228,15 +228,16 @@ class PTTRequests(FlaskView):
                     else:
                         commenter_name = session.get('username')
 
-                    commenter_ratings = request.values.get("rating1")
+                    commenter_ratings = request.values.get("rating")
+                    print(commenter_ratings)
                     comment_text = request.values.get("comment")
 
-                    if commenter_ratings:
-                        recipe.add_rating(int(commenter_ratings))
+                    # if commenter_ratings:
+                    #     recipe.add_rating(int(commenter_ratings))
                     comment_id = str(uuid.uuid4())
                     comment = Comment(commenter_name, comment_text, comment_id, recipe.recipe_id)
-                    if not self.__fsio.write_doc("/Comment/" + comment_id, comment.__dict__):
-                        flash("Comment could not be added. Please try again.")
+                    # if not self.__fsio.write_doc("/Comment/" + comment_id, comment.__dict__):
+                    #     flash("Comment could not be added. Please try again.")
 
                     recipe.add_comment(comment_id)
 

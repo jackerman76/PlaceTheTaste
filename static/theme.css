@@ -7637,3 +7637,18 @@ a.text-dark:hover, a.text-dark:focus {
 #comment_text {
   text-align: left !important;
 }
+
+#number_of_recipe_ratings {
+  display: inline-block;
+  padding-left: .5rem;
+  font-size: .9rem;
+
+}
+
+#submit_recipe_rating_button_form {
+  display: inline;
+}
+#submit_recipe_rating {
+  display: none;
+  
+}
