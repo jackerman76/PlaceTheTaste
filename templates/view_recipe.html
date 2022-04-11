@@ -11,20 +11,20 @@
           //document.getElementById("username").innerText = {{ "`" + recipe.username + "`" }};
           //document.getElementById("time").innerText = {{ "`" + recipe.get_formatted_time() + "`" }};
           document.getElementById("picture").src = {{ "`" + recipe.picture + "`" }};
+          document.getElementById("number_of_recipe_ratings").innerText = {{ "`" + recipe.get_rating_num()|string + " Ratings`" }};
 
-
-         var star_inputs = document.querySelectorAll(".star-rating");
-         console.log(star_inputs)
-         for(let i = 0; i<star_inputs.length; i++) {
-            star_inputs[i].addEventListener("click", function ()  {
-                disp_recipe_rate_btn();
-            });
-          }
-         function disp_recipe_rate_btn() {
-            document.getElementById("submit_recipe_rating").style.display='inline';
-         }
-         // This causes a uncaught type error which prevents any other javascript from running so moved it below
-         document.getElementById("leave-a-comment").href = {{  "`" + url_for('PTTRequests:view_recipe_0', requested_recipe_id=recipe.recipe_id) +  "`"}};
+           var star_inputs = document.querySelectorAll(".star-rating");
+           console.log(star_inputs)
+           for(let i = 0; i<star_inputs.length; i++) {
+              star_inputs[i].addEventListener("click", function ()  {
+                  disp_recipe_rate_btn();
+              });
+            }
+           function disp_recipe_rate_btn() {
+              document.getElementById("submit_recipe_rating").style.display='inline';
+           }
+           // This causes a uncaught type error which prevents any other javascript from running so moved it below
+           document.getElementById("leave-a-comment").href = {{  "`" + url_for('PTTRequests:view_recipe_0', requested_recipe_id=recipe.recipe_id) +  "`"}};
     };
   </script>
 </div>
