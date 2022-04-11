@@ -26,16 +26,16 @@
               star_inputs[i].addEventListener("click", function ()  {
                   disp_recipe_rate_btn(i);
               });
-            }
+           }
            function disp_recipe_rate_btn(btn_number) {
               // When the user clicks a star, the number of yellow vs. grey star adjusts based on their click
               for(let i = 0; i <= btn_number; i++) {
                   let query_str = "label_rating" + (i+1);
-                  console.log(query_str)
                   document.getElementById(query_str).style.color='#f4c430';
               }
               document.getElementById("submit_recipe_rating").style.display='inline';
            }
+
            // This causes a uncaught type error which prevents any other javascript from running so moved it below
            document.getElementById("leave-a-comment").href = {{  "`" + url_for('PTTRequests:view_recipe_0', requested_recipe_id=recipe.recipe_id) +  "`"}};
   };
@@ -75,7 +75,7 @@
                       <input type="radio" class="form-control star-rating" name="rating" id="rating5" value="5">
                       <label for="rating5" class="fa fa-star" id="label_rating5"></label>
                       <div class="form-group" id="submit_recipe_rating_button_form">
-                        <button type="submit" name="submit_recipe_rating" id="submit_recipe_rating" value="True" formmethod="post"  class="btn btn-primary">Rate</button>
+                        <button type="submit" name="submit_recipe_rating" id="submit_recipe_rating" value="True" formmethod="post"  class="btn btn-warning">Rate</button>
                       </div>
                       <p class="text-muted" id="number_of_recipe_ratings">5 Ratings</p>
                     </div>
