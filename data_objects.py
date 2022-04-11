@@ -241,6 +241,24 @@ class Recipe:
             else:
                 return True
 
+    def get_rating_num(self):
+        if self.__is_instantiated:
+            if self.rating_num is None:
+                return 0;
+            else:
+                return self.rating_num
+        else:
+            print("Recipe was not properly instantiated so its number of ratings could not be returned.")
+
+    def get_ratings(self):
+        if self.__is_instantiated:
+            if self.get_rating_num() == 0:
+                return None
+            else:
+                return sum(self.ratings) / self.get_rating_num()
+        else:
+            print("Recipe was not properly instantiated so its rating could not be returned.")
+
     def get_all_recipes(self):
         """
         Get all recipes that are currently in firestore

@@ -2,7 +2,7 @@
 {% block header %}
 <div class="container center">
   <script>
-    window.onload = function() {
+     window.onload = function() {
           document.getElementById("view_recipe_name").innerText = {{ "`"  + recipe.recipe_name + "`" }};
           document.getElementById("view_recipe_ingredients").innerText = {{ "`"  + recipe.ingredients + "`" }};
           document.getElementById("view_recipe_directions").innerText = {{ "`"  + recipe.directions + "`" }};
@@ -10,11 +10,36 @@
           //document.getElementById("username").innerText = {{ "`" + recipe.username + "`" }};
           //document.getElementById("time").innerText = {{ "`" + recipe.get_formatted_time() + "`" }};
           document.getElementById("picture").src = {{ "`" + recipe.picture + "`" }};
-          document.getElementById("leave-a-comment").href = {{  "`" + url_for('PTTRequests:view_recipe_0', requested_recipe_id=recipe.recipe_id) +  "`"}};
-<!--          // make recipe not hidden-->
-<!--        document.getElementById("recipe_container").style.visibility= "visible" ;-->
-    };
-  </script>
+          document.getElementById("number_of_recipe_ratings").innerText = {{ "`" + recipe.get_rating_num()|string + " Ratings`" }};
+
+          // Change the number of stars that are grey depending on the recipe ratings
+          let current_rating = {{ recipe.get_ratings() }};
+          current_rating = Math.ceil(current_rating);
+          for(let i = 5; i > current_rating; i--) {
+            let query_str = "label_rating" + i;
+            document.getElementById(query_str).style.color='#838383';
+          }
+
+          // Wait for the user to click on a star to pull up a button confirming they want to rate the recipe
+           var star_inputs = document.querySelectorAll(".star-rating");
+           for(let i = 0; i<star_inputs.length; i++) {
+              star_inputs[i].addEventListener("click", function ()  {
+                  disp_recipe_rate_btn(i);
+              });
+           }
+           function disp_recipe_rate_btn(btn_number) {
+              // When the user clicks a star, the number of yellow vs. grey star adjusts based on their click
+              for(let i = 0; i <= btn_number; i++) {
+                  let query_str = "label_rating" + (i+1);
+                  document.getElementById(query_str).style.color='#f4c430';
+              }
+              document.getElementById("submit_recipe_rating").style.display='inline';
+           }
+
+           // This causes a uncaught type error which prevents any other javascript from running so moved it below
+           document.getElementById("leave-a-comment").href = {{  "`" + url_for('PTTRequests:view_recipe_0', requested_recipe_id=recipe.recipe_id) +  "`"}};
+  };
+</script>
 </div>
 {% endblock %}
 {% block content %}
@@ -35,6 +60,28 @@
           <div class="card">
             <div class="card-body">
               <h1 class="display-4" id="view_recipe_name">My Favorite Crepes</h1>
+              <form>
+                <div class="form-group">
+                  <div class="rating-css">
+                    <div class="star-icon">
+                      <input type="radio" class="form-control star-rating" name="rating" id="rating1" value="1">
+                      <label for="rating1" class="fa fa-star" id="label_rating1"></label>
+                      <input type="radio" class="form-control star-rating" name="rating" id="rating2" value="2">
+                      <label for="rating2" class="fa fa-star" id="label_rating2"></label>
+                      <input type="radio" class="form-control star-rating" name="rating" id="rating3" value="3">
+                      <label for="rating3" class="fa fa-star" id="label_rating3"></label>
+                      <input type="radio" class="form-control star-rating" name="rating" id="rating4" value="4">
+                      <label for="rating4" class="fa fa-star" id="label_rating4"></label>
+                      <input type="radio" class="form-control star-rating" name="rating" id="rating5" value="5">
+                      <label for="rating5" class="fa fa-star" id="label_rating5"></label>
+                      <div class="form-group" id="submit_recipe_rating_button_form">
+                        <button type="submit" name="submit_recipe_rating" id="submit_recipe_rating" value="True" formmethod="post"  class="btn btn-warning">Rate</button>
+                      </div>
+                      <p class="text-muted" id="number_of_recipe_ratings">5 Ratings</p>
+                    </div>
+                  </div>
+              </div>
+              </form>
               <h6 class="card-subtitle my-2 text-muted" id="view_recipe_location_formatted">Location: Paris, France by Josh Ackerman</h6>
               <h3 class="" >Ingredients</h3>
               <p class="card-text" id="view_recipe_ingredients">- 1 cup flour<br>- 1 cup milk<br>- 1 tsp salt<br>- 1 tsp sugar<br>- 1 lemon<br>- 1 tbsp butter<br>- 1 tbsp honey</p>
@@ -55,23 +102,23 @@
           <h1 class="mb-4" id="leave-comment-msg">Leave a Comment</h1>
           <form>
 
-            <div class="form-group">
-              <div class="rating-css">
-                <div class="star-icon">
-                  <div id="star-rating-prompt">Rate the Recipe </div>
-                  <input type="radio" class="form-control" name="rating1" id="rating1" value="1">
-                  <label for="rating1" class="fa fa-star"></label>
-                  <input type="radio" class="form-control" name="rating1" id="rating2" value="2">
-                  <label for="rating2" class="fa fa-star"></label>
-                  <input type="radio" class="form-control" name="rating1" id="rating3" value="3">
-                  <label for="rating3" class="fa fa-star"></label>
-                  <input type="radio" class="form-control" name="rating1" id="rating4" value="4">
-                  <label for="rating4" class="fa fa-star"></label>
-                  <input type="radio" class="form-control" name="rating1" id="rating5" value="5">
-                  <label for="rating5" class="fa fa-star"></label>
-                </div>
-              </div>
-            </div>
+<!--            <div class="form-group">-->
+<!--              <div class="rating-css">-->
+<!--                <div class="star-icon">-->
+<!--                  <div id="star-rating-prompt">Rate the Recipe </div>-->
+<!--                  <input type="radio" class="form-control" name="rating1" id="rating1" value="1">-->
+<!--                  <label for="rating1" class="fa fa-star"></label>-->
+<!--                  <input type="radio" class="form-control" name="rating1" id="rating2" value="2">-->
+<!--                  <label for="rating2" class="fa fa-star"></label>-->
+<!--                  <input type="radio" class="form-control" name="rating1" id="rating3" value="3">-->
+<!--                  <label for="rating3" class="fa fa-star"></label>-->
+<!--                  <input type="radio" class="form-control" name="rating1" id="rating4" value="4">-->
+<!--                  <label for="rating4" class="fa fa-star"></label>-->
+<!--                  <input type="radio" class="form-control" name="rating1" id="rating5" value="5">-->
+<!--                  <label for="rating5" class="fa fa-star"></label>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
 <!--                Aren't we just going to use the username for the name instead of the user picking a name to the comment?-->
 <!--            <div class="form-group"> <input type="text" class="form-control" id="commenter_name" placeholder="Name" name="commenter_name" required="required"> </div>-->
             <div class="form-group">
