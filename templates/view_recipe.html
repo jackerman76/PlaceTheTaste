@@ -28,6 +28,12 @@
               });
             }
            function disp_recipe_rate_btn(btn_number) {
+              // When the user clicks a star, the number of yellow vs. grey star adjusts based on their click
+              for(let i = 0; i <= btn_number; i++) {
+                  let query_str = "label_rating" + (i+1);
+                  console.log(query_str)
+                  document.getElementById(query_str).style.color='#f4c430';
+              }
               document.getElementById("submit_recipe_rating").style.display='inline';
            }
            // This causes a uncaught type error which prevents any other javascript from running so moved it below
