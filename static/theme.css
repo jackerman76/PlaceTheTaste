@@ -7585,7 +7585,7 @@ a.text-dark:hover, a.text-dark:focus {
   font-weight: 600;
   text-align: left;
   /* text-transform: uppercase; */
-  padding: 10px 0 5px 0;
+  padding: 5px 0 5px 0;
 }
 .rating-css input {
   display: none;
@@ -7610,7 +7610,7 @@ a.text-dark:hover, a.text-dark:focus {
 }
 
 #leave-comment-msg {
-  margin-bottom: .1rem !important;
+  margin-bottom: 1rem !important;
 }
 
 
@@ -7654,4 +7654,12 @@ a.text-dark:hover, a.text-dark:focus {
 #submit_recipe_rating {
   display: none;
   
+}
+
+#recipe_star_form {
+  margin-bottom: 0 !important;
+}
+
+#recipe_star_form_group {
+  margin-bottom: 0 !important;
 }
