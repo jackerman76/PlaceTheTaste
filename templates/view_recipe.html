@@ -3,10 +3,10 @@
 <div class="container center">
   <script>
      window.onload = function() {
-          document.getElementById("view_recipe_name").innerText = {{ "`"  + recipe.recipe_name + "`" }};
-          document.getElementById("view_recipe_ingredients").innerText = {{ "`"  + recipe.ingredients + "`" }};
-          document.getElementById("view_recipe_directions").innerText = {{ "`"  + recipe.directions + "`" }};
-          document.getElementById("view_recipe_location_formatted").innerText = {{ "`"  + recipe.location_description + "`" }};
+          document.getElementById("view_recipe_name").innerText = {{ "`"  + recipe.recipe_name | safe + "`" }};
+          document.getElementById("view_recipe_ingredients").innerText = {{ "`"  + recipe.ingredients | safe + "`" }};
+          document.getElementById("view_recipe_directions").innerText = {{ "`"  + recipe.directions | safe + "`" }};
+          document.getElementById("view_recipe_location_formatted").innerText = {{ "`"  + recipe.location_description | safe + "`" }};
           //document.getElementById("username").innerText = {{ "`" + recipe.username + "`" }};
           //document.getElementById("time").innerText = {{ "`" + recipe.get_formatted_time() + "`" }};
           document.getElementById("picture").src = {{ "`" + recipe.picture + "`" }};
@@ -130,23 +130,6 @@
   </div>
 </div>
 {% endfor %}
-
-<!--  <div class="py-5" id="recipe_comment">-->
-<!--    <div class="container">-->
-<!--      <div class="row">-->
-<!--        <div class="col-md-12">-->
-<!--          <div class="card text-center">-->
-<!--            <div class="card-header" id="commenter_username"> Josh Ackerman</div>-->
-<!--            <div class="card-body">-->
-<!--              <p class="card-text" id="comment_text">This recipe was garbage I will never make it again</p>-->
-<!--            </div>-->
-<!--            <p class="card-text ">2 Stars</p>-->
-<!--            <div class="card-footer text-muted" style=""> 2 days ago </div>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--  </div>-->
 
   <div class="py-5" style="">
     <div class="container">
