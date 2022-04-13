@@ -23,6 +23,37 @@
 
     });
   </script>
+  <script>
+
+    let base64String = "";
+      
+      function imageUploaded() {
+          var file = document.querySelector(
+              'input[type=file]')['files'][0];
+        
+          var reader = new FileReader();
+          console.log("next");
+            
+          reader.onload = function () {
+              base64String = reader.result.replace("data:", "")
+                  .replace(/^.+,/, "");
+        
+              imageBase64Stringsep = base64String;
+  
+              console.log(base64String);
+              document.getElementById('img_string').value = base64String;
+              
+          }
+          reader.readAsDataURL(file);
+          document.getElementById('img_string').value = base64String;
+      }
+        
+      function displayString() {
+          console.log("Base64String about to be printed");
+          alert(base64String);
+      }
+  </script>
+
 {% endblock %}
 {% block content %}
   <div class="py-5" >
@@ -43,12 +74,13 @@
            
             <input type="hidden" id="loc_lat" name="loc_lat">
             <input type="hidden" id="loc_long" name="loc_long">
+            <input type="hidden" id="img_string" name="img_string">
 
             <div class="form-group"> <label for="recipe_name">Recipe Name</label> <input type="text" class="form-control" id="recipe_name" placeholder="My Great Recipe" name="recipe_name" required="required"> </div>
             <div class="form-group"><label>Ingredients</label><textarea class="form-control" id="ingredients" rows="3" placeholder="Please list ingredients (one per line)" name="ingredients"></textarea>
               <div class="form-group"><label>Directions</label><textarea class="form-control" id="directions" rows="3" placeholder="Please List the Directions" name="directions"></textarea></div>
             </div>
-            <div class="form-group"><label>Picture</label><input type="file" class="form-control-file" id="recipe_image" placeholder="My Great Recipe" required="required" name="recipe_image"></div>
+            <div class="form-group"><label>Picture</label><input type="file" class="form-control-file" id="recipe_image" placeholder="My Great Recipe" required="required" name="recipe_image" onchange="imageUploaded()"></div>
             <div class="form-group">
               <label for="recipe_location"><b>Location</b></label><br>
               <input type="text" class="form-control" id="search_input" placeholder="Input a location for this recipe to be tied to..." name="recipe_location" required>
