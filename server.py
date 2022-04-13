@@ -252,7 +252,7 @@ class PTTRequests(FlaskView):
             session.pop('username', default=None)
         else:
             flash("You are not logged in")
-        return redirect(url_for('PTTRequests:view_map_0'))
+        return redirect(url_for('PTTRequests:login'))
 
 
 PTTRequests.register(app)

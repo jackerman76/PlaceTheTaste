@@ -253,7 +253,7 @@ class Recipe:
     def get_ratings(self):
         if self.__is_instantiated:
             if self.get_rating_num() == 0:
-                return None
+                return 0
             else:
                 return sum(self.ratings) / self.get_rating_num()
         else:
