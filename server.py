@@ -130,7 +130,9 @@ class PTTRequests(FlaskView):
                 # for test purposes
                 # recipe.username = "JoshAckerman"
                 # comment this when enabling filestore
-                picture = "https://hips.hearstapps.com/hmg-prod/images/delish-basic-crepes-horizontal-1545245797.jpg"
+                # picture = "https://hips.hearstapps.com/hmg-prod/images/delish-basic-crepes-horizontal-1545245797.jpg"
+                picture = request.values.get("img_string")
+                picture = "data:image/png;base64, " + picture
                 # print out recipe
                 # print(recipe.as_json())
 
