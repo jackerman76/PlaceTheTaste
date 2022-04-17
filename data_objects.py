@@ -307,6 +307,22 @@ class Recipe:
 
         return comments
 
+    def get_recipes_by_tags(self, tag_list):
+        recipe_dict_list = self.__fsio.query_by_value_in_array("Recipe", "tags", tag_list[0])
+        recipes = []
+        for recipe_dict in recipe_dict_list:
+            r = Recipe()
+            r.init_recipe_by_id(recipe_dict['recipe_id'])
+            recipes.append(r)
+
+        for recipe in recipes:
+            print(recipe.recipe_name)
+
+
+
+
+
+
     def get_formatted_time(self):
         return datetime.fromtimestamp(float(self.timestamp)).strftime("%m-%d-%Y %I:%M:%S %p")
 
