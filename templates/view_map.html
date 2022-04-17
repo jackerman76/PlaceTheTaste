@@ -95,6 +95,16 @@
                       <li><input type="checkbox" id="checkbox11" name="recipe-tag" value="Baked"><label for="checkbox11">Baked</label></li>
                     </ul>
                   <div class="form-group"></div><button type="submit" class="btn btn-primary" value="True" name="filter_recipe" formmethod="POST">Filter</button>
+<!--              Flash any error message  -->
+              {% with messages = get_flashed_messages() %}
+              {% if messages %}
+              <ul>
+                  {% for message in messages %}
+                  <li>{{ message }}</li>
+                  {% endfor %}
+              </ul>
+              {% endif %}
+              {% endwith %}
               </div>
            </form>
           </div>
