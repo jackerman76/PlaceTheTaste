@@ -7668,7 +7668,7 @@ a.text-dark:hover, a.text-dark:focus {
 
 
 
-/* Recipe tag checkboxes */
+/* Recipe tag checkboxes post recipe */
 .recipe-tag-container {
   max-width: 640px;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
@@ -7685,8 +7685,8 @@ display: inline;
 ul.ks-cboxtags li label{
   display: inline-block;
   background-color: rgba(255, 255, 255, .9);
-  border: 2px solid rgba(139, 139, 139, .3);
-  color: #adadad;
+  border: 2px solid darkgray;
+  color: darkgray;
   border-radius: 25px;
   white-space: nowrap;
   margin: 3px 0px;
@@ -7740,4 +7740,22 @@ opacity: 0;
 }
 ul.ks-cboxtags li input[type="checkbox"]:focus + label {
 border: 2px solid #20c997;
+}
+
+/* View Map tags and more*/
+#filter-recipe {
+  padding-left: 30px;
+  max-width: 25%;
+  display: inline-block !important;
+}
+
+#filter-recipe-text {
+  padding: 5px 0;
+  font-size: large;
+}
+
+#view-recipe-tag-container {
+  display: inline-block;
+  max-width: 100%;
+  
 }
