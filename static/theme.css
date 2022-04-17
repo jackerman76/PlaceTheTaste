@@ -7685,8 +7685,8 @@ display: inline;
 ul.ks-cboxtags li label{
   display: inline-block;
   background-color: rgba(255, 255, 255, .9);
-  border: 2px solid darkgray;
-  color: darkgray;
+  border: 2px solid #AAAAAA;
+  color: #AAAAAA;
   border-radius: 25px;
   white-space: nowrap;
   margin: 3px 0px;
@@ -7752,6 +7752,7 @@ border: 2px solid #20c997;
 #filter-recipe-text {
   padding: 5px 0;
   font-size: large;
+  font-weight: 500;
 }
 
 #view-recipe-tag-container {

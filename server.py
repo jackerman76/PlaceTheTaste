@@ -168,8 +168,19 @@ class PTTRequests(FlaskView):
     def view_map(self):
         # list of recipes to be returned for map
         r = Recipe()
-        recipes = r.get_all_recipes()
-        #recipes = get_test_recipes()
+        # r.get_recipes_by_tags(["Breakfast", "Dessert"])
+        if request.method == "POST":
+            tags = request.values.getlist('recipe-tag')
+            if len(tags) == 0:
+                flash("Please select at least one tag to filter.")
+                return redirect(url_for('PTTRequests:view_map_0'))
+
+                # recipes = get_test_recipes()   when reloading the page a lot un-comment this
+            else:
+                recipes = r.get_recipes_by_tags(tags)
+        else:
+            recipes = r.get_all_recipes()
+            # recipes = get_test_recipes()   when reloading the page a lot un-comment this
         return render_template("view_map.html", recipes=recipes)
 
     @route('/create_account', methods=["GET", "POST"])
