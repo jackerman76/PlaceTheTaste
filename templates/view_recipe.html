@@ -11,6 +11,7 @@
           //document.getElementById("time").innerText = {{ "`" + recipe.get_formatted_time() + "`" }};
           document.getElementById("picture").src = {{ "`" + recipe.picture + "`" }};
           document.getElementById("number_of_recipe_ratings").innerText = {{ "`" + recipe.get_rating_num()|string + " Ratings`" }};
+          document.getElementById("view_recipe_back_to_map").href = {{  "`" + url_for('PTTRequests:view_map_0') +  "`"}};
 
           // Change the number of stars that are grey depending on the recipe ratings
           let current_rating = {{ recipe.get_ratings() }};
@@ -35,9 +36,6 @@
               }
               document.getElementById("submit_recipe_rating").style.display='inline';
            }
-
-           // This causes a uncaught type error which prevents any other javascript from running so moved it below
-           document.getElementById("leave-a-comment").href = {{  "`" + url_for('PTTRequests:view_recipe_0', requested_recipe_id=recipe.recipe_id) +  "`"}};
   };
 </script>
 </div>
@@ -87,8 +85,7 @@
               <p class="card-text" id="view_recipe_ingredients">- 1 cup flour<br>- 1 cup milk<br>- 1 tsp salt<br>- 1 tsp sugar<br>- 1 lemon<br>- 1 tbsp butter<br>- 1 tbsp honey</p>
               <h3 class="">Directions</h3>
               <p class="card-text" id="view_recipe_directions">1. Mix all of the ingredients together except for the butter<br>2. Heat up a nonstick pan<br>3. Add a little bit of the butter and spread around<br>4. Make crepes like normal</p>
-              <a href="" class="card-link" id="view_recipe_leave-a-comment">Leave a Comment</a>
-              <a href="#" class="card-link">Rate this Recipe</a><a href="#" class="card-link">Back to Map</a>
+              <a href="" class="card-link" id="view_recipe_back_to_map">Back to Map</a>
             </div>
           </div>
         </div>
