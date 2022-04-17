@@ -308,15 +308,22 @@ class Recipe:
         return comments
 
     def get_recipes_by_tags(self, tag_list):
-        recipe_dict_list = self.__fsio.query_by_value_in_array("Recipe", "tags", tag_list[0])
+        first_tag_dicts = self.__fsio.query_by_value_in_array("Recipe", "tags", tag_list[0])
         recipes = []
-        for recipe_dict in recipe_dict_list:
-            r = Recipe()
-            r.init_recipe_by_id(recipe_dict['recipe_id'])
-            recipes.append(r)
+        recipe_dict_list = []
+        for r_dict in first_tag_dicts:
+            matches = True
+            for tag in tag_list:
+                if tag not in r_dict['tags']:
+                    matches = False
+            if matches and r_dict not in recipe_dict_list:
+                r = Recipe()
+                r.init_recipe_by_id(r_dict['recipe_id'])
+                recipes.append(r)
 
-        for recipe in recipes:
-            print(recipe.recipe_name)
+        return recipes
+        # for recipe in recipes:
+        #     print(recipe.recipe_name, recipe.tags)
 
 
 

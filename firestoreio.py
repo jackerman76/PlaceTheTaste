@@ -390,7 +390,7 @@ class FirestoreIO():
     def get_collection(self, collection_name):
         return self.__firebase_auth.collection(collection_name).get()
 
-    def get_by_field(self, collection_name, field_name, query):
+    def query_by_value_in_array(self, collection_name, field_name, query):
 
         query_ref = self.__firebase_auth.collection(collection_name).where(field_name, "array_contains", query)
 
@@ -404,6 +404,6 @@ class FirestoreIO():
             print(e)
             return None
         for doc in docs:
-            doc_dicts.append(doc.to_dict)
+            doc_dicts.append(doc.to_dict())
         return doc_dicts
 
