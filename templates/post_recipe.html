@@ -82,11 +82,23 @@
             </div>
             <div class="form-group"><label>Picture</label><input type="file" class="form-control-file" id="recipe_image" placeholder="My Great Recipe" required="required" name="recipe_image" onchange="imageUploaded()"></div>
             <div class="form-group">
-              <label for="recipe_location"><b>Location</b></label><br>
+              <label for="search_input"><b>Location</b></label><br>
               <input type="text" class="form-control" id="search_input" placeholder="Input a location for this recipe to be tied to..." name="recipe_location" required>
               <br>
             </div>
-            <div class="form-group"></div><button type="submit" class="btn btn-primary" value="True" name="submit_recipe" formmethod="POST">Submit!</button></div>
+            <div class="form-group"><label>Select Tags that Describe Your Recipe</label>
+              <div class="recipe-tag-container">
+                <ul class="ks-cboxtags">
+                  <li><input type="checkbox" id="checkbox1" name="recipe-tag" value="Entree" checked><label for="checkbox1">Entree</label></li>
+                  <li><input type="checkbox" id="checkbox2" name="recipe-tag" value="Appetizer"><label for="checkbox2">Appetizer</label></li>
+                  <li><input type="checkbox" id="checkbox3" name="recipe-tag" value="Breakfast"><label for="checkbox3">Breakfast</label></li>
+                  <li><input type="checkbox" id="checkbox4" name="recipe-tag" value="Desert"><label for="checkbox4">Desert</label></li>
+                  <li><input type="checkbox" id="checkbox5" name="recipe-tag" value="Vegan" ><label for="checkbox5">Vegan</label></li>
+                  <li><input type="checkbox" id="checkbox6" name="recipe-tag" value="Gluten-Free"><label for="checkbox6">Gluten-Free</label></li>
+
+                </ul>
+              </div>
+            </div>
           </form>
         </div>
       </div>
