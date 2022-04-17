@@ -166,10 +166,18 @@ class PTTRequests(FlaskView):
     @route('/', methods=["GET", "POST"])
     @route('/view_map', methods=["GET", "POST"])
     def view_map(self):
-        # list of recipes to be returned for map
+        # Determine the list of recipes to be returned for the map
         r = Recipe()
-        recipes = r.get_all_recipes()
-        #recipes = get_test_recipes()
+        if request.method == "POST":
+            tags = request.values.getlist('recipe-tag')
+            if len(tags) == 0:
+                flash("Please select at least one tag to filter.")
+                return redirect(url_for('PTTRequests:view_map_0'))
+            else:
+                recipes = r.get_recipes_by_tags(tags)
+        else:
+            recipes = r.get_all_recipes()
+            # recipes = get_test_recipes()   when reloading the page a lot uncomment this
         return render_template("view_map.html", recipes=recipes)
 
     @route('/create_account', methods=["GET", "POST"])
@@ -183,13 +191,17 @@ class PTTRequests(FlaskView):
                 hashed_password = bcrypt.generate_password_hash(password).decode('utf_8')  # hashed pw converted to str
                 if self.__fsio.read_docs_by_query("/Users/", ["username", "==", username]):
                     flash("An account with that username already exists.")  # temporary behavior
+                    redirect(url_for("PTTRequests:login"))
                 else:
                     user = User(username, hashed_password, phone_number)
-                    session['username'] = username
-                    ret = self.__fsio.write_doc("/Users/" + username, user.__dict__)
-                    flash("Account Created!")  # Notification to let user know info was taken
-                    return render_template("login.html")
-                # print(ret)
+                    if self.__fsio.write_doc("/Users/" + username, user.__dict__):
+                        flash("Account Created!")  # Notification to let user know info was taken
+                        return redirect(url_for('PTTRequests:login'))
+                    else:
+                        flash("Sorry, there was some trouble with our servers, account could not be created. Please "
+                              "try again later.")
+                        return redirect(url_for("PTTRequests:create_account"))
+
 
         return render_template("create_account.html")
 
@@ -202,8 +214,8 @@ class PTTRequests(FlaskView):
             password = request.values.get("password")
             user_dict = self.__fsio.read_docs_by_query("/Users/", ["username", "==", username])
             if session.get('username'):
-                flash("already logged in")
-                return render_template("login.html")
+                flash("You are already logged in", session.get(username))
+                return redirect(url_for("PTTRequests:login"))
             if user_dict != None:  # if dict exists
                 if bcrypt.check_password_hash(user_dict[username]['password'], password):
                     session['username'] = username
