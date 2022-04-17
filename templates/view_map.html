@@ -76,25 +76,32 @@
             <div id="map"></div>
           </div>
         </div>
-        <div class="filter-recipe" id="filter-recipe">
-          <div class="card-text" id="filter-recipe-text">Filter Recipe by Tags</div>
-          <div class="recipe-tag-container" id="view-recipe-tag-container">
-                <ul class="ks-cboxtags">
-                  <li><input type="checkbox" id="checkbox1" name="recipe-tag" value="Entree"><label for="checkbox1">Entree</label></li>
-                  <li><input type="checkbox" id="checkbox2" name="recipe-tag" value="Appetizer"><label for="checkbox2">Appetizer</label></li>
-                  <li><input type="checkbox" id="checkbox3" name="recipe-tag" value="Breakfast"><label for="checkbox3">Breakfast</label></li>
-                  <li><input type="checkbox" id="checkbox4" name="recipe-tag" value="Dessert"><label for="checkbox4">Dessert</label></li>
-                  <li><input type="checkbox" id="checkbox5" name="recipe-tag" value="Vegan" ><label for="checkbox5">Vegan</label></li>
-                  <li><input type="checkbox" id="checkbox6" name="recipe-tag" value="Gluten-Free"><label for="checkbox6">Gluten-Free</label></li>
-                </ul>
-                <div class="form-group"></div><button type="submit" class="btn btn-primary" value="True" name="filter_recipe" formmethod="POST">Filter</button>
-              </div>
-            </div>
-        </div>
 
+        <div class="filter-recipe" id="filter-recipe">
+          <div class="card-text" id="filter-recipe-text">Filter Recipes</div>
+           <form class="text-left">
+              <div class="recipe-tag-container" id="view-recipe-tag-container">
+                    <ul class="ks-cboxtags">
+                      <li><input type="checkbox" id="checkbox1" name="recipe-tag" value="Entree"><label for="checkbox1">Entree</label></li>
+                      <li><input type="checkbox" id="checkbox2" name="recipe-tag" value="Appetizer"><label for="checkbox2">Appetizer</label></li>
+                      <li><input type="checkbox" id="checkbox3" name="recipe-tag" value="Breakfast"><label for="checkbox3">Breakfast</label></li>
+                      <li><input type="checkbox" id="checkbox4" name="recipe-tag" value="Dessert"><label for="checkbox4">Dessert</label></li>
+                      <li><input type="checkbox" id="checkbox5" name="recipe-tag" value="Gluten-Free"><label for="checkbox5">Gluten-Free</label></li>
+                      <li><input type="checkbox" id="checkbox6" name="recipe-tag" value="Vegan" ><label for="checkbox6">Vegan</label></li>
+                      <li><input type="checkbox" id="checkbox7" name="recipe-tag" value="Vegetarian"><label for="checkbox7">Vegetarian</label></li>
+                      <li><input type="checkbox" id="checkbox8" name="recipe-tag" value="Soups"><label for="checkbox8">Soups</label></li>
+                      <li><input type="checkbox" id="checkbox9" name="recipe-tag" value="Sandwiches"><label for="checkbox9">Sandwiches</label></li>
+                      <li><input type="checkbox" id="checkbox10" name="recipe-tag" value="Chicken"><label for="checkbox10">Chicken</label></li>
+                      <li><input type="checkbox" id="checkbox11" name="recipe-tag" value="Baked"><label for="checkbox11">Baked</label></li>
+                    </ul>
+                  <div class="form-group"></div><button type="submit" class="btn btn-primary" value="True" name="filter_recipe" formmethod="POST">Filter</button>
+              </div>
+           </form>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
+<!--need to track where div is from  </div>-->
 
   <div class="py-3">
     <div class="container" id="recipe_container" style="visibility: hidden;">
@@ -124,7 +131,7 @@
   <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
   <!-- Google Maps API Scripts - INSERT API KEY HERE  -->
   <script
-  src="https://maps.googleapis.com/maps/api/js?key=API_key&callback=initMap&libraries=&v=weekly=geometry"
+  src="https://maps.googleapis.com/maps/api/js?key=API_KEY&callback=initMap&libraries=&v=weekly=geometry"
   async
   ></script>
 {% endblock %}
