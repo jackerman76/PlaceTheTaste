@@ -136,14 +136,18 @@ class PTTRequests(FlaskView):
                 # print out recipe
                 # print(recipe.as_json())
 
+                # Get recipe tags
+                tags = request.values.getlist('recipe-tag')
+
+
                 # no picture yet Add when filestore is setup
                 recipe = Recipe(username=session.get('username'), recipe_name=recipe_name, picture=picture,
-                                ingredients=ingredients, geolocation=geolocation, tags=["tag1", "tag2", "tag3"],
+                                ingredients=ingredients, geolocation=geolocation, tags=tags,
                                 directions=directions, timestamp=str(time.time()),
                                 location_description=location_description)
                 id = recipe.gen_new_recipe_uuid()
 
-                print(recipe.__dict__)
+                # print(recipe.__dict__)
                 recipes = [recipe]
                 # add recipe to database and let user know if it failed
                 if not recipe.write_recipe():
@@ -254,7 +258,7 @@ class PTTRequests(FlaskView):
             session.pop('username', default=None)
         else:
             flash("You are not logged in")
-        return redirect(url_for('PTTRequests:view_map_0'))
+        return redirect(url_for('PTTRequests:login'))
 
 
 PTTRequests.register(app)

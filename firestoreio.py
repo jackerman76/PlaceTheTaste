@@ -389,3 +389,21 @@ class FirestoreIO():
     # For testing purposes TODO: refactor because we need an equivalent to this
     def get_collection(self, collection_name):
         return self.__firebase_auth.collection(collection_name).get()
+
+    def query_by_value_in_array(self, collection_name, field_name, query):
+
+        query_ref = self.__firebase_auth.collection(collection_name).where(field_name, "array_contains", query)
+
+        doc_dicts =[]
+        try:
+            # This said .stream() is preferred to a depreciated .get() https://firebase.google.com/docs/firestore/query-data/queries
+            docs = query_ref.stream()
+        except Exception as e:
+            print(
+                f"ERROR: FirestoreIO.get_by_field(): (3)An Exception occured while trying to execute your query! Returning None Stacktrace: \n\n{e}")
+            print(e)
+            return None
+        for doc in docs:
+            doc_dicts.append(doc.to_dict())
+        return doc_dicts
+

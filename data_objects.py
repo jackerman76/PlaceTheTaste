@@ -253,7 +253,7 @@ class Recipe:
     def get_ratings(self):
         if self.__is_instantiated:
             if self.get_rating_num() == 0:
-                return None
+                return 0
             else:
                 return sum(self.ratings) / self.get_rating_num()
         else:
@@ -306,6 +306,29 @@ class Recipe:
                 comments.append(comment)
 
         return comments
+
+    def get_recipes_by_tags(self, tag_list):
+        first_tag_dicts = self.__fsio.query_by_value_in_array("Recipe", "tags", tag_list[0])
+        recipes = []
+        recipe_dict_list = []
+        for r_dict in first_tag_dicts:
+            matches = True
+            for tag in tag_list:
+                if tag not in r_dict['tags']:
+                    matches = False
+            if matches and r_dict not in recipe_dict_list:
+                r = Recipe()
+                r.init_recipe_by_id(r_dict['recipe_id'])
+                recipes.append(r)
+
+        return recipes
+        # for recipe in recipes:
+        #     print(recipe.recipe_name, recipe.tags)
+
+
+
+
+
 
     def get_formatted_time(self):
         return datetime.fromtimestamp(float(self.timestamp)).strftime("%m-%d-%Y %I:%M:%S %p")
