@@ -102,7 +102,7 @@ class PTTRequests(FlaskView):
                 directions = request.values.get('directions')
 
                 # Assign a unique recipe id to this recipe
-                recipe_id = str(uuid.uuid4())
+                # recipe_id = str(uuid.uuid4())
 
                 # file handling
                 # uploaded_file = request.files['recipe_image']
@@ -139,13 +139,12 @@ class PTTRequests(FlaskView):
                 # Get recipe tags
                 tags = request.values.getlist('recipe-tag')
 
-
                 # no picture yet Add when filestore is setup
                 recipe = Recipe(username=session.get('username'), recipe_name=recipe_name, picture=picture,
                                 ingredients=ingredients, geolocation=geolocation, tags=tags,
                                 directions=directions, timestamp=str(time.time()),
                                 location_description=location_description)
-                id = recipe.gen_new_recipe_uuid()
+                # id = recipe.gen_new_recipe_uuid()
 
                 # print(recipe.__dict__)
                 recipes = [recipe]
@@ -156,12 +155,7 @@ class PTTRequests(FlaskView):
 
                 return render_template("view_map.html", recipes=recipes)
 
-                # varify validity of recipe
-
-                # return view of published recipe
-                return (render_template("view_recipe.html", recipe=recipe))
-
-        return (render_template("post_recipe.html"))
+        return render_template("post_recipe.html")
 
     @route('/', methods=["GET", "POST"])
     @route('/view_map', methods=["GET", "POST"])
@@ -177,7 +171,7 @@ class PTTRequests(FlaskView):
                 recipes = r.get_recipes_by_tags(tags)
         else:
             recipes = r.get_all_recipes()
-            # recipes = get_test_recipes()   when reloading the page a lot uncomment this
+            # recipes = get_test_recipes()  # when reloading the page a lot, uncomment this
         return render_template("view_map.html", recipes=recipes)
 
     @route('/create_account', methods=["GET", "POST"])
@@ -202,7 +196,6 @@ class PTTRequests(FlaskView):
                               "try again later.")
                         return redirect(url_for("PTTRequests:create_account"))
 
-
         return render_template("create_account.html")
 
     @route('/login', methods=["GET", "POST"])
@@ -216,7 +209,7 @@ class PTTRequests(FlaskView):
             if session.get('username'):
                 flash("You are already logged in", session.get(username))
                 return redirect(url_for("PTTRequests:login"))
-            if user_dict != None:  # if dict exists
+            if user_dict is not None:  # if dict exists
                 if bcrypt.check_password_hash(user_dict[username]['password'], password):
                     session['username'] = username
                     return redirect(url_for('PTTRequests:view_map_0'))
@@ -259,7 +252,7 @@ class PTTRequests(FlaskView):
                         recipe.add_comment(comment_id)
 
                 # get list of comments from firestore
-                comment_dict = self.__fsio.read_docs_by_query("/Comment/", ["recipe_id", "==", recipe.recipe_id])
+                # comment_dict = self.__fsio.read_docs_by_query("/Comment/", ["recipe_id", "==", recipe.recipe_id])
                 return render_template("view_recipe.html", recipe=recipe, comments=recipe.get_all_comments())
 
         return render_template("view_recipe.html")
