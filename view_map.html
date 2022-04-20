@@ -1,0 +1,167 @@
+{% extends '_base.html' %}
+{% block header %}
+<div class="container center">
+  <style>
+    /* Set the size of the div element that contains the map */
+    #map {
+      height: 400px;
+      /* The height is 400 pixels */
+      width: 100%;
+      /* The width is the width of the web page */
+    }
+  </style>
+
+  <script>
+    var markers = [];
+
+    // Initialize and add the map
+    function initMap() {
+      // The location of Pittsburgh
+      const pittsburgh = { lat: 40.4406, lng: -79.9959 };
+      // The map, centered at Pittsburgh
+      const map = new google.maps.Map(document.getElementById("map"), {
+        zoom: 10,
+        center: pittsburgh,
+        
+      });
+
+
+  {% for recipe in recipes %}
+
+
+      // add marker - this part works
+      var marker = new google.maps.Marker({
+        position: { lat: {{ recipe.get_latitude() }}, lng: {{ recipe.get_longitude() }} }, //{ lat: -25.344, lng: 131.036 }
+        map: map,
+      });
+      markers.push(marker);
+
+      marker.addListener("click", () => {
+        document.getElementById("recipe_name").innerText = {{ "`"  + recipe.recipe_name + "`" }};
+        document.getElementById("ingredients").innerText = {{ "`"  + recipe.ingredients + "`" }};
+        document.getElementById("directions").innerText = {{ "`"  + recipe.directions + "`" }};
+        document.getElementById("location_formatted").innerText = {{ "`"  + recipe.location_description + "`" }};
+        //document.getElementById("username").innerText = {{ "`" + recipe.username + "`" }};
+        //document.getElementById("time").innerText = {{ "`" + recipe.get_formatted_time() + "`" }};
+        document.getElementById("picture").src = {{ "`" + recipe.picture + "`" }};
+        document.getElementById("leave-a-comment").href = {{  "`" + url_for('PTTRequests:view_recipe_0', requested_recipe_id=recipe.recipe_id) +  "`"}};
+        document.getElementById("map_rate_this_recipe").href = {{  "`" + url_for('PTTRequests:view_recipe_0', requested_recipe_id=recipe.recipe_id) +  "`"}};
+
+        // this is for link to comment, not working yet
+        // document.getElementById("leave-a-comment").href = {{ "`/view_recipe/" + recipe.recipe_id + "`" }}
+
+        // make recipe not hidden
+        document.getElementById("recipe_container").style.visibility= "visible" ;    
+        /* dont't need this
+        var click = document.getElementById("collapseButton");
+        click.click();*/
+
+        //centerMap(marker);
+        //google.maps.event.addListener(marker, "click", function(){
+        //  map.setCenter(marker.getPosition());
+        //  map.panTo(map.center);
+        //  map.setZoom(10);
+        //});
+
+      
+
+      });
+
+
+  {% endfor %}
+
+  for(let i = 0; i < markers.length; i++){
+    markers[i].addListener("click", () => {
+      map.setZoom(10);
+      map.setCenter(markers[i].getPosition());
+    });
+  }
+
+    }
+
+  </script>
+</div>
+
+{% endblock %}
+{% block content %}
+
+      {% with messages = get_flashed_messages() %}
+      {% if messages %}
+      <ul>
+          {% for message in messages %}
+          <li>{{ message }}</li>
+          {% endfor %}
+      </ul>
+      {% endif %}
+      {% endwith %}
+  <div class="py-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-9">
+          <div class="card"> 
+            <!-- Interactive Map -->
+            <div id="map"></div>
+          </div>
+        </div>
+
+        <div class="filter-recipe" id="filter-recipe">
+          <div class="card-text" id="filter-recipe-text">Filter Recipes</div>
+           <form class="text-left">
+              <div class="recipe-tag-container" id="view-recipe-tag-container">
+                    <ul class="ks-cboxtags">
+                      <li><input type="checkbox" id="checkbox1" name="recipe-tag" value="Entree"><label for="checkbox1">Entree</label></li>
+                      <li><input type="checkbox" id="checkbox2" name="recipe-tag" value="Appetizer"><label for="checkbox2">Appetizer</label></li>
+                      <li><input type="checkbox" id="checkbox3" name="recipe-tag" value="Breakfast"><label for="checkbox3">Breakfast</label></li>
+                      <li><input type="checkbox" id="checkbox4" name="recipe-tag" value="Dessert"><label for="checkbox4">Dessert</label></li>
+                      <li><input type="checkbox" id="checkbox5" name="recipe-tag" value="Gluten-Free"><label for="checkbox5">Gluten-Free</label></li>
+                      <li><input type="checkbox" id="checkbox6" name="recipe-tag" value="Vegan" ><label for="checkbox6">Vegan</label></li>
+                      <li><input type="checkbox" id="checkbox7" name="recipe-tag" value="Vegetarian"><label for="checkbox7">Vegetarian</label></li>
+                      <li><input type="checkbox" id="checkbox8" name="recipe-tag" value="Soups"><label for="checkbox8">Soups</label></li>
+                      <li><input type="checkbox" id="checkbox9" name="recipe-tag" value="Sandwiches"><label for="checkbox9">Sandwiches</label></li>
+                      <li><input type="checkbox" id="checkbox10" name="recipe-tag" value="Chicken"><label for="checkbox10">Chicken</label></li>
+                      <li><input type="checkbox" id="checkbox11" name="recipe-tag" value="Baked"><label for="checkbox11">Baked</label></li>
+                      <li><input type="checkbox" id="checkbox12" name="recipe-tag" value="Pastry"><label for="checkbox12">Pastry</label></li>
+
+                    </ul>
+                  <div class="form-group"></div><button type="submit" class="btn btn-primary" value="True" name="filter_recipe" formmethod="POST">Filter</button>
+<!--              Flash any error message  -->
+              </div>
+           </form>
+          </div>
+        </div>
+      </div>
+    </div>
+<!--need to track where div is from  </div>-->
+
+  <div class="py-3">
+    <div class="container" id="recipe_container" style="visibility: hidden;">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card"> 
+            <img class="card-img mx-auto" src="https://media.istockphoto.com/photos/crepes-with-chocolate-cream-picture-id482305605?k=20&amp;m=482305605&amp;s=612x612&amp;w=0&amp;h=JDcM8RY77qh76MZOxVbpA1UvlEfPVJigIYwO2_fwtGA=" alt="Card image" id="picture">
+          </div>
+
+          <div class="card">
+            <div class="card-body">
+              <h1 class="display-4" id="recipe_name">My Favorite Crepes</h1>
+              <h6 class="card-subtitle my-2 text-muted" id="location_formatted">Location: Paris, France by Josh Ackerman</h6>
+              <h3 class="" >Ingredients</h3>
+              <p class="card-text" id="ingredients">- 1 cup flour<br>- 1 cup milk<br>- 1 tsp salt<br>- 1 tsp sugar<br>- 1 lemon<br>- 1 tbsp butter<br>- 1 tbsp honey</p>
+              <h3 class="">Directions</h3>
+              <p class="card-text" id="directions">1. Mix all of the ingredients together except for the butter<br>2. Heat up a nonstick pan<br>3. Add a little bit of the butter and spread around<br>4. Make crepes like normal</p>
+              <a href="" class="card-link" id="leave-a-comment">Leave a Comment</a>
+              <a href="" class="card-link" id="map_rate_this_recipe">Rate this Recipe</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
+  <!-- Google Maps API Scripts - INSERT API KEY HERE  -->
+  <script
+  src="https://maps.googleapis.com/maps/api/js?key=API_key&callback=initMap&libraries=&v=weekly=geometry"
+  async
+  ></script>
+{% endblock %}
