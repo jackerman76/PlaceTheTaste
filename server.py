@@ -144,7 +144,7 @@ class PTTRequests(FlaskView):
                                 ingredients=ingredients, geolocation=geolocation, tags=tags,
                                 directions=directions, timestamp=str(time.time()),
                                 location_description=location_description)
-                # id = recipe.gen_new_recipe_uuid()
+                recipe.gen_new_recipe_uuid()
 
                 # print(recipe.__dict__)
                 recipes = [recipe]

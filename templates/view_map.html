@@ -12,6 +12,7 @@
   </style>
 
   <script>
+    var markers = [];
 
     // Initialize and add the map
     function initMap() {
@@ -21,6 +22,7 @@
       const map = new google.maps.Map(document.getElementById("map"), {
         zoom: 10,
         center: pittsburgh,
+        
       });
 
 
@@ -31,8 +33,8 @@
       var marker = new google.maps.Marker({
         position: { lat: {{ recipe.get_latitude() }}, lng: {{ recipe.get_longitude() }} }, //{ lat: -25.344, lng: 131.036 }
         map: map,
-        
       });
+      markers.push(marker);
 
       marker.addListener("click", () => {
         document.getElementById("recipe_name").innerText = {{ "`"  + recipe.recipe_name + "`" }};
@@ -54,11 +56,26 @@
         var click = document.getElementById("collapseButton");
         click.click();*/
 
+        //centerMap(marker);
+        //google.maps.event.addListener(marker, "click", function(){
+        //  map.setCenter(marker.getPosition());
+        //  map.panTo(map.center);
+        //  map.setZoom(10);
+        //});
+
+      
 
       });
 
 
   {% endfor %}
+
+  for(let i = 0; i < markers.length; i++){
+    markers[i].addListener("click", () => {
+      map.setZoom(10);
+      map.setCenter(markers[i].getPosition());
+    });
+  }
 
     }
 
@@ -144,7 +161,7 @@
   <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
   <!-- Google Maps API Scripts - INSERT API KEY HERE  -->
   <script
-  src="https://maps.googleapis.com/maps/api/js?key=API_KEY&callback=initMap&libraries=&v=weekly=geometry"
+  src="https://maps.googleapis.com/maps/api/js?key=api_key&callback=initMap&libraries=&v=weekly=geometry"
   async
   ></script>
 {% endblock %}
