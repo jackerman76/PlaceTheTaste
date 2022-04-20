@@ -1,0 +1,145 @@
+{% extends '_base.html' %}
+{% block header %}
+<div class="container center">
+  <script>
+     window.onload = function() {
+          document.getElementById("view_recipe_name").innerText = {{ "`"  + recipe.recipe_name | safe + "`" }};
+          document.getElementById("view_recipe_ingredients").innerText = {{ "`"  + recipe.ingredients | safe + "`" }};
+          document.getElementById("view_recipe_directions").innerText = {{ "`"  + recipe.directions | safe + "`" }};
+          document.getElementById("view_recipe_location_formatted").innerText = {{ "`"  + recipe.location_description | safe + "`" }};
+          //document.getElementById("username").innerText = {{ "`" + recipe.username + "`" }};
+          //document.getElementById("time").innerText = {{ "`" + recipe.get_formatted_time() + "`" }};
+          document.getElementById("picture").src = {{ "`" + recipe.picture + "`" }};
+          document.getElementById("number_of_recipe_ratings").innerText = {{ "`" + recipe.get_rating_num()|string + " Ratings`" }};
+          document.getElementById("view_recipe_back_to_map").href = {{  "`" + url_for('PTTRequests:view_map_0') +  "`"}};
+
+          // Change the number of stars that are grey depending on the recipe ratings
+          let current_rating = {{ recipe.get_ratings() }};
+          current_rating = Math.ceil(current_rating);
+          for(let i = 5; i > current_rating; i--) {
+            let query_str = "label_rating" + i;
+            document.getElementById(query_str).style.color='#838383';
+          }
+
+          // Wait for the user to click on a star to pull up a button confirming they want to rate the recipe
+           var star_inputs = document.querySelectorAll(".star-rating");
+           for(let i = 0; i<star_inputs.length; i++) {
+              star_inputs[i].addEventListener("click", function ()  {
+                  disp_recipe_rate_btn(i);
+              });
+           }
+           function disp_recipe_rate_btn(btn_number) {
+              // When the user clicks a star, the number of yellow vs. grey star adjusts based on their click
+              for(let i = 0; i <= btn_number; i++) {
+                  let query_str = "label_rating" + (i+1);
+                  document.getElementById(query_str).style.color='#f4c430';
+              }
+              for(let i = 4; i >= btn_number; i--){
+                let query_str = "label_rating" + (btn_number + 2);
+                document.getElementById(query_str).style.color='#838383'
+              }
+              
+              document.getElementById("submit_recipe_rating").style.display='inline';
+           }
+  };
+</script>
+</div>
+{% endblock %}
+{% block content %}
+  <div class="py-5" id="view_recipe_image_container">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card"> <img class="card-img mx-auto" src="https://media.istockphoto.com/photos/crepes-with-chocolate-cream-picture-id482305605?k=20&amp;m=482305605&amp;s=612x612&amp;w=0&amp;h=JDcM8RY77qh76MZOxVbpA1UvlEfPVJigIYwO2_fwtGA=" alt="Card image" id="picture">
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="py-5" id="view_recipe_card_container">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-body">
+              <h1 class="display-4" id="view_recipe_name">My Favorite Crepes</h1>
+              <form id="recipe_star_form">
+                <div class="form-group" id="recipe_star_form_group">
+                  <div class="rating-css">
+                    <div class="star-icon">
+                      <input type="radio" class="form-control star-rating" name="rating" id="rating1" value="1">
+                      <label for="rating1" class="fa fa-star" id="label_rating1"></label>
+                      <input type="radio" class="form-control star-rating" name="rating" id="rating2" value="2">
+                      <label for="rating2" class="fa fa-star" id="label_rating2"></label>
+                      <input type="radio" class="form-control star-rating" name="rating" id="rating3" value="3">
+                      <label for="rating3" class="fa fa-star" id="label_rating3"></label>
+                      <input type="radio" class="form-control star-rating" name="rating" id="rating4" value="4">
+                      <label for="rating4" class="fa fa-star" id="label_rating4"></label>
+                      <input type="radio" class="form-control star-rating" name="rating" id="rating5" value="5">
+                      <label for="rating5" class="fa fa-star" id="label_rating5"></label>
+                      <div class="form-group" id="submit_recipe_rating_button_form">
+                        <button type="submit" name="submit_recipe_rating" id="submit_recipe_rating" value="True" formmethod="post"  class="btn btn-warning">Rate</button>
+                      </div>
+                      <p class="text-muted" id="number_of_recipe_ratings">5 Ratings</p>
+                    </div>
+                  </div>
+              </div>
+              </form>
+              <h6 class="card-subtitle mb-2 text-muted" id="view_recipe_location_formatted">Location: Paris, France by Josh Ackerman</h6>
+              <h3 class="" >Ingredients</h3>
+              <p class="card-text" id="view_recipe_ingredients">- 1 cup flour<br>- 1 cup milk<br>- 1 tsp salt<br>- 1 tsp sugar<br>- 1 lemon<br>- 1 tbsp butter<br>- 1 tbsp honey</p>
+              <h3 class="">Directions</h3>
+              <p class="card-text" id="view_recipe_directions">1. Mix all of the ingredients together except for the butter<br>2. Heat up a nonstick pan<br>3. Add a little bit of the butter and spread around<br>4. Make crepes like normal</p>
+              <a href="" class="card-link" id="view_recipe_back_to_map">Back to Map</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="py-1 text-center">
+    <div class="container">
+      <div class="row">
+        <div class="mx-auto pt-4 col-lg-7">
+          <h1 class="mb-4" id="leave-comment-msg">Leave a Comment</h1>
+          <form>
+            <div class="form-group">
+                <textarea class="form-control" id="comment" rows="3" placeholder="Your message" name="comment"  required="required"></textarea>
+            </div>
+          <div class="form-group">
+            <button type="submit" name="submit_comment" value="True" formmethod="post"  class="btn btn-primary">Comment</button>
+          </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+{% for comment in comments %}
+<div class="container mb-2">
+  <div class="d-flex justify-content-center row">
+      <div class="d-flex flex-column col-md-8">
+          <div class="comment-bottom bg-white px-4">
+              <div class="commented-section mt-2">
+                  <div class="d-flex flex-row align-items-center commented-user">
+                      <h5 class="mr-2" id="recipe_commenter_name">{{ comment.username }}</h5><span class="dot mb-1"></span><span class="mb-1 ml-auto pr-2" id="comment_timestamp">{{ comment.get_time_delta() }}</span>
+                  </div>
+                  <div class="comment-text-sm" id="recipe_comment_content"><span>{{ comment.message }}</span></div>
+              </div>
+            </div>
+        </div>
+  </div>
+</div>
+{% endfor %}
+
+  <div class="py-5" style="">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12" style="">
+          <div class="btn-group" style=""> </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
