@@ -151,11 +151,16 @@ class PTTRequests(FlaskView):
                 # add recipe to database and let user know if it failed
                 if not recipe.write_recipe():
                     flash("Sorry, there was an error with posting your recipe to our server. Please try again.")
-                    return render_template("post_recipe.html")
+                    return render_template("post_recipe.html", username=session.get('username'))
 
-                return render_template("view_map.html", recipes=recipes)
+                return render_template("view_map.html", recipes=recipes, username=session.get('username'))
 
-        return render_template("post_recipe.html")
+                # varify validity of recipe
+
+                # return view of published recipe
+                return (render_template("view_recipe.html", recipe=recipe, username=session.get('username')))
+
+        return render_template("post_recipe.html", username=session.get('username'))
 
     @route('/', methods=["GET", "POST"])
     @route('/view_map', methods=["GET", "POST"])
@@ -172,7 +177,7 @@ class PTTRequests(FlaskView):
         else:
             recipes = r.get_all_recipes()
             # recipes = get_test_recipes()  # when reloading the page a lot, uncomment this
-        return render_template("view_map.html", recipes=recipes)
+        return render_template("view_map.html", recipes=recipes, username=session.get('username'))
 
     @route('/create_account', methods=["GET", "POST"])
     def create_account(self):
@@ -196,7 +201,7 @@ class PTTRequests(FlaskView):
                               "try again later.")
                         return redirect(url_for("PTTRequests:create_account"))
 
-        return render_template("create_account.html")
+        return render_template("create_account.html", username=session.get('username'))
 
     @route('/login', methods=["GET", "POST"])
     def login(self):
@@ -215,12 +220,12 @@ class PTTRequests(FlaskView):
                     return redirect(url_for('PTTRequests:view_map_0'))
                 else:
                     flash("wrong password")
-                    return render_template("login.html")
+                    return render_template("login.html", username=session.get('username'))
             else:
                 flash("username does not exist")
-                return render_template("login.html")
+                return render_template("login.html", username=session.get('username'))
 
-        return render_template("login.html")
+        return render_template("login.html", username=session.get('username'))
 
     @route('/view_recipe', methods=["GET", "POST"])
     @route('/view_recipe/<requested_recipe_id>', methods=['GET', 'POST'])
@@ -252,10 +257,10 @@ class PTTRequests(FlaskView):
                         recipe.add_comment(comment_id)
 
                 # get list of comments from firestore
-                # comment_dict = self.__fsio.read_docs_by_query("/Comment/", ["recipe_id", "==", recipe.recipe_id])
-                return render_template("view_recipe.html", recipe=recipe, comments=recipe.get_all_comments())
+                comment_dict = self.__fsio.read_docs_by_query("/Comment/", ["recipe_id", "==", recipe.recipe_id])
+                return render_template("view_recipe.html", recipe=recipe, comments=recipe.get_all_comments(), username=session.get('username'))
 
-        return render_template("view_recipe.html")
+        return render_template("view_recipe.html", username=session.get('username') )
 
     @route('/logout')
     def logout(self):

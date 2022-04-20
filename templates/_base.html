@@ -24,8 +24,19 @@
           <li class="nav-item"> <a class="nav-link" href="{{ url_for('PTTRequests:logout') }}">Logout</a> </li>
         </ul>
       </div>
+      <p class="nav-item" id="user" style="text-align:right; color:white"> </p>
     </div>
   </nav>
+
+<script>
+
+    if({{username|tojson}} != null)  
+      document.getElementById("user").innerHTML = "Welcome back, " + {{username|tojson}} + "!";
+
+
+</script>
+
+
 <!--  <input type="button" value="btn1" class="btn btn-primary"/>-->
   <header>
 <!--     Google Maps API Scripts - INSERT API KEY HERE-->
