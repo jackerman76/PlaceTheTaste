@@ -34,6 +34,12 @@
                   let query_str = "label_rating" + (i+1);
                   document.getElementById(query_str).style.color='#f4c430';
               }
+              for(let i = 4; i >= btn_number; i--){
+                console.log(btn_number);
+                let query_str = "label_rating" + (btn_number + 2);
+                document.getElementById(query_str).style.color='#838383'
+              }
+              
               document.getElementById("submit_recipe_rating").style.display='inline';
            }
   };
