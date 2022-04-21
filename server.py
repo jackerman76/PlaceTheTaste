@@ -5,6 +5,7 @@ from firestoreio import FirestoreIO
 from user import User
 from comment import Comment
 from utils import *
+from providers import *
 from data_objects import Recipe
 from flask_bcrypt import Bcrypt
 import uuid

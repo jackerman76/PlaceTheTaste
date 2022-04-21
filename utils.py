@@ -1,7 +1,7 @@
 import json
 import yaml
 import firebase_admin
-from firebase_admin import firestore, storage, credentials
+from firebase_admin import firestore, credentials
 from twilio.rest import Client
 
 class Singleton(type):
