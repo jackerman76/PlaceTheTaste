@@ -3,9 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-<!--  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css">-->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="{{ url_for('static', filename='theme.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='theme.css') }}">
 </head>
 
 <body>
@@ -24,7 +23,7 @@
           <li class="nav-item"> <a class="nav-link" href="{{ url_for('PTTRequests:logout') }}">Logout</a> </li>
         </ul>
       </div>
-      <p class="nav-item" id="user" style="text-align:right; color:white"> </p>
+      <p class="nav-item" id="user" style="text-align:right; color:white; margin-bottom: 0;"> </p>
     </div>
   </nav>
 
@@ -32,16 +31,13 @@
 
     if({{username|tojson}} != null)  
       document.getElementById("user").innerHTML = "Welcome back, " + {{username|tojson}} + "!";
-
-
 </script>
 
-
-<!--  <input type="button" value="btn1" class="btn btn-primary"/>-->
   <header>
 <!--     Google Maps API Scripts - INSERT API KEY HERE-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places&key=API_key"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places&key=API_KEY"></script>
+
     {#
 
         The header and content areas will be replaced in templates that extend
@@ -57,13 +53,6 @@
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-  
-  <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
-  <!-- Google Maps API Scripts - INSERT API KEY HERE
-  <script
-  src="https://maps.googleapis.com/maps/api/js?key=API_KEY&callback=initMap&libraries=&v=weekly=geometry"
-  async
-  ></script> -->
 
 </body>
 

@@ -1,12 +1,8 @@
 import uuid
 from firestoreio import FirestoreIO
-import time
-from time import gmtime, strftime
 from datetime import datetime
-from geopy import distance
 import json
 from comment import Comment
-from functools import cmp_to_key
 
 class Recipe:
 
@@ -244,7 +240,7 @@ class Recipe:
     def get_rating_num(self):
         if self.__is_instantiated:
             if self.rating_num is None:
-                return 0;
+                return 0
             else:
                 return self.rating_num
         else:
@@ -324,9 +320,6 @@ class Recipe:
                 recipes.append(r)
 
         return recipes
-        # for recipe in recipes:
-        #     print(recipe.recipe_name, recipe.tags)
-
 
     def get_formatted_time(self):
         return datetime.fromtimestamp(float(self.timestamp)).strftime("%m-%d-%Y %I:%M:%S %p")
