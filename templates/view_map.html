@@ -16,13 +16,17 @@
 
     // Initialize and add the map
     function initMap() {
-      // The location of Pittsburgh
-      const pittsburgh = { lat: 40.4406, lng: -79.9959 };
+      if({{filtered|tojson}})  {
+        var loc = { lat: {{ recipes[0].get_latitude() }}, lng: {{ recipes[0].get_longitude() }} }
+      }
+      else {
+        // The location of Pittsburgh
+        var loc = { lat: 40.4406, lng: -79.9959 };
+      }
       // The map, centered at Pittsburgh
       const map = new google.maps.Map(document.getElementById("map"), {
         zoom: 10,
-        center: pittsburgh,
-        
+        center: loc,
       });
 
 
@@ -63,7 +67,6 @@
         //  map.setZoom(10);
         //});
 
-      
 
       });
 
@@ -161,7 +164,7 @@
   <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
   <!-- Google Maps API Scripts - INSERT API KEY HERE  -->
   <script
-  src="https://maps.googleapis.com/maps/api/js?key=api_key&callback=initMap&libraries=&v=weekly=geometry"
+  src="https://maps.googleapis.com/maps/api/js?key=API_key&callback=initMap&libraries=&v=weekly=geometry"
   async
   ></script>
 {% endblock %}
