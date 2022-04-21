@@ -9,7 +9,6 @@ from data_objects import Recipe
 from flask_bcrypt import Bcrypt
 import uuid
 import time
-from google.cloud import storage
 
 HOST = "0.0.0.0"
 PORT = 8000
@@ -24,11 +23,9 @@ ran_startup = False
 _BUCKET_NAME = "recipe-images"
 
 
-
 def get_test_recipes():
     """Returns a list of test recipes for testing purposes"""
     recipes = []
-
     recipe1 = Recipe()
     recipe1.recipe_name = "Roasted Chicken"
     recipe1.recipe_id = str(uuid.uuid4())
@@ -39,7 +36,6 @@ def get_test_recipes():
     recipe1.username = "joshackerman"
     recipe1.timestamp = 1649165332.34273
     recipe1.picture = "https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fstatic.onecms.io%2Fwp-content%2Fuploads%2Fsites%2F43%2F2022%2F01%2F19%2F83557-juicy-roast-chicken-mfs495-1.jpg"
-
     recipe2 = Recipe()
     recipe2.recipe_name = "Slow Roasted Carrots"
     recipe2.recipe_id = str(uuid.uuid4())
@@ -78,40 +74,19 @@ class PTTRequests(FlaskView):
         global ran_startup
         ran_startup = True
 
-    @route('/ptt/api/login/check_username_exists', methods=['POST'])
-    def check_username_exists(self):
-        """
-        Necessary Params in POST: "Username"
-        """
-        request_data = request.get_json()
-        if request_data["Username"] != None:
-            pass
-            # Implement this functionality
-
     @route('/post_recipe', methods=["GET", "POST"])
     def post_recipe(self):
         if not session.get('username'):
             return redirect(url_for('PTTRequests:login'))
         if request.method == 'POST':
             if request.form.get("submit_recipe") == "True":
-                # create recipe object
 
                 # get form fields
                 recipe_name = request.values.get('recipe_name')
                 ingredients = request.values.get('ingredients')
                 directions = request.values.get('directions')
 
-                # Assign a unique recipe id to this recipe
-                # recipe_id = str(uuid.uuid4())
-
-                # file handling
-                # uploaded_file = request.files['recipe_image']
-                # file_name = uploaded_file.filename or "image_upload"
-                # file_name += session["username"] + "-" + str(time.time())
-
-                print(session["username"])
-
-                # UPload file to filestore
+                # Upload file to filestore
                 """
                 gcs_client = storage.Client()
                 storage_bucket = gcs_client.get_bucket(_BUCKET_NAME)
@@ -131,34 +106,28 @@ class PTTRequests(FlaskView):
                 # recipe.username = "JoshAckerman"
                 # comment this when enabling filestore
                 # picture = "https://hips.hearstapps.com/hmg-prod/images/delish-basic-crepes-horizontal-1545245797.jpg"
+
+                # Store picture
                 picture = request.values.get("img_string")
                 picture = "data:image/png;base64, " + picture
-                # print out recipe
-                # print(recipe.as_json())
 
                 # Get recipe tags
                 tags = request.values.getlist('recipe-tag')
 
-                # no picture yet Add when filestore is setup
                 recipe = Recipe(username=session.get('username'), recipe_name=recipe_name, picture=picture,
                                 ingredients=ingredients, geolocation=geolocation, tags=tags,
                                 directions=directions, timestamp=str(time.time()),
                                 location_description=location_description)
+
+                # Generate a unique id before storing the recipe
                 recipe.gen_new_recipe_uuid()
 
-                # print(recipe.__dict__)
-                recipes = [recipe]
                 # add recipe to database and let user know if it failed
                 if not recipe.write_recipe():
                     flash("Sorry, there was an error with posting your recipe to our server. Please try again.")
                     return render_template("post_recipe.html", username=session.get('username'))
 
-                return render_template("view_map.html", recipes=recipes, username=session.get('username'))
-
-                # varify validity of recipe
-
-                # return view of published recipe
-                return (render_template("view_recipe.html", recipe=recipe, username=session.get('username')))
+                return render_template("view_map.html", recipes=recipe, username=session.get('username'))
 
         return render_template("post_recipe.html", username=session.get('username'))
 
@@ -176,7 +145,7 @@ class PTTRequests(FlaskView):
                 recipes = r.get_recipes_by_tags(tags)
         else:
             recipes = r.get_all_recipes()
-            # recipes = get_test_recipes()  # when reloading the page a lot, uncomment this
+            # recipes = get_test_recipes()  # when reloading the page a lot for testing, use this instead
         return render_template("view_map.html", recipes=recipes, username=session.get('username'))
 
     @route('/create_account', methods=["GET", "POST"])
@@ -189,12 +158,11 @@ class PTTRequests(FlaskView):
             if password == password2:
                 hashed_password = bcrypt.generate_password_hash(password).decode('utf_8')  # hashed pw converted to str
                 if self.__fsio.read_docs_by_query("/Users/", ["username", "==", username]):
-                    flash("An account with that username already exists.")  # temporary behavior
+                    flash("An account with that username already exists.")
                     redirect(url_for("PTTRequests:login"))
                 else:
                     user = User(username, hashed_password, phone_number)
                     if self.__fsio.write_doc("/Users/" + username, user.__dict__):
-                        flash("Account Created!")  # Notification to let user know info was taken
                         return redirect(url_for('PTTRequests:login'))
                     else:
                         flash("Sorry, there was some trouble with our servers, account could not be created. Please "
@@ -206,7 +174,9 @@ class PTTRequests(FlaskView):
     @route('/login', methods=["GET", "POST"])
     def login(self):
         if session.get('username'):
+            flash("You are already logged in")
             return redirect(url_for('PTTRequests:view_map_0'))
+
         if request.method == "POST":
             username = request.values.get("username")
             password = request.values.get("password")
@@ -230,26 +200,25 @@ class PTTRequests(FlaskView):
     @route('/view_recipe', methods=["GET", "POST"])
     @route('/view_recipe/<requested_recipe_id>', methods=['GET', 'POST'])
     def view_recipe(self, requested_recipe_id=None):
-        # print(requested_recipe_id)
         recipe = Recipe()
+
         if requested_recipe_id:
             found_recipe = recipe.init_recipe_by_id(requested_recipe_id)
             if found_recipe:
                 if request.method == "POST":
                     if not session.get('username'):
+                        flash("You are already logged in")
                         return redirect(url_for('PTTRequests:login'))
                     else:
                         commenter_name = session.get('username')
 
                     ratings = request.values.get("rating")
-                    # print(ratings)
 
                     comment_text = request.values.get("comment")
 
                     if ratings:
                         recipe.add_rating(int(ratings))
                     if comment_text:
-                        # print("Comment", comment_text)
                         comment_id = str(uuid.uuid4())
                         comment = Comment(commenter_name, comment_text, comment_id, recipe.recipe_id)
                         if not self.__fsio.write_doc("/Comment/" + comment_id, comment.__dict__):
@@ -257,10 +226,11 @@ class PTTRequests(FlaskView):
                         recipe.add_comment(comment_id)
 
                 # get list of comments from firestore
-                comment_dict = self.__fsio.read_docs_by_query("/Comment/", ["recipe_id", "==", recipe.recipe_id])
-                return render_template("view_recipe.html", recipe=recipe, comments=recipe.get_all_comments(), username=session.get('username'))
+                self.__fsio.read_docs_by_query("/Comment/", ["recipe_id", "==", recipe.recipe_id])
+                return render_template("view_recipe.html", recipe=recipe, comments=recipe.get_all_comments(),
+                                       username=session.get('username'))
 
-        return render_template("view_recipe.html", username=session.get('username') )
+        return render_template("view_recipe.html", username=session.get('username'))
 
     @route('/logout')
     def logout(self):
