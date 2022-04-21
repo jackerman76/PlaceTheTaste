@@ -7,7 +7,6 @@
           document.getElementById("view_recipe_ingredients").innerText = {{ "`"  + recipe.ingredients | safe + "`" }};
           document.getElementById("view_recipe_directions").innerText = {{ "`"  + recipe.directions | safe + "`" }};
           document.getElementById("view_recipe_location_formatted").innerText = {{ "`"  + recipe.location_description | safe + "`" }};
-          //document.getElementById("username").innerText = {{ "`" + recipe.username + "`" }};
           //document.getElementById("time").innerText = {{ "`" + recipe.get_formatted_time() + "`" }};
           document.getElementById("picture").src = {{ "`" + recipe.picture + "`" }};
           document.getElementById("number_of_recipe_ratings").innerText = {{ "`" + recipe.get_rating_num()|string + " Ratings`" }};
