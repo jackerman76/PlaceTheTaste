@@ -1,3 +1,5 @@
+import pickle
+
 import bcrypt
 from flask import Flask, request, render_template, flash, session, redirect, url_for
 from flask_classful import FlaskView, route
@@ -80,8 +82,10 @@ class PTTRequests(FlaskView):
 
     @route('/post_recipe', methods=["GET", "POST"])
     def post_recipe(self):
-        if not session.get('username'):
-            return redirect(url_for('PTTRequests:login'))
+        if not session.get('username') or not session.get('authenticated'):
+            flash("You are not logged in")
+            return redirect(url_for('PTTRequests:login', enter_code=False))
+
         if request.method == 'POST':
             if request.form.get("submit_recipe") == "True":
 
@@ -122,7 +126,7 @@ class PTTRequests(FlaskView):
                                 ingredients=ingredients, geolocation=geolocation, tags=tags,
                                 directions=directions, timestamp=str(time.time()),
                                 location_description=location_description)
-
+                recipes = [recipe]
                 # Generate a unique id before storing the recipe
                 recipe.gen_new_recipe_uuid()
 
@@ -131,7 +135,7 @@ class PTTRequests(FlaskView):
                     flash("Sorry, there was an error with posting your recipe to our server. Please try again.")
                     return render_template("post_recipe.html", username=session.get('username'))
 
-                return render_template("view_map.html", recipes=recipe, username=session.get('username'))
+                return render_template("view_map.html", recipes=recipes, username=session.get('username'), filtered=False)
 
         return render_template("post_recipe.html", username=session.get('username'))
 
@@ -147,7 +151,7 @@ class PTTRequests(FlaskView):
                 flash("Please select at least one tag to filter.")
                 return redirect(url_for('PTTRequests:view_map_0'))
             else:
-                filtered = True;
+                filtered = True
                 recipes = r.get_recipes_by_tags(tags)
         else:
             recipes = r.get_all_recipes()
@@ -187,12 +191,10 @@ class PTTRequests(FlaskView):
 
     @route('/login', methods=["GET", "POST"])
     def login(self):
-
         if request.method == "POST":
             if 'password' in request.form:
                 if session.get('username'):
-                    flash("You are already logged in")
-                    return redirect(url_for('PTTRequests:view_map_0'))
+                    return redirect(url_for('PTTRequests:view_map_0', username=session.get('username')))
                 username = request.values.get("username")
                 password = request.values.get("password")
                 user_dict = self.__fsio.read_docs_by_query("/Users/", ["username", "==", username])
@@ -200,6 +202,10 @@ class PTTRequests(FlaskView):
                 if user_dict is not None:  # if dict exists
                     if bcrypt.check_password_hash(user_dict[username]['password'], password):
                         session['username'] = username
+                        tfa = TwoFactorAuthManager(session.get('username'))
+                        tfa.init_new_2fa_code()  # generate new 2fa code and sms it to the user
+                        session['authenticated'] = False
+                        # return redirect(url_for('PTTRequests:view_map_0', username=username, filtered=False))
                         return render_template("login.html", username=session.get('username'), enter_code=True)
                     else:
                         flash("wrong password")
@@ -207,21 +213,19 @@ class PTTRequests(FlaskView):
                 else:
                     flash("username does not exist")
                     return render_template("login.html", username=session.get('username'))
-            elif '2fa_code':
-                print(session.get('username'))
+            elif '2fa_code' in request.form:
+                # # Check to see if the user got the right twilio code
                 tfa = TwoFactorAuthManager(session.get('username'))
-                tfa.init_new_2fa_code()  # generate new 2fa code and sms it to the user
-
-                # Check to see if the user got the right code
                 user_entered_2fa = request.values.get('2fa_code')
                 code_valid = tfa.validate_2fa_code(user_entered_2fa)
                 if code_valid:
                     print("Code Is Valid")
-                    return redirect(url_for('PTTRequests:view_map_0'))
+                    session['authenticated'] = True
+                    return redirect(url_for('PTTRequests:view_map_0', username=session.get('username'), filtered=False))
                 else:
                     print("Code is invalid")
                     flash("Two factor authentication failed")
-                    redirect(url_for('PTTRequests:login', enter_code=False))
+                    return redirect(url_for('PTTRequests:login', username=session.get('username'), enter_code=True))
         return render_template("login.html", username=session.get('username'), enter_code=False)
 
     @route('/view_recipe', methods=["GET", "POST"])
@@ -233,8 +237,9 @@ class PTTRequests(FlaskView):
             found_recipe = recipe.init_recipe_by_id(requested_recipe_id)
             if found_recipe:
                 if request.method == "POST":
-                    if not session.get('username'):
-                        flash("You are already logged in")
+                    print(session.get('authenticated'))
+                    if not session.get('username') or session.get('authenticated') != True:
+                        flash("Please Login to Comment")
                         return redirect(url_for('PTTRequests:login'))
                     else:
                         commenter_name = session.get('username')
