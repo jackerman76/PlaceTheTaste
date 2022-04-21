@@ -28,7 +28,8 @@ def get_test_recipes():
     recipes = []
     recipe1 = Recipe()
     recipe1.recipe_name = "Roasted Chicken"
-    recipe1.recipe_id = str(uuid.uuid4())
+    #recipe1.recipe_id = str(uuid.uuid4()) replace with object builtin below
+    recipe1.gen_new_recipe_uuid()
     recipe1.ingredients = "1. 1 whole chicken\r\n2. 2 t poultry seasoning\r\n3. 1 T butter (melted)\r\n4. 1 t salt"
     recipe1.directions = "1. Mix ingredients 2-4\r\n2. Rub ingredients on chicken\r\n3. Bake at 280 F for 2.5-3 hours"
     recipe1.geolocation = "[40.44062479999999, -79.9958864]"
@@ -38,7 +39,8 @@ def get_test_recipes():
     recipe1.picture = "https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fstatic.onecms.io%2Fwp-content%2Fuploads%2Fsites%2F43%2F2022%2F01%2F19%2F83557-juicy-roast-chicken-mfs495-1.jpg"
     recipe2 = Recipe()
     recipe2.recipe_name = "Slow Roasted Carrots"
-    recipe2.recipe_id = str(uuid.uuid4())
+    #recipe2.recipe_id = str(uuid.uuid4()) replace with object builtin below
+    recipe2.gen_new_recipe_uuid()
     recipe2.ingredients = "1. 1 lb carrots\r\n2. 2 t garlic\r\n3. 1 T butter (melted)\r\n4. 1 t salt"
     recipe2.directions = "1. Mix ingredients 2-4\r\n2. Bake at 300 F for 60 - 90 minutes"
     recipe2.geolocation = "[40.3765791,-80.0858934]"
