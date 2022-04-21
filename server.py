@@ -1,5 +1,3 @@
-import pickle
-
 import bcrypt
 from flask import Flask, request, render_template, flash, session, redirect, url_for
 from flask_classful import FlaskView, route
