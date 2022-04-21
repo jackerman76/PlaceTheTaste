@@ -1,7 +1,0 @@
-flask==2.0.1
-google-cloud-datastore
-phonenumbers
-datetime
-google-cloud-storage
-geopy
-py-bcrypt
