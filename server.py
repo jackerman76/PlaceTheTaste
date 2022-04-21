@@ -187,42 +187,41 @@ class PTTRequests(FlaskView):
 
     @route('/login', methods=["GET", "POST"])
     def login(self):
-        if session.get('username'):
-            flash("You are already logged in")
-            return redirect(url_for('PTTRequests:view_map_0'))
-        enter_code = False # Flag for whether 2fa code is requested or not
+
         if request.method == "POST":
-            username = request.values.get("username")
-            password = request.values.get("password")
-            user_dict = self.__fsio.read_docs_by_query("/Users/", ["username", "==", username])
-            if session.get('username'):
-                flash("You are already logged in", session.get(username))
-                return redirect(url_for('PTTRequests:view_map_0'))
-            if user_dict is not None:  # if dict exists
-                if bcrypt.check_password_hash(user_dict[username]['password'], password):
-                    tfa = TwoFactorAuthManager(username)
-                    tfa.init_new_2fa_code() # generate new 2fa code and sms it to the user
+            if 'password' in request.form:
+                if session.get('username'):
+                    flash("You are already logged in")
+                    return redirect(url_for('PTTRequests:view_map_0'))
+                username = request.values.get("username")
+                password = request.values.get("password")
+                user_dict = self.__fsio.read_docs_by_query("/Users/", ["username", "==", username])
 
-                    if request.method == "POST":
-                        # Check to see if the user got the right code
-                        code_valid = tfa.validate_2fa_code(user_dict['2fa_code'])
-                        if code_valid:
-                            print("Code Is Valid")
-                            session['username'] = username
-                            return redirect(url_for('PTTRequests:view_map_0'))
-                        else:
-                            print("Code is invalid")
-                            flash("Two factor authentication failed")
-                            redirect(url_for('PTTRequests:login', enter_code=False))
-
-                    return redirect(url_for('PTTRequests:login', enter_code=True))
+                if user_dict is not None:  # if dict exists
+                    if bcrypt.check_password_hash(user_dict[username]['password'], password):
+                        session['username'] = username
+                        return render_template("login.html", username=session.get('username'), enter_code=True)
+                    else:
+                        flash("wrong password")
+                        return render_template("login.html", username=session.get('username'))
                 else:
-                    flash("wrong password")
+                    flash("username does not exist")
                     return render_template("login.html", username=session.get('username'))
-            else:
-                flash("username does not exist")
-                return render_template("login.html", username=session.get('username'))
+            elif '2fa_code':
+                print(session.get('username'))
+                tfa = TwoFactorAuthManager(session.get('username'))
+                tfa.init_new_2fa_code()  # generate new 2fa code and sms it to the user
 
+                # Check to see if the user got the right code
+                user_entered_2fa = request.values.get('2fa_code')
+                code_valid = tfa.validate_2fa_code(user_entered_2fa)
+                if code_valid:
+                    print("Code Is Valid")
+                    return redirect(url_for('PTTRequests:view_map_0'))
+                else:
+                    print("Code is invalid")
+                    flash("Two factor authentication failed")
+                    redirect(url_for('PTTRequests:login', enter_code=False))
         return render_template("login.html", username=session.get('username'), enter_code=False)
 
     @route('/view_recipe', methods=["GET", "POST"])
