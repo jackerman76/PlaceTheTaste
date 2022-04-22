@@ -170,13 +170,6 @@ class PTTRequests(FlaskView):
                 else:
                     user = User(username, hashed_password, phone_number)
                     if self.__fsio.write_doc("/Users/" + username, user.__dict__):
-                        # tfa = TwoFactorAuthManager(username)
-                        # # Checking if TFA is functional! (this tells u if the user exists and u can continue)
-                        #
-                        # if tfa.functional:
-                        #     # First,  lets generate a new 2fa code for this user
-                        # tfa.init_new_2fa_code()  # This will make a code, log it and the fact that it hasn't
-                        # been used yet to the user in DB, then text the user the code
 
                         return redirect(url_for('PTTRequests:login'))
                     else:
@@ -188,6 +181,10 @@ class PTTRequests(FlaskView):
 
     @route('/login', methods=["GET", "POST"])
     def login(self):
+
+        if session.get('authenticated') != True and session.get('username'):
+            return render_template("login.html", username=session.get('username'), enter_code=True)
+
         if request.method == "POST":
             if 'password' in request.form:
                 if session.get('username'):
@@ -202,6 +199,7 @@ class PTTRequests(FlaskView):
                         tfa = TwoFactorAuthManager(session.get('username'))
                         tfa.init_new_2fa_code()  # generate new 2fa code and sms it to the user
                         session['authenticated'] = False
+
                         # return redirect(url_for('PTTRequests:view_map_0', username=username, filtered=False))
                         return render_template("login.html", username=session.get('username'), enter_code=True)
                     else:
@@ -234,7 +232,6 @@ class PTTRequests(FlaskView):
             found_recipe = recipe.init_recipe_by_id(requested_recipe_id)
             if found_recipe:
                 if request.method == "POST":
-                    print(session.get('authenticated'))
                     if not session.get('username') or session.get('authenticated') != True:
                         flash("Please Login to Comment")
                         return redirect(url_for('PTTRequests:login'))
@@ -263,6 +260,8 @@ class PTTRequests(FlaskView):
 
     @route('/logout')
     def logout(self):
+        if session.get('authenticated'):
+            session.pop('authenticated', default=None)
         if session.get('username'):
             session.pop('username', default=None)
         else:
