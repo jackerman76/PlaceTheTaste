@@ -25,7 +25,6 @@ def new_recipe_recipe():
     recipe_name = "Toast"
     picture = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/ToastedWhiteBread.jpg/800px-ToastedWhiteBread.jpg"
     ingredients = "1 slice of bread"
-    geolocation = ""
     tags = ["testtag1", "testtag2"]
     directions = "expose bread to heat source until toasted to desired doneness"
     timestamp = "1650256095.555848"
@@ -34,6 +33,16 @@ def new_recipe_recipe():
     return recipe
 
 class TestRecipe:
+    def test_basic_object_init(self, new_recipe_recipe):
+        assert new_recipe_recipe.username == "exampleuser"
+        assert new_recipe_recipe.recipe_name == "Toast"
+        assert new_recipe_recipe.picture == "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/ToastedWhiteBread.jpg/800px-ToastedWhiteBread.jpg"
+        assert new_recipe_recipe.ingredients == "1 slice of bread"
+        assert new_recipe_recipe.tags == ["testtag1", "testtag2"]
+        assert new_recipe_recipe.directions == "expose bread to heat source until toasted to desired doneness"
+        assert new_recipe_recipe.timestamp == "1650256095.555848"
+        assert new_recipe_recipe.location_description == "the cold plains of antarctica"
+
     def test_basic_db_read(self, recipe_id_recipe):
         d = recipe_id_recipe.get_dict_from_obj()
         assert d["geolocation"] == str([37.9767725, 23.7440562])
