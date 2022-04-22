@@ -140,6 +140,7 @@ class PTTRequests(FlaskView):
     @route('/view_map', methods=["GET", "POST"])
     def view_map(self):
         # Determine the list of recipes to be returned for the map
+
         r = Recipe()
         filtered = False  # Flag to tell whether recipes were filtered or not
         if request.method == "POST":
@@ -149,7 +150,9 @@ class PTTRequests(FlaskView):
                 return redirect(url_for('PTTRequests:view_map_0'))
             else:
                 filtered = True
+                print("here")
                 recipes = r.get_recipes_by_tags(tags)
+                print("here")
         else:
             recipes = r.get_all_recipes()
             # recipes = get_test_recipes()  # when reloading the page a lot for testing, use this instead
