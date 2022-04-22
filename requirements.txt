@@ -9,3 +9,4 @@ geopy
 bcrypt
 flask_bcrypt
 pytest
+selenium
