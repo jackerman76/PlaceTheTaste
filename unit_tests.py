@@ -90,3 +90,9 @@ class TestRecipe:
 
     def test_get_longitude(self, recipe_id_recipe):
         assert str(recipe_id_recipe.get_longitude()) == "23.7440562"
+
+    def test_gen_new_recipe_uuid(self, get_test_recipes):
+        assert get_test_recipes[0].gen_new_recipe_uuid() == get_test_recipes[0].recipe_id
+
+    def test_write(self, recipe_id_recipe):
+        assert recipe_id_recipe.write_recipe() == True

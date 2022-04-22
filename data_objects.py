@@ -64,8 +64,12 @@ class Recipe:
         """
         Diagnostic function to print the data in the object's dictionary
         """
-        self.get_dict_from_obj()
-        print(self.__r_dict)
+        try:
+            self.get_dict_from_obj()
+            print(self.__r_dict)
+            return True
+        except Exception:
+            return False
 
     def add_rating(self, rating_int, recipe_id=None):
         """
