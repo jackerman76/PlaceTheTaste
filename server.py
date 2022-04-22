@@ -185,8 +185,7 @@ class PTTRequests(FlaskView):
     @route('/login', methods=["GET", "POST"])
     def login(self):
 
-        if session.get('authenticated') != True and session.get('username'):
-            return render_template("login.html", username=session.get('username'), enter_code=True)
+
 
         if request.method == "POST":
             if 'password' in request.form:
@@ -224,7 +223,11 @@ class PTTRequests(FlaskView):
                     print("Code is invalid")
                     flash("Two factor authentication failed")
                     return redirect(url_for('PTTRequests:login', username=session.get('username'), enter_code=True))
-        return render_template("login.html", username=session.get('username'), enter_code=False)
+
+        if session.get('authenticated') != True and session.get('username'):
+            return render_template("login.html", username=session.get('username'), enter_code=True)
+        else:
+            return render_template("login.html", username=session.get('username'), enter_code=False) # default
 
     @route('/view_recipe', methods=["GET", "POST"])
     @route('/view_recipe/<requested_recipe_id>', methods=['GET', 'POST'])

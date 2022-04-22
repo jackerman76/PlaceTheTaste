@@ -29,7 +29,7 @@
 
 <script>
 
-    if({{username|tojson}} != null)  
+    if({{username|tojson}} != null && {{session.get('authenticated')|tojson}} == true)
       document.getElementById("user").innerHTML = "Welcome back, " + {{username|tojson}} + "!";
 </script>
 
