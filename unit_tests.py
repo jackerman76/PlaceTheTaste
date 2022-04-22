@@ -1,3 +1,4 @@
+from time import sleep
 import pytest
 from data_objects import Recipe
 from comment import Comment
@@ -6,8 +7,7 @@ import threading
 
 @pytest.fixture
 def fsio():
-    fsio = FirestoreIO()
-    return fsio
+    return FirestoreIO()
 
 @pytest.fixture
 def blank_recipe():
@@ -100,7 +100,7 @@ class TestRecipe:
     def test_diag_print_fields(self, recipe_id_recipe):
         assert recipe_id_recipe.diag_print_fields() == True
 
-    def test_add_rating(self, recipe_id_recipe):
+    def test_add_rating(self, recipe_id_recipe, fsio):
         pre_count = recipe_id_recipe.rating_num
         pre_count_actual = len(recipe_id_recipe.ratings)
         assert pre_count == pre_count_actual
@@ -108,3 +108,12 @@ class TestRecipe:
         assert recipe_id_recipe.rating_num == (pre_count+1)
         assert len(recipe_id_recipe.ratings) == (pre_count+1)
         assert recipe_id_recipe.ratings[(pre_count_actual)] == 5
+
+    def test_add_comment(self, recipe_id_recipe, fsio):
+        comment_id = "3218e377-74be-4986-bc66-525b6f8aa64f"
+        pre_comments = recipe_id_recipe.comment_ids
+        pre_len = len(pre_comments)
+        recipe_id_recipe.add_comment(comment_id)
+        new_comments = recipe_id_recipe.comment_ids
+        new_len = len(new_comments)
+        assert new_len > pre_len
