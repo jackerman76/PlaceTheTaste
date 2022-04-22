@@ -8,3 +8,4 @@ PyYAML
 geopy
 bcrypt
 flask_bcrypt
+pytest
