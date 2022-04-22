@@ -96,3 +96,15 @@ class TestRecipe:
 
     def test_write(self, recipe_id_recipe):
         assert recipe_id_recipe.write_recipe() == True
+
+    def test_diag_print_fields(self, recipe_id_recipe):
+        assert recipe_id_recipe.diag_print_fields() == True
+
+    def test_add_rating(self, recipe_id_recipe):
+        pre_count = recipe_id_recipe.rating_num
+        pre_count_actual = len(recipe_id_recipe.ratings)
+        assert pre_count == pre_count_actual
+        recipe_id_recipe.add_rating(5)
+        assert recipe_id_recipe.rating_num == (pre_count+1)
+        assert len(recipe_id_recipe.ratings) == (pre_count+1)
+        assert recipe_id_recipe.ratings[(pre_count_actual)] == 5
