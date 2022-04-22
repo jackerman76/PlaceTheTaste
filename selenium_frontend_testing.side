@@ -1,0 +1,403 @@
+{
+  "id": "eeca53e9-ad2a-4fc5-9f3b-4bfbae113bf3",
+  "version": "2.0",
+  "name": "ptt",
+  "url": "https://742c-71-116-60-111.ngrok.io",
+  "tests": [{
+    "id": "09454252-3623-409d-a05c-80be3bd75d10",
+    "name": "FILTER-SELECTION",
+    "commands": [{
+      "id": "81b5a345-c5e8-42f6-9848-a5c5c339fa71",
+      "comment": "",
+      "command": "open",
+      "target": "/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "0f2a73be-c378-42a7-aea1-a12f2faa54be",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "948x601",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "c829b643-64fb-466d-830b-7cfb76af12b1",
+      "comment": "",
+      "command": "click",
+      "target": "css=.ks-cboxtags > li:nth-child(1) > label",
+      "targets": [
+        ["css=.ks-cboxtags > li:nth-child(1) > label", "css:finder"],
+        ["xpath=//div[@id='view-recipe-tag-container']/ul/li/label", "xpath:idRelative"],
+        ["xpath=//form/div/ul/li/label", "xpath:position"],
+        ["xpath=//label[contains(.,'Entree')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "32d4a561-fbc8-4b61-a1bb-5b8d9b5e8db9",
+      "comment": "",
+      "command": "assertChecked",
+      "target": "id=checkbox1",
+      "targets": [
+        ["css=.ks-cboxtags > li:nth-child(1) > label", "css:finder"],
+        ["xpath=//div[@id='view-recipe-tag-container']/ul/li/label", "xpath:idRelative"],
+        ["xpath=//form/div/ul/li/label", "xpath:position"],
+        ["xpath=//label[contains(.,'Entree')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "38bd709d-a766-442d-a5e6-9331b4ccaafe",
+      "comment": "",
+      "command": "click",
+      "target": "css=.ks-cboxtags > li:nth-child(5) > label",
+      "targets": [
+        ["css=.ks-cboxtags > li:nth-child(1) > label", "css:finder"],
+        ["xpath=//div[@id='view-recipe-tag-container']/ul/li/label", "xpath:idRelative"],
+        ["xpath=//form/div/ul/li/label", "xpath:position"],
+        ["xpath=//label[contains(.,'Entree')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "8cd80da7-f0ae-4c85-aade-3c87d03c3e48",
+      "comment": "",
+      "command": "assertChecked",
+      "target": "id=checkbox5",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "83e4ae6d-34dc-45c2-bafc-de65133b1fc3",
+      "comment": "",
+      "command": "click",
+      "target": "name=filter_recipe",
+      "targets": [
+        ["name=filter_recipe", "name"],
+        ["css=.btn", "css:finder"],
+        ["xpath=//button[@name='filter_recipe']", "xpath:attributes"],
+        ["xpath=//div[@id='view-recipe-tag-container']/button", "xpath:idRelative"],
+        ["xpath=//form/div/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Filter')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "29dd37cb-2612-44be-8809-639da93db723",
+    "name": "CLICK-MARKER",
+    "commands": [{
+      "id": "7e779f2f-6867-4691-9919-299ee38c36bf",
+      "comment": "",
+      "command": "open",
+      "target": "/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "64c0e2ba-e5bb-4eae-8bed-caab6b4c0922",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "951x604",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "133cdfc7-4527-4fbd-a4ea-8317496cd74c",
+      "comment": "",
+      "command": "click",
+      "target": "css=#gmimap14 > area",
+      "targets": [
+        ["css=#gmimap14 > area", "css:finder"],
+        ["xpath=//map[@id='gmimap14']/area", "xpath:idRelative"],
+        ["xpath=//div[15]/map/area", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "541447da-aead-4c61-9e32-be4cea93692a",
+      "comment": "",
+      "command": "click",
+      "target": "id=leave-a-comment",
+      "targets": [
+        ["id=leave-a-comment", "id"],
+        ["linkText=Leave a Comment", "linkText"],
+        ["css=#leave-a-comment", "css:finder"],
+        ["xpath=//a[contains(text(),'Leave a Comment')]", "xpath:link"],
+        ["xpath=//a[@id='leave-a-comment']", "xpath:attributes"],
+        ["xpath=//div[@id='recipe_container']/div/div/div[2]/div/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/view_recipe/c4b88dd8-35c7-4874-b60e-ae129ce247a2')]", "xpath:href"],
+        ["xpath=//div[2]/div/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Leave a Comment')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "ab8f2f5e-4ebb-48a4-861f-687fe9cfc412",
+      "comment": "",
+      "command": "assertElementPresent",
+      "target": "name=submit_comment",
+      "targets": [
+        ["name=submit_comment", "name"],
+        ["css=.btn-primary", "css:finder"],
+        ["xpath=//button[@name='submit_comment']", "xpath:attributes"],
+        ["xpath=//div[2]/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Comment')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "7fe75bcf-1151-4c6f-afe6-ac6b5d6f81be",
+    "name": "RATE-RECIPE-LOGIN",
+    "commands": [{
+      "id": "44287adf-8dac-433b-bcde-add9dc5dd2d4",
+      "comment": "",
+      "command": "open",
+      "target": "/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "906810f4-a65a-43a6-995e-546c1c4796b2",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "946x601",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "c3f3481a-3bb0-4dee-b718-a3bde133ed64",
+      "comment": "",
+      "command": "click",
+      "target": "css=#gmimap14 > area",
+      "targets": [
+        ["css=#gmimap14 > area", "css:finder"],
+        ["xpath=//map[@id='gmimap14']/area", "xpath:idRelative"],
+        ["xpath=//div[15]/map/area", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "fcc05a37-ebeb-4956-b513-c6e4e1b87cdc",
+      "comment": "",
+      "command": "click",
+      "target": "id=leave-a-comment",
+      "targets": [
+        ["id=leave-a-comment", "id"],
+        ["linkText=Leave a Comment", "linkText"],
+        ["css=#leave-a-comment", "css:finder"],
+        ["xpath=//a[contains(text(),'Leave a Comment')]", "xpath:link"],
+        ["xpath=//a[@id='leave-a-comment']", "xpath:attributes"],
+        ["xpath=//div[@id='recipe_container']/div/div/div[2]/div/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/view_recipe/c4b88dd8-35c7-4874-b60e-ae129ce247a2')]", "xpath:href"],
+        ["xpath=//div[2]/div/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Leave a Comment')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "0597fba8-e191-4869-a19c-9d908f131981",
+      "comment": "",
+      "command": "click",
+      "target": "id=label_rating3",
+      "targets": [
+        ["id=label_rating3", "id"],
+        ["css=#label_rating3", "css:finder"],
+        ["xpath=//label[@id='label_rating3']", "xpath:attributes"],
+        ["xpath=//div[@id='recipe_star_form_group']/div/div/label[3]", "xpath:idRelative"],
+        ["xpath=//label[3]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "489228ee-d6b6-4319-8da7-ea93bb6a8af3",
+      "comment": "",
+      "command": "click",
+      "target": "id=submit_recipe_rating",
+      "targets": [
+        ["id=submit_recipe_rating", "id"],
+        ["name=submit_recipe_rating", "name"],
+        ["css=#submit_recipe_rating", "css:finder"],
+        ["xpath=//button[@id='submit_recipe_rating']", "xpath:attributes"],
+        ["xpath=//div[@id='submit_recipe_rating_button_form']/button", "xpath:idRelative"],
+        ["xpath=//div/div/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Rate')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "16b26b52-fa07-4028-bf9c-958929caf32d",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=h1",
+      "targets": [
+        ["css=h1", "css:finder"],
+        ["xpath=//h1", "xpath:position"],
+        ["xpath=//h1[contains(.,'Login')]", "xpath:innerText"]
+      ],
+      "value": "Login"
+    }]
+  }, {
+    "id": "e405c1ba-351b-46a7-a73c-9804eb16c059",
+    "name": "FILTER-TO-NEW",
+    "commands": [{
+      "id": "a086a811-2356-4a06-8182-7566d153f95f",
+      "comment": "",
+      "command": "open",
+      "target": "/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "748a7ab4-aae5-43fc-83fe-e9f109430f8d",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1552x840",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "542f3d6b-8661-4722-91ff-f52fe4ae78f0",
+      "comment": "",
+      "command": "click",
+      "target": "css=.ks-cboxtags > li:nth-child(1) > label",
+      "targets": [
+        ["css=.ks-cboxtags > li:nth-child(1) > label", "css:finder"],
+        ["xpath=//div[@id='view-recipe-tag-container']/ul/li/label", "xpath:idRelative"],
+        ["xpath=//form/div/ul/li/label", "xpath:position"],
+        ["xpath=//label[contains(.,'Entree')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "f50e4a42-088f-44d7-9482-ebe4abd18de9",
+      "comment": "",
+      "command": "click",
+      "target": "css=li:nth-child(7) > label",
+      "targets": [
+        ["css=li:nth-child(7) > label", "css:finder"],
+        ["xpath=//div[@id='view-recipe-tag-container']/ul/li[7]/label", "xpath:idRelative"],
+        ["xpath=//li[7]/label", "xpath:position"],
+        ["xpath=//label[contains(.,'Vegetarian')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "0cb7ff8d-2574-4858-ae3b-21eedb1319fc",
+      "comment": "",
+      "command": "click",
+      "target": "name=filter_recipe",
+      "targets": [
+        ["name=filter_recipe", "name"],
+        ["css=.btn", "css:finder"],
+        ["xpath=//button[@name='filter_recipe']", "xpath:attributes"],
+        ["xpath=//div[@id='view-recipe-tag-container']/button", "xpath:idRelative"],
+        ["xpath=//form/div/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Filter')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "c4dc00b9-30bf-40e2-bbcf-10d312571da4",
+      "comment": "",
+      "command": "click",
+      "target": "css=#gmimap2 > area",
+      "targets": [
+        ["css=#gmimap2 > area", "css:finder"],
+        ["xpath=//map[@id='gmimap2']/area", "xpath:idRelative"],
+        ["xpath=//div[3]/map/area", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "544c686f-8c8b-4e88-b270-c92bbeafacaa",
+      "comment": "",
+      "command": "assertText",
+      "target": "id=recipe_name",
+      "targets": [
+        ["id=recipe_name", "id"],
+        ["css=#recipe_name", "css:finder"],
+        ["xpath=//h1[@id='recipe_name']", "xpath:attributes"],
+        ["xpath=//div[@id='recipe_container']/div/div/div[2]/div/h1", "xpath:idRelative"],
+        ["xpath=//h1", "xpath:position"],
+        ["xpath=//h1[contains(.,'Greek Einkorn (Wheat Berry) Salad')]", "xpath:innerText"]
+      ],
+      "value": "Greek Einkorn (Wheat Berry) Salad"
+    }]
+  }, {
+    "id": "6d0cb11e-57f9-4a58-9dca-790f833ca149",
+    "name": "BACK-TO-MAP",
+    "commands": [{
+      "id": "b8f10d67-e3df-4da4-a849-fc71dba9bbcf",
+      "comment": "",
+      "command": "open",
+      "target": "/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "d761ee41-f834-44e9-b78d-d3f0d0023f9b",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "948x600",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "3c73b07d-31b8-45c2-8ecf-fe4c1a7b17f6",
+      "comment": "",
+      "command": "click",
+      "target": "css=#gmimap11 > area",
+      "targets": [
+        ["css=#gmimap11 > area", "css:finder"],
+        ["xpath=//map[@id='gmimap11']/area", "xpath:idRelative"],
+        ["xpath=//div[12]/map/area", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "101ffcf7-6e2a-4880-a695-1475c503ede7",
+      "comment": "",
+      "command": "click",
+      "target": "css=.py-5",
+      "targets": [
+        ["css=.py-5", "css:finder"],
+        ["xpath=//section/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "b1a222ac-a87c-49de-9c8d-5ce34f463ba1",
+      "comment": "",
+      "command": "click",
+      "target": "id=map_rate_this_recipe",
+      "targets": [
+        ["id=map_rate_this_recipe", "id"],
+        ["linkText=Rate this Recipe", "linkText"],
+        ["css=#map_rate_this_recipe", "css:finder"],
+        ["xpath=//a[contains(text(),'Rate this Recipe')]", "xpath:link"],
+        ["xpath=//a[@id='map_rate_this_recipe']", "xpath:attributes"],
+        ["xpath=//div[@id='recipe_container']/div/div/div[2]/div/a[2]", "xpath:idRelative"],
+        ["xpath=(//a[contains(@href, '/view_recipe/8f13fc2c-a998-49df-b8c2-83942447911c')])[2]", "xpath:href"],
+        ["xpath=//a[2]", "xpath:position"],
+        ["xpath=//a[contains(.,'Rate this Recipe')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "95671232-44ca-4e4c-8af3-66f50cd47f1a",
+      "comment": "",
+      "command": "click",
+      "target": "id=view_recipe_back_to_map",
+      "targets": [
+        ["id=view_recipe_back_to_map", "id"],
+        ["linkText=Back to Map", "linkText"],
+        ["css=#view_recipe_back_to_map", "css:finder"],
+        ["xpath=//a[contains(text(),'Back to Map')]", "xpath:link"],
+        ["xpath=//a[@id='view_recipe_back_to_map']", "xpath:attributes"],
+        ["xpath=//div[@id='view_recipe_card_container']/div/div/div/div/div/a", "xpath:idRelative"],
+        ["xpath=(//a[contains(@href, '/view_map')])[2]", "xpath:href"],
+        ["xpath=//div/div/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Back to Map')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "d6ad4361-bf79-4fe5-8eb9-8490babd5a7a",
+      "comment": "",
+      "command": "assertElementPresent",
+      "target": "id=filter-recipe-text",
+      "targets": [
+        ["id=filter-recipe-text", "id"],
+        ["css=#filter-recipe-text", "css:finder"],
+        ["xpath=//div[@id='filter-recipe-text']", "xpath:attributes"],
+        ["xpath=//div[@id='filter-recipe']/div", "xpath:idRelative"],
+        ["xpath=//section/div/div/div/div[2]/div", "xpath:position"]
+      ],
+      "value": "Filter Recipes"
+    }]
+  }],
+  "suites": [{
+    "id": "81601dbf-f843-440c-8e7b-56e17d623ccc",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": ["6d0cb11e-57f9-4a58-9dca-790f833ca149", "29dd37cb-2612-44be-8809-639da93db723", "09454252-3623-409d-a05c-80be3bd75d10", "e405c1ba-351b-46a7-a73c-9804eb16c059", "7fe75bcf-1151-4c6f-afe6-ac6b5d6f81be"]
+  }],
+  "urls": ["https://742c-71-116-60-111.ngrok.io/"],
+  "plugins": []
+}
