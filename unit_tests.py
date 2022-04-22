@@ -21,19 +21,6 @@ def recipe_id_recipe():
     return recipe
 
 @pytest.fixture
-def new_recipe_recipe():
-    username = "exampleuser"
-    recipe_name = "Toast"
-    picture = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/ToastedWhiteBread.jpg/800px-ToastedWhiteBread.jpg"
-    ingredients = "1 slice of bread"
-    tags = ["testtag1", "testtag2"]
-    directions = "expose bread to heat source until toasted to desired doneness"
-    timestamp = "1650256095.555848"
-    location_description = "the cold plains of antarctica"
-    recipe = Recipe(username=username, recipe_name=recipe_name, picture=picture, ingredients=ingredients, tags=tags, directions=directions, timestamp=timestamp, location_description=location_description)
-    return recipe
-
-@pytest.fixture
 def get_test_recipes():
     """Returns a list of test recipes for testing purposes"""
     recipes = []
@@ -64,17 +51,7 @@ def get_test_recipes():
     return recipes
 
 class TestRecipe:
-    def test_basic_object_init(self, new_recipe_recipe):
-        assert new_recipe_recipe.username == "exampleuser"
-        assert new_recipe_recipe.recipe_name == "Toast"
-        assert new_recipe_recipe.picture == "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/ToastedWhiteBread.jpg/800px-ToastedWhiteBread.jpg"
-        assert new_recipe_recipe.ingredients == "1 slice of bread"
-        assert new_recipe_recipe.tags == ["testtag1", "testtag2"]
-        assert new_recipe_recipe.directions == "expose bread to heat source until toasted to desired doneness"
-        assert new_recipe_recipe.timestamp == "1650256095.555848"
-        assert new_recipe_recipe.location_description == "the cold plains of antarctica"
-
-    def test_basic_db_read(self, recipe_id_recipe):
+    def test_basic_object_init(self, recipe_id_recipe):
         d = recipe_id_recipe.get_dict_from_obj()
         assert d["geolocation"] == str([37.9767725, 23.7440562])
         assert d["location_description"] == "Loukianou 12, Athina 106 75, Greece"
@@ -100,3 +77,16 @@ class TestRecipe:
         assert type(recipes[0]) == Recipe
         assert "Baked" in recipes[0].tags
         assert "Vegan" in recipes[0].tags
+
+    def test_get_formatted_time(self, recipe_id_recipe):
+        time = str(recipe_id_recipe.get_formatted_time())
+        assert time == "04-18-2022 01:31:01 AM"
+
+    def test_has_geolocation(self, recipe_id_recipe):
+        assert recipe_id_recipe.has_geolocation() == True
+
+    def test_get_latitude(self, recipe_id_recipe):
+        assert str(recipe_id_recipe.get_latitude()) == "37.9767725"
+
+    def test_get_longitude(self, recipe_id_recipe):
+        assert str(recipe_id_recipe.get_longitude()) == "23.7440562"
