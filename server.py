@@ -1,3 +1,5 @@
+
+
 import bcrypt
 from flask import Flask, request, render_template, flash, session, redirect, url_for
 from flask_classful import FlaskView, route
@@ -17,7 +19,7 @@ PORT = 8000
 AuthHolder()  # Invoke this early just to avoid any possible race conditions
 app = Flask(__name__, static_folder='static')
 # add secret key here using app.secret_key = INSERT_KEY_HERE for now until more permanent solution (if that is a thing)
-
+app.secret_key = "This-is-our-super-secret-and-I-mean-top-secret-key"
 bcrypt = Bcrypt(app)
 ran_startup = False
 
@@ -181,8 +183,6 @@ class PTTRequests(FlaskView):
 
     @route('/login', methods=["GET", "POST"])
     def login(self):
-
-
 
         if request.method == "POST":
             if 'password' in request.form:
